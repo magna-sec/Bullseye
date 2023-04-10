@@ -1,0 +1,27 @@
+---
+- name: Set facts for random Access Point - WEP
+  set_fact:
+    WEP_Name: "{{ APNames[1] }}"
+    WEP_Pass: "summer2018"
+
+- name: Set facts for custom files - WEP
+  set_fact:
+    HostapdWEP:
+    - interface=wlan29
+    - driver=nl80211
+    - ssid={{ WEP_Name }}
+    - hw_mode=g
+    - channel=1
+    - ignore_broadcast_ssid=0
+    - wep_default_key=1
+    - wep_key1=abcdeabcde
+    - wep_key_len_broadcast=5
+    - wep_key_len_unicast=5
+    - wep_rekey_period=300
+
+- name: Create custom hostapd.conf - WEP
+  ansible.builtin.lineinfile:
+    path: /etc/hostapd/wlan29.conf
+    line: "{{ item }}"
+    create: yes
+  loop: "{{ HostapdWEP }}"

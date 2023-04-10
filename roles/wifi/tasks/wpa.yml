@@ -1,0 +1,42 @@
+---
+- name: Set facts for random Access Point - WPA
+  set_fact:
+    WPA_Name: "{{ APNames[0] }}"
+    WPA_Pass: "summer2018"
+
+- name: Set facts for custom files - WPA
+  set_fact:
+    HostapdWPA:
+    - interface=wlan20
+    - driver=nl80211
+    - country_code=UK
+    - ssid={{ WPA_Name }}
+    - channel=0
+    - hw_mode=b
+    - wpa=3
+    - wpa_key_mgmt=WPA-PSK
+    - wpa_pairwise=TKIP CCMP
+    - wpa_passphrase={{ WPA_Pass }}
+    - auth_algs=3
+    - beacon_int=100
+    WPA_supplicantFile:
+    - network={
+    -  ssid="{{ WPA_Name }}"
+    -  key_mgmt=WPA-PSK
+    -  psk="{{ WPA_Pass }}"
+    - '}'
+
+- name: Create custom hostapd.conf - WPA
+  ansible.builtin.lineinfile:
+    path: /etc/hostapd/wlan20.conf
+    line: "{{ item }}"
+    create: yes
+  loop: "{{ HostapdWPA }}"
+
+# Output wpa_supplicant config file
+- name: Create custom wpa_supplicant.conf
+  ansible.builtin.lineinfile:
+    path: /root/wpa_supplicant.conf
+    line: "{{ item }}"
+    create: yes
+  loop: "{{ WPA_supplicantFile }}"

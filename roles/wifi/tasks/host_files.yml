@@ -2,26 +2,14 @@
 # This is a terrible way to do this, fix this ASAP
 
 # Output hostapd config file
-- name: Create custom hostapd.conf
-  ansible.builtin.lineinfile:
-    path: /root/hostapd.conf
-    line: "{{ item }}"
-    create: yes
-  loop: "{{ HostapdFile }}"
+- include_tasks: wpa.yml
+- include_tasks: wep.yml
 
 - name: Copy ap_setup.sh then make executable
   ansible.builtin.copy:
     src: ap_setup.sh
     dest: /root/ap_setup.sh
     mode: '0645'
-
-# Output wpa_supplicant config file
-- name: Create custom wpa_supplicant.conf
-  ansible.builtin.lineinfile:
-    path: /root/wpa_supplicant.conf
-    line: "{{ item }}"
-    create: yes
-  loop: "{{ Wpa_supplicantFile }}"
 
 - name: Copy client_loop.sh then make executable
   ansible.builtin.copy:

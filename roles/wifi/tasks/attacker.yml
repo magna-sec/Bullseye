@@ -1,5 +1,5 @@
 ---
-# Setting up the attacker container
+# Setting up the attacker0 container
 # Useful guide for forwarding interfaces: https://blog.simos.info/using-the-lxd-kali-container-image/
 
 - name: Initialise lxd - Shell
@@ -13,51 +13,54 @@
 # lxc list
 
 # To remove
-# lxc delete attacker --force
+# lxc delete attacker0 --force
 
-- name: Launch attacker machine - Shell
-  ansible.builtin.shell: lxc launch images:alpine/3.14/amd64 attacker
+- name: Launch attacker0 machine - Shell
+  ansible.builtin.shell: lxc launch images:alpine/3.14/amd64 attacker0
 
-- name: Set autoboot on attacker to true - Shell
-  ansible.builtin.shell: lxc config set attacker boot.autostart true
+- name: Set autoboot on attacker0 to true - Shell
+  ansible.builtin.shell: lxc config set attacker0 boot.autostart true
   
 # Do some updating on the container and set up ssh server on the container
 - name: Container Command - update - Shell
-  ansible.builtin.shell: lxc exec attacker -- apk update
+  ansible.builtin.shell: lxc exec attacker0 -- apk update
 
 - name: Container Command - upgrade - Shell
-  ansible.builtin.shell: lxc exec attacker -- apk upgrade
+  ansible.builtin.shell: lxc exec attacker0 -- apk upgrade
 
 - name: Container Command - install aircrack-ng, openssh - Shell
-  ansible.builtin.shell: lxc exec attacker -- apk add {{ item }}
+  ansible.builtin.shell: lxc exec attacker0 -- apk add {{ item }}
   loop: "{{ ApkPackages }}"
 
 - name: Container Command - Allow root login - Shell
-  ansible.builtin.shell: lxc exec attacker -- ash -c 'echo "PermitRootLogin yes" >> /etc/ssh/sshd_config'
+  ansible.builtin.shell: lxc exec attacker0 -- ash -c 'echo "PermitRootLogin yes" >> /etc/ssh/sshd_config'
 
 - name: Container Command - Allow SSH - Shell
-  ansible.builtin.shell: lxc exec attacker -- rc-update add sshd
+  ansible.builtin.shell: lxc exec attacker0 -- rc-update add sshd
 
 - name: Container Command - Restart SSH - Shell
-  ansible.builtin.shell: lxc exec attacker -- /etc/init.d/sshd start
+  ansible.builtin.shell: lxc exec attacker0 -- /etc/init.d/sshd start
 
 - name: Container Command - Change root password - Shell
-  ansible.builtin.shell: lxc exec attacker -- ash -c 'echo "root:bob" | chpasswd'
+  ansible.builtin.shell: lxc exec attacker0 -- ash -c 'echo "root:bob" | chpasswd'
 
-- name: Proxy SSH - Shell
-  ansible.builtin.shell: lxc config device add attacker sshproxy proxy listen=tcp:0.0.0.0:2222 connect=tcp:127.0.0.1:22
-  
+- name: Clone attacker0 for other machines - Shell
+  ansible.builtin.shell: |
+    lxc copy attacker0 attacker{{ item }}
+    lxc config set attacker{{ item }} boot.autostart true
+    lxc start attacker{{ item }}
+  with_sequence: start=1 end={{ AmountOfUsers - 1 }}
 
 
+# Add SSH Proxy append with user number
 # Remove the default bridge device (internet/network access)
-- name: Remove the default bridge device - Shell
-  ansible.builtin.shell: lxc config device add attacker eth0 none
-
 # Add the bridge device back
-- name: Add the bridge device back - Shell
-  ansible.builtin.shell: lxc config device remove attacker eth0
-
-
 # Set up wireless networking on the container
-- name: Set up wireless networking on the container - Shell
-  ansible.builtin.shell: lxc config device add attacker wifi nic nictype=physical parent=wlan0 name=wlan0
+- name: Clone attacker0 for other machines - Shell
+  ansible.builtin.shell: |
+    lxc config device add attacker{{ item }} sshproxy proxy listen=tcp:0.0.0.0:22{{ item }} connect=tcp:127.0.0.1:22
+    lxc config device add attacker{{ item }} eth0 none
+    lxc config device remove attacker{{ item }} eth0
+    lxc config device add attacker{{ item }} wifi nic nictype=physical parent=wlan{{ item }} name=wlan0
+  with_sequence: start=0 end={{ AmountOfUsers - 1 }}
+

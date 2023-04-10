@@ -11,7 +11,7 @@
 
 # Create the network interfaces
 - name: Create the network interfaces - Shell
-  ansible.builtin.shell: modprobe mac80211_hwsim radios=3
+  ansible.builtin.shell: modprobe mac80211_hwsim radios={{ AmountOfInterfaces }}
 
 # Set up the module to be loaded on boot
 - name: Add a line to set up the module to be loaded on boot 1/2
@@ -23,7 +23,7 @@
 - name: Add a line to set up the module to be loaded on boot 2/2
   ansible.builtin.lineinfile:
     path: /etc/modprobe.d/vwifi.conf
-    line: options mac80211_hwsim radios=3
+    line: options mac80211_hwsim radios={{ AmountOfInterfaces }}
     create: yes
 
 # Assign a static IP to the card, not really used since there's no traffic but could be in the future

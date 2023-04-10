@@ -1,14 +1,20 @@
 ---
-WIFI_1_Name: "Hello There"
-WIFI_1_PW: "summer2018"
+# 0-19: Users
+# 20-29: APs
+# 30-39: Fake Users for APs
+AmountOfInterfaces: 40
+AmountOfUsers: 20
+AmountOfAPs: "{{ (AmountOfInterfaces - AmountOfUsers) / 2 }}" # 50/50 AP/Clients hence /2
+AmountOfClients: "{{ AmountOfAPs }}"
+
+APNames: []
 
 InitialPackages:
   - wpasupplicant
   - hostapd
   - aircrack-ng 
   - wireless-tools
-  - python3-lxc
-  - lxc-utils
+  - net-tools
   
 ApkPackages:
   - iw
@@ -16,23 +22,86 @@ ApkPackages:
   - openssh
   - pciutils
 
-HostapdFile:
- - interface=wlan1
- - driver=nl80211
- - country_code=UK
- - ssid={{ WIFI_1_Name }}
- - channel=0
- - hw_mode=b
- - wpa=3
- - wpa_key_mgmt=WPA-PSK
- - wpa_pairwise=TKIP CCMP
- - wpa_passphrase={{ WIFI_1_PW }}
- - auth_algs=3
- - beacon_int=100
-
-Wpa_supplicantFile:
- - network={
- -  ssid="{{ WIFI_1_Name }}"
- -  key_mgmt=WPA-PSK
- -  psk="{{ WIFI_1_PW }}"
- - '}'
+AP_Names:
+ - AbhorrentActivity
+ - AcquireAction
+ - AdaptEarth
+ - AfricaAlpha
+ - AlfredSecond
+ - AmusementApparatus
+ - ApproveAddition
+ - AssureAunt
+ - BallsBirds
+ - BeanFiction
+ - BelligerentUse
+ - BorisBruce
+ - BrassCook
+ - CadetChief
+ - CakesCake
+ - CalculateMind
+ - ClaraAddress
+ - CompactCrater
+ - ConcertChant
+ - ConfuseMind
+ - ConvertHorizon
+ - CoverPaper
+ - CowboyConcert
+ - CrownLanguage
+ - DisgustedMetal
+ - DolphinCenter
+ - EdgeCamera
+ - EditedEar
+ - ElasticMike
+ - FlapHearing
+ - FloorFather
+ - FurtivePowder
+ - GabrielMilan
+ - GarageGraph
+ - GateCrack
+ - HabitualHouses
+ - HawaiiPandora
+ - HourDebt
+ - IncandescentIncrease
+ - InterviewQuill
+ - KevinMeter
+ - LeafLamp
+ - LiveRabbits
+ - LogLeg
+ - Mnemonics
+ - Mnemonics
+ - NumericNetwork
+ - ObedientAttention
+ - PaperPassenger
+ - ParcelParty
+ - ParchedPan
+ - PeelPlant
+ - PickPail
+ - PlutoEpisode
+ - PoisedCat
+ - PonchoPotato
+ - PorterPlough
+ - PenguinZoo
+ - QuicksandQuill
+ - RapidSpy
+ - RealizeProse
+ - RefuseDigestion
+ - RepresentativeProcess
+ - RudeMist
+ - SelectSlang
+ - SkySquirrel
+ - SlimyServant
+ - SmartShop
+ - SmashClock
+ - SnobbishSoup
+ - SpookySpace
+ - StimulateSponge
+ - StingSize
+ - StoreSmile
+ - SuggestSuit
+ - TemporaryPan
+ - TherapeuticTail
+ - UnderIceberg
+ - WaryWar
+ - WaveWilderness
+ - WildWire
+ - WorthlessShow
