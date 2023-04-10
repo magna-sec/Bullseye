@@ -3,7 +3,7 @@
 
 
 ## Purpose:
-Deploy various training enviroments
+Deploy various training environments
 
 ---
 ## Current Abilities:
