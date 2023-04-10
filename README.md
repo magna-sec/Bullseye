@@ -8,11 +8,11 @@ Deploy various training enviroments
 ---
 ## Current Abilities:
 - Deploy single WiFi network for attacking
+- Multiple access points
+- Multiple containers for users
 
 ---
 ## To Do:
-- Multiple access points
-- Multiple containers
 - Different versions of encryption
 - Traffic generation
 - Introduce randomness
