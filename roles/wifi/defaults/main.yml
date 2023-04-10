@@ -9,6 +9,12 @@ InitialPackages:
   - wireless-tools
   - python3-lxc
   - lxc-utils
+  
+ApkPackages:
+  - iw
+  - aircrack-ng
+  - openssh
+  - pciutils
 
 HostapdFile:
  - interface=wlan1
@@ -30,6 +36,3 @@ Wpa_supplicantFile:
  -  key_mgmt=WPA-PSK
  -  psk="{{ WIFI_1_PW }}"
  - '}'
-
-Client_loopFile:
-

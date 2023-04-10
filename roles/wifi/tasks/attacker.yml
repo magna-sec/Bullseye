@@ -22,8 +22,6 @@
   ansible.builtin.shell: lxc config set attacker boot.autostart true
   
 # Do some updating on the container and set up ssh server on the container
-# Drop into a shell into the container, commands following will be run in the container until we exit it
-
 - name: Container Command - update - Shell
   ansible.builtin.shell: lxc exec attacker -- apk update
 
@@ -31,7 +29,8 @@
   ansible.builtin.shell: lxc exec attacker -- apk upgrade
 
 - name: Container Command - install aircrack-ng, openssh - Shell
-  ansible.builtin.shell: lxc exec attacker -- apk add iw aircrack-ng openssh pciutils
+  ansible.builtin.shell: lxc exec attacker -- apk add {{ item }}
+  loop: "{{ ApkPackages }}"
 
 - name: Container Command - Allow root login - Shell
   ansible.builtin.shell: lxc exec attacker -- ash -c 'echo "PermitRootLogin yes" >> /etc/ssh/sshd_config'
