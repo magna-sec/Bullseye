@@ -1,0 +1,11 @@
+[Unit]
+Description=Virtual Wifi AP&Client
+
+[Service]
+Type=oneshot
+ExecStart=/root/autostart.sh
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target

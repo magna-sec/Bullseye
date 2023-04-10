@@ -1,0 +1,50 @@
+---
+# This is a terrible way to do this, fix this ASAP
+
+# Output hostapd config file
+- name: Create custom hostapd.conf
+  ansible.builtin.lineinfile:
+    path: /root/hostapd.conf
+    line: "{{ item }}"
+    create: yes
+  loop: "{{ HostapdFile }}"
+
+- name: Copy ap_setup.sh then make executable
+  ansible.builtin.copy:
+    src: ap_setup.sh
+    dest: /root/ap_setup.sh
+    mode: '0645'
+
+# Output wpa_supplicant config file
+- name: Create custom wpa_supplicant.conf
+  ansible.builtin.lineinfile:
+    path: /root/wpa_supplicant.conf
+    line: "{{ item }}"
+    create: yes
+  loop: "{{ Wpa_supplicantFile }}"
+
+- name: Copy client_loop.sh then make executable
+  ansible.builtin.copy:
+    src: client_loop.sh
+    dest: /root/client_loop.sh
+    mode: '0645'
+
+- name: Copy autostart.sh then make executable
+  ansible.builtin.copy:
+    src: autostart.sh
+    dest: /root/autostart.sh
+    mode: '0645'
+
+- name: Copy virtual-wifi service
+  ansible.builtin.copy:
+    src: virtual-wifi.service
+    dest: /etc/systemd/system/virtual-wifi.service
+    mode: '0644'
+
+- name: Enable virtual-wifi service
+  ansible.builtin.service:
+    name: virtual-wifi
+    enabled: true
+
+- name: Rebooting
+  ansible.builtin.reboot:

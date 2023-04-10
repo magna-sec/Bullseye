@@ -1,0 +1,15 @@
+---
+- name: Run the equivalent of "apt update"
+  apt:
+    update_cache: yes
+
+- name: Upgrade all packages to their latest version
+  apt:
+    upgrade: yes
+
+# Installing packages
+- name: Install packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ InitialPackages }}"

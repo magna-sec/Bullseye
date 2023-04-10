@@ -1,0 +1,9 @@
+---
+# Initial setup
+- include_tasks: setup.yml
+# Setup host
+- include_tasks: host.yml
+# Create files
+- include_tasks: host_files.yml
+# Start attacker setup
+- include_tasks: attacker.yml

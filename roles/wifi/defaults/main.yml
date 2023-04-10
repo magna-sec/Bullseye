@@ -1,0 +1,35 @@
+---
+WIFI_1_Name: "Hello There"
+WIFI_1_PW: "summer2018"
+
+InitialPackages:
+  - wpasupplicant
+  - hostapd
+  - aircrack-ng 
+  - wireless-tools
+  - python3-lxc
+  - lxc-utils
+
+HostapdFile:
+ - interface=wlan1
+ - driver=nl80211
+ - country_code=UK
+ - ssid={{ WIFI_1_Name }}
+ - channel=0
+ - hw_mode=b
+ - wpa=3
+ - wpa_key_mgmt=WPA-PSK
+ - wpa_pairwise=TKIP CCMP
+ - wpa_passphrase={{ WIFI_1_PW }}
+ - auth_algs=3
+ - beacon_int=100
+
+Wpa_supplicantFile:
+ - network={
+ -  ssid="{{ WIFI_1_Name }}"
+ -  key_mgmt=WPA-PSK
+ -  psk="{{ WIFI_1_PW }}"
+ - '}'
+
+Client_loopFile:
+
