@@ -7,7 +7,7 @@ Deploy various training environments
 
 ---
 ## Current Abilities:
-- Deploy single WiFi network for attacking
+- Deploy WiFi networks for attacking, WPA/WEP
 - Multiple access points
 - Multiple containers for users
 
