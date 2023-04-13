@@ -16,3 +16,4 @@ Deploy various training environments
 - Different versions of encryption
 - Traffic generation
 - Introduce randomness
+- Assign vendor MAC addresses to Wifi APs
