@@ -27,8 +27,8 @@ SPLASH = """
 """
 
 # Menus
-MAIN = {"1":"Training", "2":"COMING SOON", "3":"Exit"}
-TRAINING = {"1:":"Build WiFi", "2:":"Build COMING SOON"}
+MAIN = {"1":"Training Builds", "2":"COMING SOON", "3":"Exit"}
+TRAINING = {"1":"WiFi", "2":"Tech SCR - COMING SOON", "3":"Radio - COMING SOON"}
 
 # Ques
 WIFI_QUES = [["How many students?", DIGITS]]

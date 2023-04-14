@@ -1,0 +1,24 @@
+---
+#- name: Pull CTFd image
+#  community.docker.docker_image:
+#    name: ctfd/ctfd
+#    source: pull
+#    pull:
+#      platform: amd64
+
+#- name: Pull mysql image
+#  community.docker.docker_image:
+#    name: mysql
+#    source: pull
+#    pull:
+#      platform: amd64
+
+- name: Copy docker-compose to host
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: /root/
+
+- name: Docker-compose up - Shell
+  ansible.builtin.shell:
+    cmd: docker-compose up -d
+    chdir: /root/
