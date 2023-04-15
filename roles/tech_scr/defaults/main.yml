@@ -1,3 +1,45 @@
 ---
 InitialPackages:
   - net-tools
+
+# Admin
+#MySqlPW_Admin: $bcrypt-sha256$v=2,t=2b,r=12$kRhCrgQLv8erKwLjuJ6pre$2e63b/VmIPUsL5ONChqHFv9b9IzDQqu
+MySqlPW_Admin: $bcrypt-sha256$v=2,t=2b,r=12$rKGhqp/E.NjixrzZCQqXzO$M9n3JTyph0Idac7dOkJaRPW47iPoF.G
+MySqlAdd_Admin: INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "admin", "{{ MySqlPW_Admin }}", "admin@admin.com", "admin", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+# User
+MySqlPW_Password: $bcrypt-sha256$v=2,t=2b,r=12$rKGhqp/E.NjixrzZCQqXzO$M9n3JTyph0Idac7dOkJaRPW47iPoF.G
+MySqlAdd_User: INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user", "{{ MySqlPW_Password }}", "user@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+
+
+# Config Setup
+MySql_Setup:
+ - INSERT INTO config (`key`, value) VALUES ("ctf_name", "The Big test")
+ - INSERT INTO config (`key`, value) VALUES ("ctf_description", "Hello there\r\n")
+ - INSERT INTO config (`key`, value) VALUES ("user_mode", "users")
+ - INSERT INTO config (`key`, value) VALUES ("start", "")
+ - INSERT INTO config (`key`, value) VALUES ("end", "")
+ - INSERT INTO config (`key`, value) VALUES ("freeze", NULL)
+ - INSERT INTO config (`key`, value) VALUES ("challenge_visibility", "private")
+ - INSERT INTO config (`key`, value) VALUES ("registration_visibility", "public")
+ - INSERT INTO config (`key`, value) VALUES ("score_visibility", "public")
+ - INSERT INTO config (`key`, value) VALUES ("account_visibility", "public")
+ - INSERT INTO config (`key`, value) VALUES ("verify_emails", NULL)
+ - INSERT INTO config (`key`, value) VALUES ("mail_server", NULL)
+ - INSERT INTO config (`key`, value) VALUES ("mail_port", NULL)
+ - INSERT INTO config (`key`, value) VALUES ("mail_tls", NULL)
+ - INSERT INTO config (`key`, value) VALUES ("mail_ssl", NULL)
+ - INSERT INTO config (`key`, value) VALUES ("mail_username", NULL)
+ - INSERT INTO config (`key`, value) VALUES ("mail_password", NULL)
+ - INSERT INTO config (`key`, value) VALUES ("mail_useauth", NULL)
+ - INSERT INTO config (`key`, value) VALUES ("verification_email_subject", "Confirm your account for {ctf_name}")
+ - INSERT INTO config (`key`, value) VALUES ("verification_email_body", "Welcome to {ctf_name}!\n\nClick the following link to confirm and activate your account:\n{url}\n\nIf the link is not clickable, try copying and pasting it into your browser.")
+ - INSERT INTO config (`key`, value) VALUES ("successful_registration_email_subject", "Successfully registered for {ctf_name}")
+ - INSERT INTO config (`key`, value) VALUES ("successful_registration_email_body", "You\"ve successfully registered for {ctf_name}!")
+ - INSERT INTO config (`key`, value) VALUES ("user_creation_email_subject", "Message from {ctf_name}")
+ - INSERT INTO config (`key`, value) VALUES ("user_creation_email_body", "A new account has been created for you for {ctf_name}")
+ - INSERT INTO config (`key`, value) VALUES ("password_reset_subject", "Password Reset Request from {ctf_name}")
+ - INSERT INTO config (`key`, value) VALUES ("password_reset_body", "Did you initiate a password reset on {ctf_name}? If you didn\"t initiate this request you can ignore this email. \n\nClick the following link to reset your password:\n{url}\n\nIf the link is not clickable, try copying and pasting it into your browser.")
+ - INSERT INTO config (`key`, value) VALUES ("password_change_alert_subject", "Password Change Confirmation for {ctf_name}")
+ - INSERT INTO config (`key`, value) VALUES ("password_change_alert_body", "Your password for {ctf_name} has been changed.")
+ - INSERT INTO config (`key`, value) VALUES ("setup", 1) # 1 means no setup required
+ - INSERT INTO pages (title, route, content, draft, hidden, auth_required, format) VALUES (NULL, "index", FROM_BASE64("PGhlYWQ+CiAgPG1ldGEgaHR0cC1lcXVpdj0icmVmcmVzaCIgY29udGVudD0iMTsgVVJMPS9jaGFsbGVuZ2VzIiAvPgo8L2hlYWQ+Cjxib2R5PgogIDxwPklmIHlvdSBhcmUgbm90IHJlZGlyZWN0ZWQgZ28gdG8sIDxhIGhyZWY9Ii9jaGFsbGVuZ2VzIj5jbGljayBoZXJlPC9hPi48L3A+CjwvYm9keT4="), 0, NULL, NULL, "markdown")

@@ -101,3 +101,326 @@ User
 |  1 |     NULL | admin | $bcrypt-sha256$v=2,t=2b,r=12$rKGhqp/E.NjixrzZCQqXzO$M9n3JTyph0Idac7dOkJaRPW47iPoF.G | admin@admin.com | admin | NULL   | NULL    | NULL        | NULL    | NULL    |      1 |      0 |        0 |    NULL | 2023-04-15 07:43:43.586195 |
 +----+----------+-------+-------------------------------------------------------------------------------------+-----------------+-------+--------+---------+-------------+---------+---------+--------+--------+----------+---------+----------------------------+
 INSERT INTO users (name,password,email,type) VALUES("user1", "$bcrypt-sha256$v=2,t=2b,r=12$rKGhqp/E.NjixrzZCQqXzO$M9n3JTyph0Idac7dOkJaRPW47iPoF.G", "user1@test.com", "user");
+
+
+
+
+mysqld, Version: 5.7.41 (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+2023-04-15T14:15:00.346517Z        12 Query     SHOW VARIABLES LIKE "general_log%"
+2023-04-15T14:15:09.672035Z        12 Quit
+bash-4.2# cat /var/lib/mysql/c37fcae4d208.log
+mysqld, Version: 5.7.41 (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+2023-04-15T14:15:00.346517Z        12 Query     SHOW VARIABLES LIKE "general_log%"
+2023-04-15T14:15:09.672035Z        12 Quit
+bash-4.2# cat /var/lib/mysql/c37fcae4d208.log
+mysqld, Version: 5.7.41 (MySQL Community Server (GPL)). started with:
+Tcp port: 3306  Unix socket: /var/run/mysqld/mysqld.sock
+Time                 Id Command    Argument
+2023-04-15T14:15:00.346517Z        12 Query     SHOW VARIABLES LIKE "general_log%"
+2023-04-15T14:15:09.672035Z        12 Quit
+2023-04-15T14:15:44.473784Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'ctf_name'
+ LIMIT 1
+2023-04-15T14:15:44.477424Z        10 Query     INSERT INTO config (`key`, value) VALUES ('ctf_name', 'I like turtles')
+2023-04-15T14:15:44.479460Z        10 Query     COMMIT
+2023-04-15T14:15:44.485372Z        10 Query     ROLLBACK
+2023-04-15T14:15:44.491733Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'ctf_description'
+ LIMIT 1
+2023-04-15T14:15:44.496210Z        10 Query     INSERT INTO config (`key`, value) VALUES ('ctf_description', 'Hello there\r\n')
+2023-04-15T14:15:44.505578Z        10 Query     COMMIT
+2023-04-15T14:15:44.515178Z        10 Query     ROLLBACK
+2023-04-15T14:15:44.522656Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'user_mode'
+ LIMIT 1
+2023-04-15T14:15:44.529994Z        10 Query     INSERT INTO config (`key`, value) VALUES ('user_mode', 'users')
+2023-04-15T14:15:44.537768Z        10 Query     COMMIT
+2023-04-15T14:15:44.545448Z        10 Query     ROLLBACK
+2023-04-15T14:15:44.551583Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'ctf_theme'
+ LIMIT 1
+2023-04-15T14:15:44.555142Z        10 Query     COMMIT
+2023-04-15T14:15:44.557529Z        10 Query     ROLLBACK
+2023-04-15T14:15:44.564243Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'start'
+ LIMIT 1
+2023-04-15T14:15:44.567915Z        10 Query     INSERT INTO config (`key`, value) VALUES ('start', '')
+2023-04-15T14:15:44.571141Z        10 Query     COMMIT
+2023-04-15T14:15:44.579487Z        10 Query     ROLLBACK
+2023-04-15T14:15:44.585444Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'end'
+ LIMIT 1
+2023-04-15T14:15:44.588142Z        10 Query     INSERT INTO config (`key`, value) VALUES ('end', '')
+2023-04-15T14:15:44.591003Z        10 Query     COMMIT
+2023-04-15T14:15:44.597861Z        10 Query     ROLLBACK
+2023-04-15T14:15:44.604252Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'freeze'
+ LIMIT 1
+2023-04-15T14:15:44.607924Z        10 Query     INSERT INTO config (`key`, value) VALUES ('freeze', NULL)
+2023-04-15T14:15:44.610742Z        10 Query     COMMIT
+2023-04-15T14:15:44.617369Z        10 Query     ROLLBACK
+2023-04-15T14:15:44.645778Z        10 Query     SELECT anon_1.users_id AS anon_1_users_id, anon_1.users_oauth_id AS anon_1_users_oauth_id, anon_1.users_name AS anon_1_users_name, anon_1.users_password AS anon_1_users_password, anon_1.users_email AS anon_1_users_email, anon_1.users_type AS anon_1_users_type, anon_1.users_secret AS anon_1_users_secret, anon_1.users_website AS anon_1_users_website, anon_1.users_affiliation AS anon_1_users_affiliation, anon_1.users_country AS anon_1_users_country, anon_1.users_bracket AS anon_1_users_bracket, anon_1.users_hidden AS anon_1_users_hidden, anon_1.users_banned AS anon_1_users_banned, anon_1.users_verified AS anon_1_users_verified, anon_1.users_team_id AS anon_1_users_team_id, anon_1.users_created AS anon_1_users_created, anon_1.name, anon_1.id, fields_1.id AS fields_1_id, fields_1.name AS fields_1_name, fields_1.type AS fields_1_type, fields_1.field_type AS fields_1_field_type, fields_1.description AS fields_1_description, fields_1.required AS fields_1_required, fields_1.public AS fields_1_public, fields_1.editable AS fields_1_editable, field_entries_1.id AS field_entries_1_id, field_entries_1.type AS field_entries_1_type, field_entries_1.value AS field_entries_1_value, field_entries_1.field_id AS field_entries_1_field_id, field_entries_1.user_id AS field_entries_1_user_id
+FROM (SELECT users.id AS users_id, users.oauth_id AS users_oauth_id, users.name AS users_name, users.password AS users_password, users.email AS users_email, users.type AS users_type, users.secret AS users_secret, users.website AS users_website, users.affiliation AS users_affiliation, users.country AS users_country, users.bracket AS users_bracket, users.hidden AS users_hidden, users.banned AS users_banned, users.verified AS users_verified, users.team_id AS users_team_id, users.created AS users_created, name, id
+FROM users
+WHERE users.name = 'admin'
+ LIMIT 1) AS anon_1 LEFT OUTER JOIN field_entries AS field_entries_1 ON anon_1.users_id = field_entries_1.user_id AND field_entries_1.type IN ('user') LEFT OUTER JOIN `fields` AS fields_1 ON fields_1.id = field_entries_1.field_id
+2023-04-15T14:15:44.670016Z        10 Query     SELECT anon_1.users_id AS anon_1_users_id, anon_1.users_oauth_id AS anon_1_users_oauth_id, anon_1.users_name AS anon_1_users_name, anon_1.users_password AS anon_1_users_password, anon_1.users_email AS anon_1_users_email, anon_1.users_type AS anon_1_users_type, anon_1.users_secret AS anon_1_users_secret, anon_1.users_website AS anon_1_users_website, anon_1.users_affiliation AS anon_1_users_affiliation, anon_1.users_country AS anon_1_users_country, anon_1.users_bracket AS anon_1_users_bracket, anon_1.users_hidden AS anon_1_users_hidden, anon_1.users_banned AS anon_1_users_banned, anon_1.users_verified AS anon_1_users_verified, anon_1.users_team_id AS anon_1_users_team_id, anon_1.users_created AS anon_1_users_created, anon_1.email, anon_1.id, fields_1.id AS fields_1_id, fields_1.name AS fields_1_name, fields_1.type AS fields_1_type, fields_1.field_type AS fields_1_field_type, fields_1.description AS fields_1_description, fields_1.required AS fields_1_required, fields_1.public AS fields_1_public, fields_1.editable AS fields_1_editable, field_entries_1.id AS field_entries_1_id, field_entries_1.type AS field_entries_1_type, field_entries_1.value AS field_entries_1_value, field_entries_1.field_id AS field_entries_1_field_id, field_entries_1.user_id AS field_entries_1_user_id
+FROM (SELECT users.id AS users_id, users.oauth_id AS users_oauth_id, users.name AS users_name, users.password AS users_password, users.email AS users_email, users.type AS users_type, users.secret AS users_secret, users.website AS users_website, users.affiliation AS users_affiliation, users.country AS users_country, users.bracket AS users_bracket, users.hidden AS users_hidden, users.banned AS users_banned, users.verified AS users_verified, users.team_id AS users_team_id, users.created AS users_created, email, id
+FROM users
+WHERE users.email = 'admin@admin.com'
+ LIMIT 1) AS anon_1 LEFT OUTER JOIN field_entries AS field_entries_1 ON anon_1.users_id = field_entries_1.user_id AND field_entries_1.type IN ('user') LEFT OUTER JOIN `fields` AS fields_1 ON fields_1.id = field_entries_1.field_id
+2023-04-15T14:15:45.352179Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'ctf_theme'
+2023-04-15T14:15:45.357194Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'challenge_visibility'
+ LIMIT 1
+2023-04-15T14:15:45.360683Z        10 Query     INSERT INTO config (`key`, value) VALUES ('challenge_visibility', 'private')
+2023-04-15T14:15:45.363888Z        10 Query     COMMIT
+2023-04-15T14:15:45.370932Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.380102Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'registration_visibility'
+ LIMIT 1
+2023-04-15T14:15:45.383681Z        10 Query     INSERT INTO config (`key`, value) VALUES ('registration_visibility', 'public')
+2023-04-15T14:15:45.386863Z        10 Query     COMMIT
+2023-04-15T14:15:45.392754Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.398924Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'score_visibility'
+ LIMIT 1
+2023-04-15T14:15:45.402505Z        10 Query     INSERT INTO config (`key`, value) VALUES ('score_visibility', 'public')
+2023-04-15T14:15:45.404832Z        10 Query     COMMIT
+2023-04-15T14:15:45.412158Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.419333Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'account_visibility'
+ LIMIT 1
+2023-04-15T14:15:45.422901Z        10 Query     INSERT INTO config (`key`, value) VALUES ('account_visibility', 'public')
+2023-04-15T14:15:45.425935Z        10 Query     COMMIT
+2023-04-15T14:15:45.431636Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.437929Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'verify_emails'
+ LIMIT 1
+2023-04-15T14:15:45.441354Z        10 Query     INSERT INTO config (`key`, value) VALUES ('verify_emails', NULL)
+2023-04-15T14:15:45.443850Z        10 Query     COMMIT
+2023-04-15T14:15:45.450591Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.456718Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'mail_server'
+ LIMIT 1
+2023-04-15T14:15:45.460578Z        10 Query     INSERT INTO config (`key`, value) VALUES ('mail_server', NULL)
+2023-04-15T14:15:45.463158Z        10 Query     COMMIT
+2023-04-15T14:15:45.468711Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.480161Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'mail_port'
+ LIMIT 1
+2023-04-15T14:15:45.483074Z        10 Query     INSERT INTO config (`key`, value) VALUES ('mail_port', NULL)
+2023-04-15T14:15:45.485129Z        10 Query     COMMIT
+2023-04-15T14:15:45.491567Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.497938Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'mail_tls'
+ LIMIT 1
+2023-04-15T14:15:45.501350Z        10 Query     INSERT INTO config (`key`, value) VALUES ('mail_tls', NULL)
+2023-04-15T14:15:45.503339Z        10 Query     COMMIT
+2023-04-15T14:15:45.508217Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.513697Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'mail_ssl'
+ LIMIT 1
+2023-04-15T14:15:45.516236Z        10 Query     INSERT INTO config (`key`, value) VALUES ('mail_ssl', NULL)
+2023-04-15T14:15:45.518251Z        10 Query     COMMIT
+2023-04-15T14:15:45.528237Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.537907Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'mail_username'
+ LIMIT 1
+2023-04-15T14:15:45.541380Z        10 Query     INSERT INTO config (`key`, value) VALUES ('mail_username', NULL)
+2023-04-15T14:15:45.543888Z        10 Query     COMMIT
+2023-04-15T14:15:45.551236Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.556849Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'mail_password'
+ LIMIT 1
+2023-04-15T14:15:45.560375Z        10 Query     INSERT INTO config (`key`, value) VALUES ('mail_password', NULL)
+2023-04-15T14:15:45.563140Z        10 Query     COMMIT
+2023-04-15T14:15:45.570458Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.577538Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'mail_useauth'
+ LIMIT 1
+2023-04-15T14:15:45.581264Z        10 Query     INSERT INTO config (`key`, value) VALUES ('mail_useauth', NULL)
+2023-04-15T14:15:45.583637Z        10 Query     COMMIT
+2023-04-15T14:15:45.588670Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.593340Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'verification_email_subject'
+ LIMIT 1
+2023-04-15T14:15:45.595538Z        10 Query     INSERT INTO config (`key`, value) VALUES ('verification_email_subject', 'Confirm your account for {ctf_name}')
+2023-04-15T14:15:45.596847Z        10 Query     COMMIT
+2023-04-15T14:15:45.601435Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.606162Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'verification_email_body'
+ LIMIT 1
+2023-04-15T14:15:45.608634Z        10 Query     INSERT INTO config (`key`, value) VALUES ('verification_email_body', 'Welcome to {ctf_name}!\n\nClick the following link to confirm and activate your account:\n{url}\n\nIf the link is not clickable, try copying and pasting it into your browser.')
+2023-04-15T14:15:45.611081Z        10 Query     COMMIT
+2023-04-15T14:15:45.615915Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.619823Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'successful_registration_email_subject'
+ LIMIT 1
+2023-04-15T14:15:45.621829Z        10 Query     INSERT INTO config (`key`, value) VALUES ('successful_registration_email_subject', 'Successfully registered for {ctf_name}')
+2023-04-15T14:15:45.624009Z        10 Query     COMMIT
+2023-04-15T14:15:45.630880Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.637592Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'successful_registration_email_body'
+ LIMIT 1
+2023-04-15T14:15:45.640758Z        10 Query     INSERT INTO config (`key`, value) VALUES ('successful_registration_email_body', 'You\'ve successfully registered for {ctf_name}!')
+2023-04-15T14:15:45.643383Z        10 Query     COMMIT
+2023-04-15T14:15:45.649817Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.655333Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'user_creation_email_subject'
+ LIMIT 1
+2023-04-15T14:15:45.658400Z        10 Query     INSERT INTO config (`key`, value) VALUES ('user_creation_email_subject', 'Message from {ctf_name}')
+2023-04-15T14:15:45.660450Z        10 Query     COMMIT
+2023-04-15T14:15:45.666824Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.673350Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'user_creation_email_body'
+ LIMIT 1
+2023-04-15T14:15:45.675751Z        10 Query     INSERT INTO config (`key`, value) VALUES ('user_creation_email_body', 'A new account has been created for you for {ctf_name} at {url}. \n\nUsername: {name}\nPassword: {password}')
+2023-04-15T14:15:45.677721Z        10 Query     COMMIT
+2023-04-15T14:15:45.681230Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.685903Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'password_reset_subject'
+ LIMIT 1
+2023-04-15T14:15:45.689595Z        10 Query     INSERT INTO config (`key`, value) VALUES ('password_reset_subject', 'Password Reset Request from {ctf_name}')
+2023-04-15T14:15:45.691939Z        10 Query     COMMIT
+2023-04-15T14:15:45.703990Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.710794Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'password_reset_body'
+ LIMIT 1
+2023-04-15T14:15:45.714570Z        10 Query     INSERT INTO config (`key`, value) VALUES ('password_reset_body', 'Did you initiate a password reset on {ctf_name}? If you didn\'t initiate this request you can ignore this email. \n\nClick the following link to reset your password:\n{url}\n\nIf the link is not clickable, try copying and pasting it into your browser.')
+2023-04-15T14:15:45.716922Z        10 Query     COMMIT
+2023-04-15T14:15:45.723674Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.730482Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'password_change_alert_subject'
+ LIMIT 1
+2023-04-15T14:15:45.733634Z        10 Query     INSERT INTO config (`key`, value) VALUES ('password_change_alert_subject', 'Password Change Confirmation for {ctf_name}')
+2023-04-15T14:15:45.736079Z        10 Query     COMMIT
+2023-04-15T14:15:45.742811Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.749579Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'password_change_alert_body'
+ LIMIT 1
+2023-04-15T14:15:45.754311Z        10 Query     INSERT INTO config (`key`, value) VALUES ('password_change_alert_body', 'Your password for {ctf_name} has been changed.\n\nIf you didn\'t request a password change you can reset your password here: {url}')
+2023-04-15T14:15:45.756789Z        10 Query     COMMIT
+2023-04-15T14:15:45.763905Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.769631Z        10 Query     SELECT config.id AS config_id, config.`key` AS config_key, config.value AS config_value
+FROM config
+WHERE config.`key` = 'setup'
+ LIMIT 1
+2023-04-15T14:15:45.773124Z        10 Query     INSERT INTO config (`key`, value) VALUES ('setup', 1)
+2023-04-15T14:15:45.775515Z        10 Query     COMMIT
+2023-04-15T14:15:45.781520Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.792107Z        10 Query     INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES (NULL, 'admin', '$bcrypt-sha256$v=2,t=2b,r=12$0ks0ir9GhPx2a8LvtqLKeu$2bdsE6jHZceFforZ3FQgECNatmtUHgC', 'admin@admin.com', 'admin', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, '2023-04-15 14:15:45.788724')
+2023-04-15T14:15:45.796817Z        10 Query     COMMIT
+2023-04-15T14:15:45.804399Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.810832Z        10 Query     INSERT INTO pages (title, route, content, draft, hidden, auth_required, format) VALUES (NULL, 'index', '<div class=\"row\">\n    <div class=\"col-md-6 offset-md-3\">\n        <img class=\"w-100 mx-auto d-block\" style=\"max-width: 500px;padding: 50px;padding-top: 14vh;\" src=\"/themes/core/static/img/logo.png?d=938e0ec4\" />\n        <h3 class=\"text-center\">\n            <p>A cool CTF platform from <a href=\"https://ctfd.io\">ctfd.io</a></p>\n            <p>Follow us on social media:</p>\n            <a href=\"https://twitter.com/ctfdio\"><i class=\"fab fa-twitter fa-2x\" aria-hidden=\"true\"></i></a>&nbsp;\n            <a href=\"https://facebook.com/ctfdio\"><i class=\"fab fa-facebook fa-2x\" aria-hidden=\"true\"></i></a>&nbsp;\n            <a href=\"https://github.com/ctfd\"><i class=\"fab fa-github fa-2x\" aria-hidden=\"true\"></i></a>\n        </h3>\n        <br>\n        <h4 class=\"text-center\">\n            <a href=\"admin\">Click here</a> to login and setup your CTF\n        </h4>\n    </div>\n</div>', 0, NULL, NULL, 'markdown')
+2023-04-15T14:15:45.813550Z        10 Query     COMMIT
+2023-04-15T14:15:45.819623Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.829437Z        10 Query     SELECT users.id AS users_id, users.oauth_id AS users_oauth_id, users.name AS users_name, users.password AS users_password, users.email AS users_email, users.type AS users_type, users.secret AS users_secret, users.website AS users_website, users.affiliation AS users_affiliation, users.country AS users_country, users.bracket AS users_bracket, users.hidden AS users_hidden, users.banned AS users_banned, users.verified AS users_verified, users.team_id AS users_team_id, users.created AS users_created
+FROM users
+WHERE users.id = 1 AND users.type IN ('admin')
+2023-04-15T14:15:45.837393Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.865353Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'setup'
+2023-04-15T14:15:45.873126Z        10 Query     SELECT DISTINCT tracking.ip AS anon_1
+FROM tracking
+WHERE tracking.user_id = 1 AND tracking.date >= '2023-04-15 13:15:45.869879'
+2023-04-15T14:15:45.881201Z        10 Query     SELECT tracking.id AS tracking_id, tracking.type AS tracking_type, tracking.ip AS tracking_ip, tracking.user_id AS tracking_user_id, tracking.date AS tracking_date
+FROM tracking
+WHERE tracking.ip = '192.168.189.1' AND tracking.user_id = 1
+ LIMIT 1
+2023-04-15T14:15:45.888557Z        10 Query     INSERT INTO tracking (type, ip, user_id, date) VALUES (NULL, '192.168.189.1', 1, '2023-04-15 14:15:45.886302')
+2023-04-15T14:15:45.892217Z        10 Query     COMMIT
+2023-04-15T14:15:45.900126Z        10 Query     ROLLBACK
+2023-04-15T14:15:45.921331Z        10 Query     SELECT anon_1.users_id AS anon_1_users_id, anon_1.users_oauth_id AS anon_1_users_oauth_id, anon_1.users_name AS anon_1_users_name, anon_1.users_password AS anon_1_users_password, anon_1.users_email AS anon_1_users_email, anon_1.users_type AS anon_1_users_type, anon_1.users_secret AS anon_1_users_secret, anon_1.users_website AS anon_1_users_website, anon_1.users_affiliation AS anon_1_users_affiliation, anon_1.users_country AS anon_1_users_country, anon_1.users_bracket AS anon_1_users_bracket, anon_1.users_hidden AS anon_1_users_hidden, anon_1.users_banned AS anon_1_users_banned, anon_1.users_verified AS anon_1_users_verified, anon_1.users_team_id AS anon_1_users_team_id, anon_1.users_created AS anon_1_users_created, fields_1.id AS fields_1_id, fields_1.name AS fields_1_name, fields_1.type AS fields_1_type, fields_1.field_type AS fields_1_field_type, fields_1.description AS fields_1_description, fields_1.required AS fields_1_required, fields_1.public AS fields_1_public, fields_1.editable AS fields_1_editable, field_entries_1.id AS field_entries_1_id, field_entries_1.type AS field_entries_1_type, field_entries_1.value AS field_entries_1_value, field_entries_1.field_id AS field_entries_1_field_id, field_entries_1.user_id AS field_entries_1_user_id
+FROM (SELECT users.id AS users_id, users.oauth_id AS users_oauth_id, users.name AS users_name, users.password AS users_password, users.email AS users_email, users.type AS users_type, users.secret AS users_secret, users.website AS users_website, users.affiliation AS users_affiliation, users.country AS users_country, users.bracket AS users_bracket, users.hidden AS users_hidden, users.banned AS users_banned, users.verified AS users_verified, users.team_id AS users_team_id, users.created AS users_created
+FROM users
+WHERE users.id = 1
+ LIMIT 1) AS anon_1 LEFT OUTER JOIN field_entries AS field_entries_1 ON anon_1.users_id = field_entries_1.user_id AND field_entries_1.type IN ('user') LEFT OUTER JOIN `fields` AS fields_1 ON fields_1.id = field_entries_1.field_id
+2023-04-15T14:15:45.933667Z        10 Query     SELECT pages.id, pages.title, pages.route, pages.content, pages.draft, pages.hidden, pages.auth_required, pages.format
+FROM pages
+WHERE pages.route = 'index' AND pages.draft IS NOT true
+2023-04-15T14:15:45.939920Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'ctf_name'
+2023-04-15T14:15:45.944660Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'ctf_description'
+2023-04-15T14:15:45.950144Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'start'
+2023-04-15T14:15:45.955319Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'end'
+2023-04-15T14:15:45.960014Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'freeze'
+2023-04-15T14:15:45.965412Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'ctf_theme'
+2023-04-15T14:15:45.976487Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'ctf_small_icon'
+2023-04-15T14:15:45.984101Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'user_mode'
+2023-04-15T14:15:45.994173Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'theme_settings'
+2023-04-15T14:15:45.999747Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'theme_header'
+2023-04-15T14:15:46.005832Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'ctf_logo'
+2023-04-15T14:15:46.012103Z        10 Query     SELECT pages.id AS pages_id, pages.title AS pages_title, pages.route AS pages_route, pages.content AS pages_content, pages.draft AS pages_draft, pages.hidden AS pages_hidden, pages.auth_required AS pages_auth_required, pages.format AS pages_format
+FROM pages
+WHERE pages.route != 'index' AND pages.draft IS NOT true AND pages.hidden IS NOT true
+2023-04-15T14:15:46.017577Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'account_visibility'
+2023-04-15T14:15:46.023714Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'score_visibility'
+2023-04-15T14:15:46.034123Z        10 Query     SELECT config.id, config.`key`, config.value
+FROM config
+WHERE config.`key` = 'theme_footer'
+2023-04-15T14:15:46.038369Z        10 Query     ROLLBACK
+2023-04-15T14:15:46.304141Z        10 Query     SELECT DISTINCT tracking.ip AS anon_1
+FROM tracking
+WHERE tracking.user_id = 1 AND tracking.date >= '2023-04-15 13:15:46.300670'

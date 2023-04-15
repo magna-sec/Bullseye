@@ -1,18 +1,4 @@
 ---
-#- name: Pull CTFd image
-#  community.docker.docker_image:
-#    name: ctfd/ctfd
-#    source: pull
-#    pull:
-#      platform: amd64
-
-#- name: Pull mysql image
-#  community.docker.docker_image:
-#    name: mysql
-#    source: pull
-#    pull:
-#      platform: amd64
-
 - name: Copy docker-compose to host
   ansible.builtin.copy:
     src: docker-compose.yml
@@ -22,3 +8,11 @@
   ansible.builtin.shell:
     cmd: docker-compose up -d
     chdir: /root/
+
+- name: Sleep for 30 seconds to allow Dockers to come up
+  ansible.builtin.wait_for:
+    timeout: 30
+
+- name: Sleep for 30 seconds to allow CTFd to populate MySql
+  ansible.builtin.wait_for:
+    timeout: 30

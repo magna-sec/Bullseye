@@ -2,3 +2,4 @@
 - include_tasks: docker_install.yml
 # https://anuragmewar.medium.com/hosting-a-ctf-using-docker-248ecf9f904f
 - include_tasks: docker.yml
+- include_tasks: mysql.yml

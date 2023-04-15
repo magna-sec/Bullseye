@@ -1,3 +1,18 @@
 ---
+- name: Add admin user
+  community.docker.docker_container_exec:
+    container: root-db-1
+    argv:
+      - /bin/bash
+      - "-c"
+      - "mysql -u root -pctfd -D ctfd -e '{{ MySqlAdd_Admin }};'"
 
+- name: Setup MySql for CTFd
+  community.docker.docker_container_exec:
+    container: root-db-1
+    argv:
+      - /bin/bash
+      - "-c"
+      - "mysql -u ctfd -pctfd -D ctfd -e '{{ item }};'"
+  loop: "{{ MySql_Setup }}"
 

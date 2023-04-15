@@ -1,0 +1,31 @@
+# Challenge Ideas
+# ----- NETWORKING -----
+# CISCO - CSR1000v? -> SSH open TESTBOT -> check configs -> send token to user
+# Subnets
+# VLANS
+# DHCP pool
+# Accounts
+# Ports
+# TCP/UDP
+# Wireshark Investigate
+# VLAN on CISCO
+# ----- ADMIN -----
+# SSH/WINRM open -> Check output -> send token
+# Linux/Windows - Create users
+# Linux/Windows - chmod/acl/permissions
+# ----- Scripting -----
+# Linux - bash scripting
+# Windows - Powershell
+# ----- WiFi -----
+# Questions/Answers
+# WPA/2 Fundamentals
+# WEP Fundamentals
+# Hacking WiFi
+# ----- Cracking -----
+# Answers
+# Make wordlist
+# Cracking password
+# ----- Crypt -----
+# Answers
+# Encrypt string
+# Decrypt string

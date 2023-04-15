@@ -33,9 +33,16 @@
       - docker-compose-plugin
       - containerd.io
 
+# NEED TO PUT IN A CHECK FOR DOCKER-COMPOSE
+- name: Get stats of a file
+  ansible.builtin.stat:
+    path: /usr/local/bin/docker-compose
+  register: file_stats
+
 - name: Install docker-compose - Shell
   ansible.builtin.shell: |
     curl -L https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
+  when: not file_stats.stat.exists
 
 
