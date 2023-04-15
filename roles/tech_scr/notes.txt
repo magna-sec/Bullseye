@@ -1,0 +1,103 @@
+CONFIG BEFORE:
++----+------------------------------------+--------------+
+| id | key                                | value        |
++----+------------------------------------+--------------+
+|  1 | ctf_version                        | 3.5.1        |
+|  2 | ctf_theme                          | core         |
+|  3 | dynamic_challenges_alembic_version | b37fb68807ea |
++----+------------------------------------+--------------+
+
+CONFIG AFTER:
++----+---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| id | key                                   | value
+                                                                                                                                         |
++----+---------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|  1 | ctf_version                           | 3.5.1
+                                                                                                                                         |
+|  2 | ctf_theme                             | core
+                                                                                                                                         |
+|  3 | dynamic_challenges_alembic_version    | b37fb68807ea
+                                                                                                                                         |
+|  4 | ctf_name                              | FindMe
+                                                                                                                                         |
+|  5 | ctf_description                       | Yeah find this too yeah?
+                                                                                                                                         |
+|  6 | user_mode                             | users
+                                                                                                                                         |
+|  7 | start                                 |
+                                                                                                                                         |
+|  8 | end                                   |
+                                                                                                                                         |
+|  9 | freeze                                | NULL
+                                                                                                                                         |
+| 10 | challenge_visibility                  | private
+                                                                                                                                         |
+| 11 | registration_visibility               | public
+                                                                                                                                         |
+| 12 | score_visibility                      | public
+                                                                                                                                         |
+| 13 | account_visibility                    | public
+                                                                                                                                         |
+| 14 | verify_emails                         | NULL
+                                                                                                                                         |
+| 15 | mail_server                           | NULL
+                                                                                                                                         |
+| 16 | mail_port                             | NULL
+                                                                                                                                         |
+| 17 | mail_tls                              | NULL
+                                                                                                                                         |
+| 18 | mail_ssl                              | NULL
+                                                                                                                                         |
+| 19 | mail_username                         | NULL
+                                                                                                                                         |
+| 20 | mail_password                         | NULL
+                                                                                                                                         |
+| 21 | mail_useauth                          | NULL
+                                                                                                                                         |
+| 22 | verification_email_subject            | Confirm your account for {ctf_name}
+                                                                                                                                         |
+| 23 | verification_email_body               | Welcome to {ctf_name}!
+
+Click the following link to confirm and activate your account:
+{url}
+
+If the link is not clickable, try copying and pasting it into your browser.                                                                             |
+| 24 | successful_registration_email_subject | Successfully registered for {ctf_name}
+                                                                                                                                         |
+| 25 | successful_registration_email_body    | You've successfully registered for {ctf_name}!
+                                                                                                                                         |
+| 26 | user_creation_email_subject           | Message from {ctf_name}
+                                                                                                                                         |
+| 27 | user_creation_email_body              | A new account has been created for you for {ctf_name} at {url}.
+
+Username: {name}
+Password: {password}
+       |
+| 28 | password_reset_subject                | Password Reset Request from {ctf_name}
+                                                                                                                                         |
+| 29 | password_reset_body                   | Did you initiate a password reset on {ctf_name}? If you didn't initiate this request you can ignore this email.
+
+Click the following link to reset your password:
+{url}
+
+If the link is not clickable, try copying and pasting it into your browser. |
+| 30 | password_change_alert_subject         | Password Change Confirmation for {ctf_name}
+                                                                                                                                         |
+| 31 | password_change_alert_body            | Your password for {ctf_name} has been changed.
+
+If you didn't request a password change you can reset your password here: {url}
+                                          |
+| 32 | setup                                 | 1
+                                                                                                                                         |
+| 33 | version_latest                        | NULL
+                                                                                                                                         |
+| 34 | next_update_check                     | 1681587829
+                                                                                                                                         |
+#####################################################
+User 
++----+----------+-------+-------------------------------------------------------------------------------------+-----------------+-------+--------+---------+-------------+---------+---------+--------+--------+----------+---------+----------------------------+
+| id | oauth_id | name  | password                                                                            | email           | type  | secret | website | affiliation | country | bracket | hidden | banned | verified | team_id | created                    |
++----+----------+-------+-------------------------------------------------------------------------------------+-----------------+-------+--------+---------+-------------+---------+---------+--------+--------+----------+---------+----------------------------+
+|  1 |     NULL | admin | $bcrypt-sha256$v=2,t=2b,r=12$rKGhqp/E.NjixrzZCQqXzO$M9n3JTyph0Idac7dOkJaRPW47iPoF.G | admin@admin.com | admin | NULL   | NULL    | NULL        | NULL    | NULL    |      1 |      0 |        0 |    NULL | 2023-04-15 07:43:43.586195 |
++----+----------+-------+-------------------------------------------------------------------------------------+-----------------+-------+--------+---------+-------------+---------+---------+--------+--------+----------+---------+----------------------------+
+INSERT INTO users (name,password,email,type) VALUES("user1", "$bcrypt-sha256$v=2,t=2b,r=12$rKGhqp/E.NjixrzZCQqXzO$M9n3JTyph0Idac7dOkJaRPW47iPoF.G", "user1@test.com", "user");
