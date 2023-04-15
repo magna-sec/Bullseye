@@ -1,6 +1,7 @@
 # Challenge Ideas
 # ----- NETWORKING -----
-# CISCO - CSR1000v? -> SSH open TESTBOT -> check configs -> send token to user
+# CISCO - CSR1000v -> SSH open TESTBOT -> check configs -> send token to user
+# OR PACKET TRACER DOWNLOADS THAT GIVE CODES!?!?! IVE SEEN THIS BEFORE?!?
 # Subnets
 # VLANS
 # DHCP pool
@@ -9,23 +10,39 @@
 # TCP/UDP
 # Wireshark Investigate
 # VLAN on CISCO
+
 # ----- ADMIN -----
 # SSH/WINRM open -> Check output -> send token
 # Linux/Windows - Create users
 # Linux/Windows - chmod/acl/permissions
+
 # ----- Scripting -----
 # Linux - bash scripting
 # Windows - Powershell
+
 # ----- WiFi -----
 # Questions/Answers
 # WPA/2 Fundamentals
 # WEP Fundamentals
 # Hacking WiFi
+
 # ----- Cracking -----
 # Answers
 # Make wordlist
 # Cracking password
+
 # ----- Crypt -----
 # Answers
 # Encrypt string
 # Decrypt string
+
+
+
+# ----- VMs -----
+# Ubuntu - CTFd/MySql
+# Ubuntu - WiFi Hacking
+# Ubuntu - Administration/bash
+# Windows - Administration/powershell
+# CISCO CSR1000v - Networking
+# 3x Ubuntu, 1x Windows, 1x Cisco CSR1000v
+# 5 VMs

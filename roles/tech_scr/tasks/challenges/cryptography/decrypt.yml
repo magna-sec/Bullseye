@@ -1,0 +1,31 @@
+---
+- name: Set question and answer
+  ansible.builtin.set_fact:
+    question_name: "String Decryption"
+    decrypted: ILikeTurtles
+    encrypted: U2FsdGVkX1+vE40fYsRxkkA8Ubm3+eAFYvtGLZTQlN8=
+    type: 3DES
+
+- name: Set MySQL statements
+  ansible.builtin.set_fact:
+    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "Use {{ type }} to decrypt the following string \r\n {{ encrypted }} \r\n Make sure to use '-pbkdf2'", 0, 5, "cryptography", "standard", "visible", NULL, NULL, NULL)
+    answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ decrypted }}", "")
+
+- name: Put challenge into CTFd
+  community.docker.docker_container_exec:
+    container: root-db-1
+    argv:
+      - /bin/bash
+      - "-c"
+      - "mysql -u ctfd -pctfd -D ctfd -e '{{ challenge }};'"
+
+- name: Put flag into CTFd
+  community.docker.docker_container_exec:
+    container: root-db-1
+    argv:
+      - /bin/bash
+      - "-c"
+      - "mysql -u ctfd -pctfd -D ctfd -e '{{ answer_flag }};'"
+
+# echo -n "hellothere" | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword
+# echo "U2FsdGVkX1+x2JIRVf04ppVKudXBukdtUYziRNgnCBg=" | base64 --decode | openssl enc -pbkdf2 -des3 -d -pass pass:mysecretpassword
