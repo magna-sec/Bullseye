@@ -2,8 +2,8 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "String Decryption"
-    decrypted: ILikeTurtles
-    encrypted: U2FsdGVkX1+vE40fYsRxkkA8Ubm3+eAFYvtGLZTQlN8=
+    decrypted: compulsatively
+    encrypted: U2FsdGVkX19DHkzPRF4r5Ulo3x4W4XbUYubQGKd9t7s=
     type: 3DES
 
 - name: Set MySQL statements

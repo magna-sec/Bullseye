@@ -1,12 +1,21 @@
 #!/usr/bin/python3
+import random
+import sys
+import yaml
 from termcolor import colored
 
 # Purely to hide that ugly CTRL+C output
 import signal
-import sys
+import subprocess
 signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 # Purely to hide that ugly CTRL+C output
 
+# SCR Variables
+WORD_LIST = "words.txt"
+CHALLENGE_ENCRYPTED = "roles/tech_scr/tasks/challenges/cryptography/encrypt.yml"
+CHALLENGE_DECRYPTED = "roles/tech_scr/tasks/challenges/cryptography/decrypt.yml"
+ENCRYPT_TYPES = ["AES256"]
+DECRYPT_TYPES = ["3DES", "AES56"]
 # Checks
 COLOURS = ["black","blue","cyan","dark_grey","green","light_blue","light_cyan","light_green","light_grey","light_magenta","light_red","light_yellow","magenta","red","white","yellow"]
 DIGITS = ["0","1","2","3","4","5","6","7","8","9"] # Sure theres a better way than this
@@ -33,6 +42,51 @@ TRAINING = {"1":"WiFi", "2":"Tech SCR - COMING SOON", "3":"Radio - COMING SOON"}
 # Ques
 WIFI_QUES = [["How many students?", DIGITS]]
 
+
+class Scr:
+    def __init__(self):
+        self.init_encrypt()
+        self.init_decrypt()
+
+    def edit_cryptography(self, encrypted, decrypted, file_path):
+        # Using readlines()
+        file1 = open(file_path, 'r')
+        Lines = file1.readlines()
+ 
+        # Strips the newline character
+        for line in Lines:
+            if("decrypted: " in line):
+                index = Lines.index(line)
+                Lines[index] = "    decrypted: " + decrypted
+            if("encrypted: " in line):
+                print("HI")
+                index = Lines.index(line)
+                Lines[index] = "    encrypted: " + encrypted + "\n"        
+        
+        file1 = open(file_path, 'w')
+        file1.writelines(Lines)
+        file1.close()
+
+    # echo -n "hellothere" | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword
+    def init_encrypt(self):
+        random_word = random.choice(open(WORD_LIST).readlines())
+
+        command = f'echo -n "{random_word}"  | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword'
+        encrypted = subprocess.check_output(command, shell=True).decode('utf-8').strip()
+
+        self.edit_cryptography(encrypted, random_word, CHALLENGE_ENCRYPTED)
+        
+
+    # echo "U2FsdGVkX1+x2JIRVf04ppVKudXBukdtUYziRNgnCBg=" | base64 --decode | openssl enc -pbkdf2 -des3 -d -pass pass:mysecretpassword
+    def init_decrypt(self):
+        random_word = random.choice(open(WORD_LIST).readlines())
+        
+        command = f'echo -n "{random_word}"  | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword'
+        encrypted = subprocess.check_output(command, shell=True).decode('utf-8').strip()
+
+        self.edit_cryptography(encrypted, random_word, CHALLENGE_DECRYPTED)
+
+
 class Que:
     def __init__(self, question):
         self.question = question[0]
@@ -45,8 +99,6 @@ class Que:
             print(colored(self.question, 'green'), end = "")
             print(colored(": ", 'white'), end = "")
             self.choice = input()    
-
-
 
 class Menu:
     def __init__(self, menu_list, possibles):
@@ -84,6 +136,7 @@ def start():
         if main_menu.choice == "1":
             training_menu = Menu(TRAINING, DIGITS)
             if(training_menu.choice == "1"): wifi_que = Que(WIFI_QUES[0])
+            if(training_menu.choice == "2"): scr_exam = Scr()
         if main_menu.choice == "2":
             print("COMING SOON")
         if main_menu.choice == "3":
