@@ -2,8 +2,8 @@
 # 0-19: Users
 # 20-29: APs
 # 30-39: Fake Users for APs
-AmountOfInterfaces: 40
 AmountOfUsers: 20
+AmountOfInterfaces: "{{ AmountOfUsers * 2 }}"
 AmountOfAPs: "{{ (AmountOfInterfaces - AmountOfUsers) / 2 }}" # 50/50 AP/Clients hence /2
 AmountOfClients: "{{ AmountOfAPs }}"
 
