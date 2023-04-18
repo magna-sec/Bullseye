@@ -2,6 +2,8 @@
 import random
 import sys
 import yaml
+import zlib
+import os
 from termcolor import colored
 
 # Purely to hide that ugly CTRL+C output
@@ -42,11 +44,82 @@ TRAINING = {"1":"WiFi", "2":"Tech SCR - COMING SOON", "3":"Radio - COMING SOON"}
 # Ques
 WIFI_QUES = [["How many students?", DIGITS]]
 
+class PacketTracer:
+    def __init__(self):
+        self.decrypt_file("temp.xml")
+        self.edit_xml("temp.xml", "ILikTurtles")
+        self.encrypt_file("temp.xml")
+
+    def decrypt_file(self, pt_xml):
+        pt_file = "lab3.pka"
+
+        with open(pt_file, 'rb') as f:
+                in_data = bytearray(f.read())
+
+        i_size = len(in_data)
+        
+        out = bytearray()
+        # Decrypting each byte with decreasing file length
+        for byte in in_data:
+            out.append((byte ^ i_size).to_bytes(4, "little")[0])
+            i_size = i_size - 1
+        
+        # We decompress the file without the 4 first bytes
+        with open(pt_xml, 'wb') as f:
+            f.write(zlib.decompress(out[4:]))
+
+    def edit_xml(self, pt_xml, flag):
+        new_flag = f'<OVERALL_COMPLETE_FEEDBACK translate="true" >Congrations! Flag: {flag}</OVERALL_COMPLETE_FEEDBACK>'
+       # new_pass = '<ACTIVITY PASS="562ff3291f31f5361793053485dac7a0" FORWARD_ANS_SIM_MS="0" TIMERTYPE="0" ENABLED="yes" COUNTDOWNMS="10000" >\n' # [][]HelloThere[][]
+        file1 = open(pt_xml, 'r')
+        Lines = file1.readlines()
+ 
+        # Strips the newline character
+        for line in Lines:
+            if("OVERALL_COMPLETE_FEEDBACK" in line):
+                index = Lines.index(line)
+                Lines[index] = new_flag
+
+
+        file1 = open(pt_xml, 'w')
+        file1.writelines(Lines)
+        file1.close()
+
+
+    def encrypt_file(self, pt_xml):
+        pt_new = "lab3_mod.pkt"
+        with open(pt_xml, 'rb') as f:
+            in_data = bytearray(f.read())
+
+        i_size = len(in_data)
+
+        # Convert uncompressed size to bytes
+        i_size = i_size.to_bytes(4, 'big')
+
+        # Compress the file and add the uncompressed size
+        out_data = zlib.compress(in_data)
+        out_data = i_size + out_data
+        o_size = len(out_data)
+
+        xor_out = bytearray()
+        # Encrypting each byte with decreasing file length
+        for byte in out_data:
+            xor_out.append((byte ^ o_size).to_bytes(4, "little")[0])
+            o_size = o_size - 1
+
+        # We decompress the file without the 4 first bytes
+        with open(pt_new, 'wb') as f:
+            f.write(xor_out)
+        
+        os.remove(pt_xml)
+
+
 
 class Scr:
     def __init__(self):
-        self.init_encrypt()
-        self.init_decrypt()
+        convert_pt = PacketTracer()
+        #self.init_encrypt()
+        #self.init_decrypt()
 
     def edit_cryptography(self, encrypted, decrypted, file_path):
         # Using readlines()
@@ -85,7 +158,6 @@ class Scr:
         encrypted = subprocess.check_output(command, shell=True).decode('utf-8').strip()
 
         self.edit_cryptography(encrypted, random_word, CHALLENGE_DECRYPTED)
-
 
 class Que:
     def __init__(self, question):
