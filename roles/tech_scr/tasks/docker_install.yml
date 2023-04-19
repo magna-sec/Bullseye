@@ -1,9 +1,6 @@
 ---
 - name: Install Docker required packages
   apt:
-    cache_valid_time: 3600
-    update_cache: yes
-    state: latest
     pkg:
       - ca-certificates
       - curl
@@ -25,8 +22,6 @@
 
 - name: Install docker
   apt:
-    update_cache: yes
-    state: latest
     pkg:
       - docker-ce
       - docker-ce-cli

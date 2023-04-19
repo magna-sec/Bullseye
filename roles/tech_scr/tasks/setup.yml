@@ -13,3 +13,21 @@
     name: "{{ item }}"
     state: present
   loop: "{{ InitialPackages }}"
+
+- name: Creates directory /ctf_logs for CTFd
+  file:
+    path: /ctf_logs
+    state: directory
+    mode: "0666"
+
+- name: Creates directory /ctf_uploads for CTFd
+  file:
+    path: /ctf_uploads
+    state: directory
+    mode: "0666"
+
+- name: Creates directory /ctf_uploads for CTFd
+  file:
+    path: /ctf_uploads/packettracer
+    state: directory
+    mode: "0666"

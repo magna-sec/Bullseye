@@ -17,8 +17,10 @@ signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 WORD_LIST = "words.txt"
 CHALLENGE_ENCRYPTED = "roles/tech_scr/tasks/challenges/cryptography/encrypt.yml"
 CHALLENGE_DECRYPTED = "roles/tech_scr/tasks/challenges/cryptography/decrypt.yml"
+CHALLENGE_PACKETTRACER = "roles/tech_scr/tasks/challenges/networking/packettracer.yml"
+
 ENCRYPT_TYPES = ["AES256"]
-DECRYPT_TYPES = ["3DES", "AES56"]
+DECRYPT_TYPES = ["3DES", "AES256"]
 # Checks
 COLOURS = ["black","blue","cyan","dark_grey","green","light_blue","light_cyan","light_green","light_grey","light_magenta","light_red","light_yellow","magenta","red","white","yellow"]
 DIGITS = ["0","1","2","3","4","5","6","7","8","9"] # Sure theres a better way than this
@@ -47,47 +49,113 @@ WIFI_QUES = [["How many students?", DIGITS]]
 
 class PacketTracer:
     def __init__(self):
+        # Variables
         self.random_file = random.choice(os.listdir("PacketTracer")) 
-        self.decrypt_file("PacketTracer/temp.xml")
-        self.edit_xml("PacketTracer/temp.xml", "ILikTurtles")
-        self.encrypt_file("PacketTracer/temp.xml")
+        print("FILE: " + self.random_file)
+        self.flag = random.choice(open(WORD_LIST).readlines())
+        self.pt_file = "PacketTracer/" + self.random_file
+        self.pt_xml = "PacketTracer/temp.xml"
 
-    def decrypt_file(self, pt_xml):
-        pt_file = "PacketTracer/" + self.random_file
+        # Functions
+        self.decrypt_file()
+        self.edit_xml()
+        self.encrypt_file()
+        self.edit_ansible(CHALLENGE_PACKETTRACER)
+        
 
+    def decrypt_file(self):
+        try:
+            command = f"./pka2xml -d {self.pt_file} {self.pt_xml} 2>/dev/null"
+            subprocess.check_output(command, shell=True)
+        except:
+            with open(self.pt_file, 'rb') as f:
+                in_data = bytearray(f.read())
 
-        #command = f"./pka2xml -d {pt_file} {pt_xml}"
-        command = f"python3 ptexplorer.py -d {pt_file} {pt_xml}"
-        subprocess.check_output(command, shell=True)
+            i_size = len(in_data)
+
+            out = bytearray()
+            # Decrypting each byte with decreasing file length
+            for byte in in_data:
+                out.append((byte ^ i_size).to_bytes(4, "little")[0])
+                i_size = i_size - 1
+
+            # We decompress the file without the 4 first bytes
+            with open(self.pt_xml, 'wb') as f:
+                f.write(zlib.decompress(out[4:]))
+
         # Just to allow the file to write
         time.sleep(5)
 
 
-    def edit_xml(self, pt_xml, flag):
-        new_flag = f'<OVERALL_COMPLETE_FEEDBACK translate="true" >Congrations! Flag: {flag}</OVERALL_COMPLETE_FEEDBACK>'
-        file1 = open(pt_xml, 'r')
+    def edit_xml(self):
+        new_flag = f'<OVERALL_COMPLETE_FEEDBACK translate="true" >Congrations! Flag: {self.flag}</OVERALL_COMPLETE_FEEDBACK>'
+        file1 = open(self.pt_xml, 'r')
         Lines = file1.readlines()
  
-        # Strips the newline character
+        # Change Flag and timer from 30mins to 60mins
         for line in Lines:
             if("OVERALL_COMPLETE_FEEDBACK" in line):
                 index = Lines.index(line)
                 Lines[index] = new_flag
+            if('COUNTDOWNMS="1800000" >' in line):
+                index = Lines.index(line)
+                Lines[index] = line.replace("1800000", "3600000")
 
-        file1 = open(pt_xml, 'w')
+
+        file1 = open(self.pt_xml, 'w')
         file1.writelines(Lines)
         file1.close()
 
 
-    def encrypt_file(self, pt_xml):
-        pt_new = self.random_file + ".mod"
+    def encrypt_file(self):
+        try:
+            command = f"./pka2xml -e {self.pt_xml} {self.pt_file} 2>/dev/null"
+            subprocess.check_output(command, shell=True)
+        except:
+            with open(self.pt_xml, 'rb') as f:
+                in_data = bytearray(f.read())
 
-        #command = f"./pka2xml -e {pt_xml} PacketTracer/{pt_new}"
-        command = f"python3 ptexplorer.py -e {pt_xml} PacketTracer/{pt_new}"
+            i_size = len(in_data)
+
+            # Convert uncompressed size to bytes
+            i_size = i_size.to_bytes(4, 'big')
+
+            # Compress the file and add the uncompressed size
+            out_data = zlib.compress(in_data)
+            out_data = i_size + out_data
+            o_size = len(out_data)
+
+            xor_out = bytearray()
+            # Encrypting each byte with decreasing file length
+            for byte in out_data:
+                xor_out.append((byte ^ o_size).to_bytes(4, "little")[0])
+                o_size = o_size - 1
+
+            # We decompress the file without the 4 first bytes
+            with open(pt_new, 'wb') as f:
+                f.write(xor_out)
+
+        #os.remove(self.pt_xml)
+
+    def edit_ansible(self, file_path):
+        # Using readlines()
+        file1 = open(file_path, 'r')
+        Lines = file1.readlines()
+
+        # Strips the newline character
+        for line in Lines:
+            if("flag_token: " in line):
+                index = Lines.index(line)
+                Lines[index] = "    flag_token: " + self.flag
+
+            if("file_name: " in line):
+                index = Lines.index(line)
+                Lines[index] = "    file_name: " + self.random_file + "\n"
         
-        subprocess.check_output(command, shell=True)
-        
-        os.remove(pt_xml)
+        file1 = open(file_path, 'w')
+        file1.writelines(Lines)
+        file1.close()
+
 
 
 
@@ -97,7 +165,7 @@ class Scr:
         #self.init_encrypt()
         #self.init_decrypt()
 
-    def edit_cryptography(self, encrypted, decrypted, file_path):
+    def edit_ansible(self, encrypted, decrypted, file_path):
         # Using readlines()
         file1 = open(file_path, 'r')
         Lines = file1.readlines()
@@ -123,7 +191,7 @@ class Scr:
         command = f'echo -n "{random_word}"  | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword'
         encrypted = subprocess.check_output(command, shell=True).decode('utf-8').strip()
 
-        self.edit_cryptography(encrypted, random_word, CHALLENGE_ENCRYPTED)
+        self.edit_ansible(encrypted, random_word, CHALLENGE_ENCRYPTED)
         
 
     # echo "U2FsdGVkX1+x2JIRVf04ppVKudXBukdtUYziRNgnCBg=" | base64 --decode | openssl enc -pbkdf2 -des3 -d -pass pass:mysecretpassword
@@ -133,7 +201,7 @@ class Scr:
         command = f'echo -n "{random_word}"  | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword'
         encrypted = subprocess.check_output(command, shell=True).decode('utf-8').strip()
 
-        self.edit_cryptography(encrypted, random_word, CHALLENGE_DECRYPTED)
+        self.edit_ansible(encrypted, random_word, CHALLENGE_DECRYPTED)
 
 class Que:
     def __init__(self, question):

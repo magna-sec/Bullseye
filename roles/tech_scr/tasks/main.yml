@@ -3,5 +3,6 @@
 # https://anuragmewar.medium.com/hosting-a-ctf-using-docker-248ecf9f904f
 - include_tasks: docker.yml
 - include_tasks: mysql.yml
-- include_tasks: challenges/cryptography/decrypt.yml
-- include_tasks: challenges/cryptography/encrypt.yml
+#- include_tasks: challenges/cryptography/decrypt.yml
+#- include_tasks: challenges/cryptography/encrypt.yml
+- include_tasks: challenges/networking/packettracer.yml

@@ -18,8 +18,8 @@ services:
    environment:
     - DATABASE_URL=mysql+pymysql://ctfd:ctfd@db/ctfd
    volumes:
-    - ctf_logs:/opt/CTFd/CTFd/logs
-    - ctf_uploads:/opt/CTFd/CTFd/uploads
+    - /ctf_logs:/opt/CTFd/CTFd/logs
+    - /ctf_uploads:/opt/CTFd/CTFd/uploads
    depends_on:
     - db
 volumes:
