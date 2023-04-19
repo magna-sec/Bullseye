@@ -56,7 +56,8 @@ class PacketTracer:
         pt_file = "PacketTracer/" + self.random_file
 
 
-        command = f"./pka2xml -d {pt_file} {pt_xml}"
+        #command = f"./pka2xml -d {pt_file} {pt_xml}"
+        command = f"python3 ptexplorer.py -d {pt_file} {pt_xml}"
         subprocess.check_output(command, shell=True)
         # Just to allow the file to write
         time.sleep(5)
@@ -81,7 +82,9 @@ class PacketTracer:
     def encrypt_file(self, pt_xml):
         pt_new = self.random_file + ".mod"
 
-        command = f"./pka2xml -e {pt_xml} PacketTracer/{pt_new}"
+        #command = f"./pka2xml -e {pt_xml} PacketTracer/{pt_new}"
+        command = f"python3 ptexplorer.py -e {pt_xml} PacketTracer/{pt_new}"
+        
         subprocess.check_output(command, shell=True)
         
         os.remove(pt_xml)
