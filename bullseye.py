@@ -47,24 +47,22 @@ WIFI_QUES = [["How many students?", DIGITS]]
 
 class PacketTracer:
     def __init__(self):
-        self.decrypt_file("temp.xml")
+        self.random_file = random.choice(os.listdir("PacketTracer")) 
+        self.decrypt_file("PacketTracer/temp.xml")
         self.edit_xml("PacketTracer/temp.xml", "ILikTurtles")
-        self.encrypt_file("temp.xml")
+        self.encrypt_file("PacketTracer/temp.xml")
 
     def decrypt_file(self, pt_xml):
-        pt_file = "lab81-configure-and-modify-standard-ipv4-acls.pka"
+        pt_file = "PacketTracer/" + self.random_file
 
-        command = f"sudo docker run -v `pwd`/PacketTracer:/pkt  quentinn42/pka2xml:latest pka2xml -d /pkt/{pt_file} /pkt/{pt_xml}"
+
+        command = f"./pka2xml -d {pt_file} {pt_xml}"
         subprocess.check_output(command, shell=True)
         # Just to allow the file to write
         time.sleep(5)
 
 
     def edit_xml(self, pt_xml, flag):
-        command = f"sudo chmod 777 {pt_xml}"
-        subprocess.check_output(command, shell=True)
-
-
         new_flag = f'<OVERALL_COMPLETE_FEEDBACK translate="true" >Congrations! Flag: {flag}</OVERALL_COMPLETE_FEEDBACK>'
         file1 = open(pt_xml, 'r')
         Lines = file1.readlines()
@@ -81,13 +79,12 @@ class PacketTracer:
 
 
     def encrypt_file(self, pt_xml):
-        pt_new = "mod.pkt"
+        pt_new = self.random_file + ".mod"
 
-        command = f"sudo docker run -v `pwd`/PacketTracer:/pkt  quentinn42/pka2xml:latest pka2xml -e /pkt/{pt_xml} /pkt/{pt_new}"
+        command = f"./pka2xml -e {pt_xml} PacketTracer/{pt_new}"
         subprocess.check_output(command, shell=True)
         
-        remove = f"PacketTracer/{pt_xml}"
-       # os.remove(remove)
+        os.remove(pt_xml)
 
 
 
