@@ -4,6 +4,7 @@ import sys
 import yaml
 import zlib
 import os
+import time
 from termcolor import colored
 
 # Purely to hide that ugly CTRL+C output
@@ -47,30 +48,24 @@ WIFI_QUES = [["How many students?", DIGITS]]
 class PacketTracer:
     def __init__(self):
         self.decrypt_file("temp.xml")
-        self.edit_xml("temp.xml", "ILikTurtles")
+        self.edit_xml("PacketTracer/temp.xml", "ILikTurtles")
         self.encrypt_file("temp.xml")
 
     def decrypt_file(self, pt_xml):
-        pt_file = "lab3.pka"
+        pt_file = "lab81-configure-and-modify-standard-ipv4-acls.pka"
 
-        with open(pt_file, 'rb') as f:
-                in_data = bytearray(f.read())
+        command = f"sudo docker run -v `pwd`/PacketTracer:/pkt  quentinn42/pka2xml:latest pka2xml -d /pkt/{pt_file} /pkt/{pt_xml}"
+        subprocess.check_output(command, shell=True)
+        # Just to allow the file to write
+        time.sleep(5)
 
-        i_size = len(in_data)
-        
-        out = bytearray()
-        # Decrypting each byte with decreasing file length
-        for byte in in_data:
-            out.append((byte ^ i_size).to_bytes(4, "little")[0])
-            i_size = i_size - 1
-        
-        # We decompress the file without the 4 first bytes
-        with open(pt_xml, 'wb') as f:
-            f.write(zlib.decompress(out[4:]))
 
     def edit_xml(self, pt_xml, flag):
+        command = f"sudo chmod 777 {pt_xml}"
+        subprocess.check_output(command, shell=True)
+
+
         new_flag = f'<OVERALL_COMPLETE_FEEDBACK translate="true" >Congrations! Flag: {flag}</OVERALL_COMPLETE_FEEDBACK>'
-       # new_pass = '<ACTIVITY PASS="562ff3291f31f5361793053485dac7a0" FORWARD_ANS_SIM_MS="0" TIMERTYPE="0" ENABLED="yes" COUNTDOWNMS="10000" >\n' # [][]HelloThere[][]
         file1 = open(pt_xml, 'r')
         Lines = file1.readlines()
  
@@ -80,38 +75,19 @@ class PacketTracer:
                 index = Lines.index(line)
                 Lines[index] = new_flag
 
-
         file1 = open(pt_xml, 'w')
         file1.writelines(Lines)
         file1.close()
 
 
     def encrypt_file(self, pt_xml):
-        pt_new = "lab3_mod.pkt"
-        with open(pt_xml, 'rb') as f:
-            in_data = bytearray(f.read())
+        pt_new = "mod.pkt"
 
-        i_size = len(in_data)
-
-        # Convert uncompressed size to bytes
-        i_size = i_size.to_bytes(4, 'big')
-
-        # Compress the file and add the uncompressed size
-        out_data = zlib.compress(in_data)
-        out_data = i_size + out_data
-        o_size = len(out_data)
-
-        xor_out = bytearray()
-        # Encrypting each byte with decreasing file length
-        for byte in out_data:
-            xor_out.append((byte ^ o_size).to_bytes(4, "little")[0])
-            o_size = o_size - 1
-
-        # We decompress the file without the 4 first bytes
-        with open(pt_new, 'wb') as f:
-            f.write(xor_out)
+        command = f"sudo docker run -v `pwd`/PacketTracer:/pkt  quentinn42/pka2xml:latest pka2xml -e /pkt/{pt_xml} /pkt/{pt_new}"
+        subprocess.check_output(command, shell=True)
         
-        os.remove(pt_xml)
+        remove = f"PacketTracer/{pt_xml}"
+       # os.remove(remove)
 
 
 
