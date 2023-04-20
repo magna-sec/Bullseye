@@ -132,7 +132,7 @@ class PacketTracer:
                 o_size = o_size - 1
 
             # We decompress the file without the 4 first bytes
-            with open(pt_new, 'wb') as f:
+            with open(self.pt_file, 'wb') as f:
                 f.write(xor_out)
 
         os.remove(self.pt_xml)

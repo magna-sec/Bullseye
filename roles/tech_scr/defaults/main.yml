@@ -3,6 +3,7 @@ CTFd_Name: "Tech SCR"
 
 InitialPackages:
   - net-tools
+  - mysql-client
 
 # Admin
 MySqlPW_Admin: $bcrypt-sha256$v=2,t=2b,r=12$kRhCrgQLv8erKwLjuJ6pre$2e63b/VmIPUsL5ONChqHFv9b9IzDQqu

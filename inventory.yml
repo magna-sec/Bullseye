@@ -1,6 +1,6 @@
 [targets]
-192.168.64.73
+192.168.189.135
 
 
 [targets:vars]
-ansible_user=ansible
+ansible_user=magna

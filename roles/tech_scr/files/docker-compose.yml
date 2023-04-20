@@ -3,13 +3,16 @@ services:
  db:
    image: mysql:5.7
    restart: always
+   ports:
+    - "3306:3306"
+    - "33060:33060"
    environment:
     - MYSQL_ROOT_PASSWORD=ctfd
     - MYSQL_USER=ctfd
     - MYSQL_PASSWORD=ctfd
     - MYSQL_DATABASE=ctfd
    volumes:
-    - mysql_storage:/var/lib/mysql
+    - /mysql_storage:/var/lib/mysql
  ctfd:
    image: ctfd/ctfd
    restart: always

@@ -3,10 +3,15 @@
   apt:
     update_cache: yes
 
-- name: Remove apt lock file
+- name: Remove apt lock-frontend file
   file:
     state: absent
     path: "/var/lib/dpkg/lock-frontend"
+
+- name: Remove apt lock file
+  file:
+    state: absent
+    path: "/var/lib/dpkg/lock"
 
 - name: Upgrade all packages to their latest version
   apt:
@@ -18,6 +23,12 @@
     name: "{{ item }}"
     state: present
   loop: "{{ InitialPackages }}"
+
+- name: Creates directory /mysql_storage for CTFd
+  file:
+    path: /mysql_storage
+    state: directory
+    mode: "0777"
 
 - name: Creates directory /ctf_logs for CTFd
   file:
