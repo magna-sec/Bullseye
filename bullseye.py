@@ -135,7 +135,7 @@ class PacketTracer:
             with open(pt_new, 'wb') as f:
                 f.write(xor_out)
 
-        #os.remove(self.pt_xml)
+        os.remove(self.pt_xml)
 
     def edit_ansible(self, file_path):
         # Using readlines()
@@ -156,52 +156,64 @@ class PacketTracer:
         file1.writelines(Lines)
         file1.close()
 
-
-
-
 class Scr:
     def __init__(self):
         convert_pt = PacketTracer()
-        #self.init_encrypt()
-        #self.init_decrypt()
+        self.init_encrypt()
+        self.init_decrypt()
 
-    def edit_ansible(self, encrypted, decrypted, file_path):
+    def edit_cryptography(self, encrypted, decrypted, file_path, enc_type):
         # Using readlines()
         file1 = open(file_path, 'r')
         Lines = file1.readlines()
- 
+
         # Strips the newline character
         for line in Lines:
             if("decrypted: " in line):
                 index = Lines.index(line)
                 Lines[index] = "    decrypted: " + decrypted
             if("encrypted: " in line):
-                print("HI")
                 index = Lines.index(line)
-                Lines[index] = "    encrypted: " + encrypted + "\n"        
+                Lines[index] = "    encrypted: " + encrypted + "\n" 
+            if("type: " in line):
+                index = Lines.index(line)
+                Lines[index] = "    type: " + enc_type + "\n"       
         
         file1 = open(file_path, 'w')
         file1.writelines(Lines)
         file1.close()
 
-    # echo -n "hellothere" | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword
+    def encrypt_string(self, cleartext, encrypt_type):
+        match encrypt_type:
+            case "3DES":
+                command =  f'echo -n "{cleartext.strip()}"  | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword -nosalt'
+                encrypted = subprocess.check_output(command, shell=True).decode('utf-8').strip()
+                return encrypted
+
+            case "AES256":
+                # Obtain key
+                command1 = f'openssl enc -aes-256-cbc -k mysecretpassword -P -md sha1 -nosalt -pbkdf2 | grep "key" | cut -d "=" -f 2'
+                command1_key = subprocess.check_output(command1, shell=True).decode('utf-8').strip()
+
+                # Encrypt using said key
+                command2 = f'echo -n "{cleartext.strip()}" | openssl enc -aes-256-cbc -K {command1_key} -iv 0 -base64 2>/dev/null'
+                encrypted = subprocess.check_output(command2, shell=True).decode('utf-8').strip()
+                return encrypted
+
     def init_encrypt(self):
+        random_enc = random.choice(ENCRYPT_TYPES)
         random_word = random.choice(open(WORD_LIST).readlines())
 
-        command = f'echo -n "{random_word}"  | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword'
-        encrypted = subprocess.check_output(command, shell=True).decode('utf-8').strip()
-
-        self.edit_ansible(encrypted, random_word, CHALLENGE_ENCRYPTED)
         
+        encrypted = self.encrypt_string(random_word.strip(), random_enc)
+        self.edit_cryptography(encrypted, random_word, CHALLENGE_ENCRYPTED, random_enc)
 
-    # echo "U2FsdGVkX1+x2JIRVf04ppVKudXBukdtUYziRNgnCBg=" | base64 --decode | openssl enc -pbkdf2 -des3 -d -pass pass:mysecretpassword
     def init_decrypt(self):
+        random_enc = random.choice(DECRYPT_TYPES)
         random_word = random.choice(open(WORD_LIST).readlines())
         
-        command = f'echo -n "{random_word}"  | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword'
-        encrypted = subprocess.check_output(command, shell=True).decode('utf-8').strip()
-
-        self.edit_ansible(encrypted, random_word, CHALLENGE_DECRYPTED)
+        encrypted = self.encrypt_string(random_word.strip(), random_enc)
+        self.edit_cryptography(encrypted, random_word, CHALLENGE_DECRYPTED, random_enc)
 
 class Que:
     def __init__(self, question):

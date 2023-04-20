@@ -16,3 +16,11 @@
       - "mysql -u ctfd -pctfd -D ctfd -e '{{ item }};'"
   loop: "{{ MySql_Setup }}"
 
+- name: Add 20 users
+  community.docker.docker_container_exec:
+    container: root-db-1
+    argv:
+      - /bin/bash
+      - "-c"
+      - "mysql -u ctfd -pctfd -D ctfd -e '{{ item }};'"
+  loop: "{{ MySqlAdd_Users }}"

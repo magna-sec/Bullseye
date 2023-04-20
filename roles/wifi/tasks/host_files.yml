@@ -36,3 +36,9 @@
 
 - name: Rebooting
   ansible.builtin.reboot:
+
+# Set MAC to random vendor
+- name: Set WLAN interface MAC to random vendor - Doesn't persist reboot
+  ansible.builtin.shell: macchanger -A wlan{{ item }}
+  with_sequence: start=0 end={{ AmountOfInterfaces - 1 }}
+  ignore_errors: true

@@ -3,6 +3,11 @@
   apt:
     update_cache: yes
 
+- name: Remove apt lock file
+  file:
+    state: absent
+    path: "/var/lib/dpkg/lock-frontend"
+
 - name: Upgrade all packages to their latest version
   apt:
     upgrade: yes
@@ -18,16 +23,16 @@
   file:
     path: /ctf_logs
     state: directory
-    mode: "0666"
+    mode: "0777"
 
 - name: Creates directory /ctf_uploads for CTFd
   file:
     path: /ctf_uploads
     state: directory
-    mode: "0666"
+    mode: "0777"
 
 - name: Creates directory /ctf_uploads for CTFd
   file:
     path: /ctf_uploads/packettracer
     state: directory
-    mode: "0666"
+    mode: "0777"

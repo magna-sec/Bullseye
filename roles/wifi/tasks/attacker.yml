@@ -18,6 +18,10 @@
 - name: Launch attacker0 machine - Shell
   ansible.builtin.shell: lxc launch images:alpine/3.14/amd64 attacker0
 
+- name: Sleep for 3 seconds to allow machine to spawn
+  ansible.builtin.wait_for:
+    timeout: 3
+
 - name: Set autoboot on attacker0 to true - Shell
   ansible.builtin.shell: lxc config set attacker0 boot.autostart true
   

@@ -1,2 +1,6 @@
 [targets]
-192.168.190.160
+192.168.64.73
+
+
+[targets:vars]
+ansible_user=ansible

@@ -2,16 +2,16 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "String Encryption"
-    decrypted: ephoralty
-    encrypted: U2FsdGVkX19h0/7EhKrb0fJKI9U6/u/hd/B+bPTnJGs=
-    type: 3DES
+    decrypted: ironlike
+    encrypted: 0FcbLewz9wuv84JTnnqd4g==
+    type: AES256
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:
-    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "Use {{ type }} to encrypt the following string \r\n {{ decrypted }} \r\n Make sure to use '-pbkdf2'", 0, 5, "cryptography", "standard", "visible", NULL, NULL, NULL)
-    answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ encrypted }}", "")
+    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "Use {{ type }} to encrypt the following string \r\n {{ decrypted }} \r\n Make sure to use '-pbkdf2'", 0, 5, "Cryptography", "standard", "visible", NULL, NULL, NULL)
+    answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ encrypted }}", "case_insensitive")
 
-- name: Put challenge into CTFd
+- name: Put challenge into CTFd - Encrypt
   community.docker.docker_container_exec:
     container: root-db-1
     argv:
@@ -19,7 +19,7 @@
       - "-c"
       - "mysql -u ctfd -pctfd -D ctfd -e '{{ challenge }};'"
 
-- name: Put flag into CTFd
+- name: Put flag into CTFd - Encrypt
   community.docker.docker_container_exec:
     container: root-db-1
     argv:
@@ -27,5 +27,15 @@
       - "-c"
       - "mysql -u ctfd -pctfd -D ctfd -e '{{ answer_flag }};'"
 
-# echo -n "hellothere" | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword
+### 3DES
+## Encrypt
+# echo -n "hellothere" | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword -nosalt
+## Decrypt
 # echo "U2FsdGVkX1+x2JIRVf04ppVKudXBukdtUYziRNgnCBg=" | base64 --decode | openssl enc -pbkdf2 -des3 -d -pass pass:mysecretpassword
+
+### AES256
+## Encrypt
+# openssl enc -aes-256-cbc -k mysecretpassword -P -md sha1 -nosalt -pbkdf2
+# echo -n "hello there" | openssl enc -aes-256-cbc -K <KEY VALUE> -iv 0 -base64
+## Decrypt
+# echo -n <ENCRYPTED MESSAGE> | base64 --decode | openssl enc -d -aes-256-cbc -K <KEY VALUE> -iv 0

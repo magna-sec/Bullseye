@@ -1,0 +1,31 @@
+---
+- name: Choose a networking question - NetQuestion {{ itter }}
+  ansible.builtin.set_fact:
+    rand_question: "{{ Net_Ques | random }}"
+
+- name: Set question and answer for - NetQuestion {{ itter }}
+  ansible.builtin.set_fact:
+    question_name: "Networking Question {{ itter }}"
+    question: "{{ rand_question.split('~')[0] }}"
+    flag_token: "{{ rand_question.split('~')[1] }}"
+
+- name: Set MySQL statements - NetQuestion {{ itter }}
+  ansible.builtin.set_fact:
+    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "{{ question }}", 0, 5, "Networking", "standard", "visible", NULL, NULL, NULL)
+    answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ flag_token }}", "case_insensitive")
+
+- name: Put challenge into CTFd - NetQuestion {{ itter }}
+  community.docker.docker_container_exec:
+    container: root-db-1
+    argv:
+      - /bin/bash
+      - "-c"
+      - "mysql -u ctfd -pctfd -D ctfd -e '{{ challenge }};'"
+
+- name: Put flag into CTFd - NetQuestion {{ itter }}
+  community.docker.docker_container_exec:
+    container: root-db-1
+    argv:
+      - /bin/bash
+      - "-c"
+      - "mysql -u ctfd -pctfd -D ctfd -e '{{ answer_flag }};'"
