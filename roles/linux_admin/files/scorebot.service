@@ -1,0 +1,11 @@
+[Unit]
+Description=Scorebot
+
+[Service]
+Type=oneshot
+ExecStart=/root/bot.sh
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target

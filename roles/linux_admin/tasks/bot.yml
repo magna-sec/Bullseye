@@ -1,0 +1,17 @@
+---
+- name: Copy bot.sh then make executable
+  ansible.builtin.copy:
+    src: bot.sh
+    dest: /root/bot.sh
+    mode: '0645'
+
+- name: Copy ScoreBot service
+  ansible.builtin.copy:
+    src: scorebot.service
+    dest: /etc/systemd/system/scorebot.service
+    mode: '0644'
+
+- name: Enable scorebot service
+  ansible.builtin.service:
+    name: scorebot
+    enabled: true
