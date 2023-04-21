@@ -1,0 +1,8 @@
+---
+- name: Copy characters.txt to host
+  ansible.builtin.copy:
+    src: ../../tech_scr/tasks/challenges/linux/files/characters.txt
+    dest: /tmp/char.txt
+    owner: root
+    group: root
+    mode: '0644'

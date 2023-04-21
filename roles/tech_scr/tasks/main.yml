@@ -10,3 +10,6 @@
   vars:
     itter: "{{ item }}"
   loop: "{{ range(1,6) }}"
+- include_tasks: challenges/linux/line_count.yml
+- include_tasks: challenges/linux/char_count.yml
+

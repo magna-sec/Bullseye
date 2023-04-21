@@ -1,0 +1,3 @@
+- include_tasks: setup.yml
+- include_tasks: exercises/line_count.yml
+- include_tasks: exercises/char_count.yml

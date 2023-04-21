@@ -5,6 +5,7 @@ import yaml
 import zlib
 import os
 import time
+import string
 from termcolor import colored
 
 # Purely to hide that ugly CTRL+C output
@@ -18,6 +19,11 @@ WORD_LIST = "words.txt"
 CHALLENGE_ENCRYPTED = "roles/tech_scr/tasks/challenges/cryptography/encrypt.yml"
 CHALLENGE_DECRYPTED = "roles/tech_scr/tasks/challenges/cryptography/decrypt.yml"
 CHALLENGE_PACKETTRACER = "roles/tech_scr/tasks/challenges/networking/packettracer.yml"
+CHALLENGE_LINUX_LINES= "roles/tech_scr/tasks/challenges/linux/line_count.yml"
+CHALLENGE_LINUX_CHARS = "roles/tech_scr/tasks/challenges/linux/char_count.yml"
+
+CHALLENGE_LINUX_LINES_FILE = "roles/tech_scr/tasks/challenges/linux/files/lines.txt"
+CHALLENGE_LINUX_CHARS_FILE = "roles/tech_scr/tasks/challenges/linux/files/characters.txt"
 
 ENCRYPT_TYPES = ["AES256"]
 DECRYPT_TYPES = ["3DES", "AES256"]
@@ -156,11 +162,10 @@ class PacketTracer:
         file1.writelines(Lines)
         file1.close()
 
-class Scr:
+class Cryptography:
     def __init__(self):
-        convert_pt = PacketTracer()
-        self.init_encrypt()
         self.init_decrypt()
+        self.init_encrypt()
 
     def edit_cryptography(self, encrypted, decrypted, file_path, enc_type):
         # Using readlines()
@@ -203,7 +208,6 @@ class Scr:
     def init_encrypt(self):
         random_enc = random.choice(ENCRYPT_TYPES)
         random_word = random.choice(open(WORD_LIST).readlines())
-
         
         encrypted = self.encrypt_string(random_word.strip(), random_enc)
         self.edit_cryptography(encrypted, random_word, CHALLENGE_ENCRYPTED, random_enc)
@@ -214,6 +218,51 @@ class Scr:
         
         encrypted = self.encrypt_string(random_word.strip(), random_enc)
         self.edit_cryptography(encrypted, random_word, CHALLENGE_DECRYPTED, random_enc)
+
+class Linux:
+    def __init__(self):
+        self.length_count()
+        self.character_count()
+
+
+    def length_count(self):
+        random_length = random.choice(range(10, 500))
+        with open(CHALLENGE_LINUX_LINES_FILE, "w") as my_file:
+            for a in range(0, random_length):
+                my_file.write("Hello There\n")
+        self.edit_ansible(CHALLENGE_LINUX_LINES, "flag_token", random_length)
+
+    def character_count(self):
+        random_length = random.choice(range(10, 10000))
+        with open(CHALLENGE_LINUX_CHARS_FILE, "w") as my_file:
+            for a in range(0, random_length):      
+                my_file.write(random.choice(string.ascii_lowercase))
+        self.edit_ansible(CHALLENGE_LINUX_CHARS, "flag_token", random_length)
+
+
+
+    def edit_ansible(self, file_path, field, value):
+        # Using readlines()
+        file1 = open(file_path, 'r')
+        Lines = file1.readlines()
+
+        # Strips the newline character
+        for line in Lines:
+            if(f"{field}: " in line):
+                index = Lines.index(line)
+                Lines[index] = f"    {field}: " + str(value) + "\n"
+        
+        file1 = open(file_path, 'w')
+        file1.writelines(Lines)
+        file1.close()
+
+
+
+class Scr:
+    def __init__(self):
+        convert_pt = PacketTracer()
+        crypto = Cryptography()
+        linux = Linux()
 
 class Que:
     def __init__(self, question):

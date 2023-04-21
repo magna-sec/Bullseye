@@ -1,6 +1,11 @@
-[targets]
-10.10.254.50
-
-
-[targets:vars]
-ansible_user=magna
+linux:
+  hosts: null
+  children:
+    ctfd:
+      hosts: 10.10.254.49
+    linux_admin:
+      hosts: 10.10.254.50
+    wifi:
+      hosts: null
+  vars:
+    ansible_user: magna

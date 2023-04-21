@@ -2,8 +2,8 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "PacketTracer Lab"
-    file_name: lab04-nterVLAN.pka
-    flag_token: Marsupialia
+    file_name: lab13-OSPF.pka
+    flag_token: autopoisonous
 
 - name: Put PacketTracer file onto CTFd
   ansible.builtin.copy:
@@ -16,7 +16,6 @@
     challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "Please work through the attached Packet Tracer lab", 0, 5, "Networking", "standard", "visible", NULL, NULL, NULL)
     answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ flag_token }}", "case_insensitive")
     insert_file: INSERT INTO files (type, location, challenge_id) VALUES ("challenge", "packettracer/{{ file_name }}", (SELECT id FROM challenges WHERE name = "{{ question_name }}"))
-
 
 - name: Put challenge into CTFd - PacketTracer
   community.mysql.mysql_query:

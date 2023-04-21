@@ -13,7 +13,7 @@
     query: '{{ item }};'
   loop: "{{ MySql_Setup }}"
 
-- name: Add 20 users
+- name: Add {{ AmountOfUsers }} users
   community.mysql.mysql_query:
     query: INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user{{ item }}", "{{ MySqlPW_Password }}", "user{{ item }}@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
   loop: "{{ range(0, AmountOfUsers) }}"

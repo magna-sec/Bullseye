@@ -1,6 +1,8 @@
 ---
 CTFd_Name: "Tech SCR"
-AmountOfUsers: 20
+AmountOfUsers: 5
+
+linux_admin_ip: "{{ groups['linux_admin'][0] }}"
 
 InitialPackages:
   - net-tools
@@ -67,36 +69,12 @@ MySql_Setup:
 
 Net_Ques:
   - "Which protocol is connection-oriented?~TCP"
-  - "Which protocol is connectionless~UDP"
+  - "Which protocol is connectionless?~UDP"
   - "What port is SSH?~22"
-  - "What port is WinRM~5985"
-  - "How do you save a running and startup config in Cisco~copy running-config startup-config"
-  - "What type of device do you use to connect to a WAN~Router"
-  - "What type of Firewall inspects packets~stateful"
+  - "What port is WinRM?~5985"
+  - "How do you save a running and startup config in Cisco?~copy running-config startup-config"
+  - "What type of device do you use to connect to a WAN?~Router"
+  - "What type of Firewall inspects packets?~stateful"
   - "What does TCP stand for?~Transmission Control Protocol"
   - "What does UDP stand for?~User Datagram Protocol"
-  - "What do you use to create dynamic connections and provide information to the requesting port~Switch"
-
-
-  # Don't look at this, its a dirty way for it to work
-MySqlAdd_Users: 
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user1", "{{ MySqlPW_Password }}", "user1@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user2", "{{ MySqlPW_Password }}", "user2@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user3", "{{ MySqlPW_Password }}", "user3@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user4", "{{ MySqlPW_Password }}", "user4@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user5", "{{ MySqlPW_Password }}", "user5@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user6", "{{ MySqlPW_Password }}", "user6@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user7", "{{ MySqlPW_Password }}", "user7@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user8", "{{ MySqlPW_Password }}", "user8@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user9", "{{ MySqlPW_Password }}", "user9@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user10", "{{ MySqlPW_Password }}", "user10@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user11", "{{ MySqlPW_Password }}", "user11@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user12", "{{ MySqlPW_Password }}", "user12@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user13", "{{ MySqlPW_Password }}", "user13@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user14", "{{ MySqlPW_Password }}", "user14@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user15", "{{ MySqlPW_Password }}", "user15@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user16", "{{ MySqlPW_Password }}", "user16@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user17", "{{ MySqlPW_Password }}", "user17@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user18", "{{ MySqlPW_Password }}", "user18@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user19", "{{ MySqlPW_Password }}", "user19@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user20", "{{ MySqlPW_Password }}", "user20@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - "What do you use to create dynamic connections and provide information to the requesting port?~Switch"
