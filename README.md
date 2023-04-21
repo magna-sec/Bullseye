@@ -13,7 +13,9 @@ Deploy various training environments
 - Multiple containers for users
 ## Tech SCR:
 - Deploy and config CTFd with attached MySql database
-- Adds Networking/Linux/Cryptography challenges
+- Networking challenges
+- Linux challenges
+- Cryptography challenges
 
 ---
 ## To Do:
