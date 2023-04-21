@@ -256,8 +256,6 @@ class Linux:
         file1.writelines(Lines)
         file1.close()
 
-
-
 class Scr:
     def __init__(self):
         convert_pt = PacketTracer()
