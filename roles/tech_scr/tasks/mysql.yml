@@ -1,26 +1,19 @@
 ---
+- name: Copy docker-compose to host
+  ansible.builtin.copy:
+    src: my.cnf
+    dest: /root/.my.cnf
+
 - name: Add admin user
-  community.docker.docker_container_exec:
-    container: root-db-1
-    argv:
-      - /bin/bash
-      - "-c"
-      - "mysql -u root -pctfd -D ctfd -e '{{ MySqlAdd_Admin }};'"
+  community.mysql.mysql_query:
+    query: '{{ MySqlAdd_Admin }};'
 
 - name: Setup MySql for CTFd
-  community.docker.docker_container_exec:
-    container: root-db-1
-    argv:
-      - /bin/bash
-      - "-c"
-      - "mysql -u ctfd -pctfd -D ctfd -e '{{ item }};'"
+  community.mysql.mysql_query:
+    query: '{{ item }};'
   loop: "{{ MySql_Setup }}"
 
 - name: Add 20 users
-  community.docker.docker_container_exec:
-    container: root-db-1
-    argv:
-      - /bin/bash
-      - "-c"
-      - "mysql -u ctfd -pctfd -D ctfd -e '{{ item }};'"
-  loop: "{{ MySqlAdd_Users }}"
+  community.mysql.mysql_query:
+    query: INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user{{ item }}", "{{ MySqlPW_Password }}", "user{{ item }}@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  loop: "{{ range(0, AmountOfUsers) }}"

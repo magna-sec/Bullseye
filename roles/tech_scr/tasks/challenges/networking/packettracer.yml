@@ -17,26 +17,15 @@
     answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ flag_token }}", "case_insensitive")
     insert_file: INSERT INTO files (type, location, challenge_id) VALUES ("challenge", "packettracer/{{ file_name }}", (SELECT id FROM challenges WHERE name = "{{ question_name }}"))
 
-- name: Put challenge into CTFd - PacketTracer1
-  community.docker.docker_container_exec:
-    container: root-db-1
-    argv:
-      - /bin/bash
-      - "-c"
-      - "mysql -u ctfd -pctfd -D ctfd -e '{{ challenge }};'"
 
-- name: Put flag into CTFd - PacketTracer1
-  community.docker.docker_container_exec:
-    container: root-db-1
-    argv:
-      - /bin/bash
-      - "-c"
-      - "mysql -u ctfd -pctfd -D ctfd -e '{{ answer_flag }};'"
+- name: Put challenge into CTFd - PacketTracer
+  community.mysql.mysql_query:
+    query: "{{ challenge }}"
 
-- name: Put file into CTFd - PacketTracer1
-  community.docker.docker_container_exec:
-    container: root-db-1
-    argv:
-      - /bin/bash
-      - "-c"
-      - "mysql -u ctfd -pctfd -D ctfd -e '{{ insert_file }};'"
+- name: Put flag into CTFd - PacketTracer
+  community.mysql.mysql_query:
+    query: "{{ answer_flag }}"
+
+- name: Put file into CTFd - PacketTracer
+  community.mysql.mysql_query:
+    query: "{{ insert_file }}"

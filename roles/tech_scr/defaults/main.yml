@@ -1,9 +1,27 @@
 ---
 CTFd_Name: "Tech SCR"
+AmountOfUsers: 20
 
 InitialPackages:
   - net-tools
   - mysql-client
+
+DockerRequired:
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+  - python3-pip
+  - python3-pymysql
+
+DockerComplete:
+  - docker-ce
+  - docker-ce-cli
+  - docker-compose-plugin
+  - containerd.io
+
+PipInstalls:
+  - PyMySQL
 
 # Admin
 MySqlPW_Admin: $bcrypt-sha256$v=2,t=2b,r=12$kRhCrgQLv8erKwLjuJ6pre$2e63b/VmIPUsL5ONChqHFv9b9IzDQqu
@@ -11,7 +29,7 @@ MySqlPW_Admin: $bcrypt-sha256$v=2,t=2b,r=12$kRhCrgQLv8erKwLjuJ6pre$2e63b/VmIPUsL
 MySqlAdd_Admin: INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "admin", "{{ MySqlPW_Admin }}", "admin@admin.com", "admin", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
 # User
 MySqlPW_Password: $bcrypt-sha256$v=2,t=2b,r=12$rKGhqp/E.NjixrzZCQqXzO$M9n3JTyph0Idac7dOkJaRPW47iPoF.G
-MySqlAdd_User: INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user", "{{ MySqlPW_Password }}", "user@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+MySqlAdd_User: INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user", "{{ MySqlPW_Password }}", "user@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
 
 
 # Config Setup
@@ -62,23 +80,23 @@ Net_Ques:
 
   # Don't look at this, its a dirty way for it to work
 MySqlAdd_Users: 
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user1", "{{ MySqlPW_Password }}", "user1@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user2", "{{ MySqlPW_Password }}", "user2@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user3", "{{ MySqlPW_Password }}", "user3@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user4", "{{ MySqlPW_Password }}", "user4@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user5", "{{ MySqlPW_Password }}", "user5@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user6", "{{ MySqlPW_Password }}", "user6@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user7", "{{ MySqlPW_Password }}", "user7@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user8", "{{ MySqlPW_Password }}", "user8@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user9", "{{ MySqlPW_Password }}", "user9@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user10", "{{ MySqlPW_Password }}", "user10@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user11", "{{ MySqlPW_Password }}", "user11@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user12", "{{ MySqlPW_Password }}", "user12@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user13", "{{ MySqlPW_Password }}", "user13@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user14", "{{ MySqlPW_Password }}", "user14@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user15", "{{ MySqlPW_Password }}", "user15@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user16", "{{ MySqlPW_Password }}", "user16@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user17", "{{ MySqlPW_Password }}", "user17@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user18", "{{ MySqlPW_Password }}", "user18@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user19", "{{ MySqlPW_Password }}", "user19@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
-  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user20", "{{ MySqlPW_Password }}", "user20@user.com", "user", NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user1", "{{ MySqlPW_Password }}", "user1@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user2", "{{ MySqlPW_Password }}", "user2@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user3", "{{ MySqlPW_Password }}", "user3@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user4", "{{ MySqlPW_Password }}", "user4@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user5", "{{ MySqlPW_Password }}", "user5@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user6", "{{ MySqlPW_Password }}", "user6@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user7", "{{ MySqlPW_Password }}", "user7@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user8", "{{ MySqlPW_Password }}", "user8@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user9", "{{ MySqlPW_Password }}", "user9@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user10", "{{ MySqlPW_Password }}", "user10@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user11", "{{ MySqlPW_Password }}", "user11@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user12", "{{ MySqlPW_Password }}", "user12@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user13", "{{ MySqlPW_Password }}", "user13@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user14", "{{ MySqlPW_Password }}", "user14@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user15", "{{ MySqlPW_Password }}", "user15@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user16", "{{ MySqlPW_Password }}", "user16@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user17", "{{ MySqlPW_Password }}", "user17@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user18", "{{ MySqlPW_Password }}", "user18@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user19", "{{ MySqlPW_Password }}", "user19@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");
+  - INSERT INTO users (oauth_id, name, password, email, type, secret, website, affiliation, country, bracket, hidden, banned, verified, team_id, created) VALUES(NULL, "user20", "{{ MySqlPW_Password }}", "user20@user.com", "user", NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, "2023-04-15 14:15:45.788724");

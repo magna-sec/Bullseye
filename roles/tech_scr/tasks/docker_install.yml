@@ -1,12 +1,9 @@
 ---
 - name: Install Docker required packages
-  apt:
-    pkg:
-      - ca-certificates
-      - curl
-      - gnupg
-      - lsb-release
-      - python3-pip
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ DockerRequired }}"
 
 - name: Add docker gpg apt key
   apt_key:
@@ -21,12 +18,10 @@
     state: present
 
 - name: Install docker
-  apt:
-    pkg:
-      - docker-ce
-      - docker-ce-cli
-      - docker-compose-plugin
-      - containerd.io
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ DockerComplete }}"
 
 # NEED TO PUT IN A CHECK FOR DOCKER-COMPOSE
 - name: Get stats of a file

@@ -12,21 +12,12 @@
     answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ encrypted }}", "case_insensitive")
 
 - name: Put challenge into CTFd - Encrypt
-  community.docker.docker_container_exec:
-    container: root-db-1
-    argv:
-      - /bin/bash
-      - "-c"
-      - "mysql -u ctfd -pctfd -D ctfd -e '{{ challenge }};'"
+  community.mysql.mysql_query:
+    query: "{{ challenge }}"
 
 - name: Put flag into CTFd - Encrypt
-  community.docker.docker_container_exec:
-    container: root-db-1
-    argv:
-      - /bin/bash
-      - "-c"
-      - "mysql -u ctfd -pctfd -D ctfd -e '{{ answer_flag }};'"
-
+  community.mysql.mysql_query:
+    query: "{{ answer_flag }}"
 ### 3DES
 ## Encrypt
 # echo -n "hellothere" | openssl enc -pbkdf2 -des3 -base64 -pass pass:mysecretpassword -nosalt
