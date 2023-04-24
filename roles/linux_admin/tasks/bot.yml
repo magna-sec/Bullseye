@@ -1,8 +1,8 @@
 ---
-- name: Copy bot.sh then make executable
+- name: Copy bot.py then make executable
   ansible.builtin.copy:
-    src: bot.sh
-    dest: /root/bot.sh
+    src: bot.py
+    dest: /root/bot.py
     mode: '0645'
 
 - name: Copy ScoreBot service
@@ -15,3 +15,7 @@
   ansible.builtin.service:
     name: scorebot
     enabled: true
+
+# Tried with module.. hung forever
+- name: Start scorebot service - Shell
+  ansible.builtin.shell: systemctl start scorebot &

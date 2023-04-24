@@ -1,0 +1,15 @@
+---
+# Add selected challenges to boxes
+
+
+# char_count challenge
+- name: Container Command - Copy char_count.txt to user
+  ansible.builtin.shell: lxc file push /tmp/char_count.txt user{{ item }}/challenges/
+  with_sequence: start=0 end={{ AmountOfUsers - 1 }}
+  when: char_count == True
+
+# line_count challenge
+- name: Container Command - Copy line_count.txt to user
+  ansible.builtin.shell: lxc file push /tmp/line_count.txt user{{ item }}/challenges/
+  with_sequence: start=0 end={{ AmountOfUsers - 1 }}
+  when: line_count == True

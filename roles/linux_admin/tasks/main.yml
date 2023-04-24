@@ -1,3 +1,14 @@
+# Setup
 - include_tasks: setup.yml
+- include_tasks: lxc.yml
+
+# Exercises
 - include_tasks: exercises/line_count.yml
+  when: line_count == True
 - include_tasks: exercises/char_count.yml
+  when: char_count == True
+  
+- include_tasks: challenge_files.yml
+
+# Bot
+- include_tasks: bot.yml

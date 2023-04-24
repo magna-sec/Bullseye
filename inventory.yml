@@ -1,11 +1,13 @@
-linux:
-  hosts: null
+all:
   children:
-    ctfd:
-      hosts: 10.10.254.49
-    linux_admin:
-      hosts: 10.10.254.50
-    wifi:
+    linux:
       hosts: null
-  vars:
-    ansible_user: magna
+      children:
+        ctfd:
+          hosts: 10.10.254.49
+        linux_admin:
+          hosts: 10.10.254.50
+        wifi:
+          hosts: 10.10.254.51
+      vars:
+        ansible_user: magna

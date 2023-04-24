@@ -3,7 +3,7 @@ Description=Scorebot
 
 [Service]
 Type=oneshot
-ExecStart=/root/bot.sh
+ExecStart=/root/bot.py
 RemainAfterExit=true
 StandardOutput=journal
 

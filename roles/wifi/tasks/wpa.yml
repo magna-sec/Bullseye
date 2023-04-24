@@ -1,8 +1,8 @@
 ---
 - name: Set facts for random Access Point - WPA
   set_fact:
-    WPA_Name: "{{ APNames[0] }}"
-    WPA_Pass: "summer2018"
+    WPA_Name: PorterPlough
+    WPA_Pass: communicatee
 
 - name: Set facts for custom files - WPA
   set_fact:

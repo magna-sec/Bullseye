@@ -6,4 +6,4 @@
 # Create files
 - include_tasks: host_files.yml
 # Start attacker setup
-- include_tasks: attacker.yml
+- include_tasks: lxc.yml

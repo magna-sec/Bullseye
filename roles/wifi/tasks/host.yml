@@ -27,7 +27,7 @@
     create: yes
 
 # Assign a static IP to the card, not really used since there's no traffic but could be in the future
-- name: Assign a static IP to the wlan1, not really used since there's no traffic - Shell
-  ansible.builtin.shell: ip addr add 192.168.21.1/24 dev wlan1 
+- name: Assign a static IP to the wlan30, not really used since there's no traffic - Shell
+  ansible.builtin.shell: ip addr add 10.10.254.52/24 dev wlan30 
   ignore_errors: true
 

@@ -1,0 +1,18 @@
+---
+- name: Set question and answer
+  ansible.builtin.set_fact:
+    question_name: "Create User"
+    flag_token: 3711
+
+- name: Set MySQL statements
+  ansible.builtin.set_fact:
+    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "SSH to {{ linux_admin_ip }} port 22X where X is your user number with 'scr:password'\r\n\r\nCreate a user called jediX where X is your user number", 0, 5, "Linux", "standard", "visible", NULL, NULL, NULL)
+    answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ flag_token }}", "case_insensitive")
+
+- name: Put challenge into CTFd - Linux - Create User
+  community.mysql.mysql_query:
+    query: "{{ challenge }}"
+
+- name: Put flag into CTFd - Linux - Create User
+  community.mysql.mysql_query:
+    query: "{{ answer_flag }}"

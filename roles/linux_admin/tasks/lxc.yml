@@ -1,0 +1,72 @@
+---
+# Setting up the user0 container
+# Useful guide for forwarding interfaces: https://blog.simos.info/using-the-lxd-kali-container-image/
+
+- name: Initialise lxd - Shell
+  ansible.builtin.shell: lxd init --auto
+
+# To list images
+# lxc list images
+# lxc image list
+
+# To list running
+# lxc list
+# lxc exec <instance_name> -- /bin/bash
+
+# To remove
+# lxc delete user0 --force
+
+- name: Launch user0 machine - Shell
+  ansible.builtin.shell: lxc launch images:ubuntu/jammy/amd64 user0
+
+- name: Sleep for 3 seconds to allow machine to spawn
+  ansible.builtin.wait_for:
+    timeout: 3
+
+- name: Set autoboot on user0 to true - Shell
+  ansible.builtin.shell: lxc config set user0 boot.autostart true
+  
+# Do some updating on the container and set up ssh server on the container
+- name: Container Command - update - Shell
+  ansible.builtin.shell: lxc exec user0 -- apt update
+
+- name: Container Command - upgrade - Shell
+  ansible.builtin.shell: lxc exec user0 -- apt upgrade
+
+- name: Container Command - Install APT packages - Shell
+  ansible.builtin.shell: lxc exec user0 -- apt -y install {{ item }}
+  loop: "{{ AptPackages }}"
+
+- name: Container Command - Create challenge folder - Shell
+  ansible.builtin.shell: | 
+    lxc exec user0 -- mkdir /challenges
+    lxc exec user0 -- chmod 644 /challenges
+
+- name: Container Command - Allow root login - Shell
+  ansible.builtin.shell: lxc exec user0 -- bash -c 'echo "PermitRootLogin yes" >> /etc/ssh/sshd_config'
+
+- name: Container Command - Restart SSH - Shell
+  ansible.builtin.shell: lxc exec user0 -- systemctl restart sshd
+
+- name: Container Command - Change scr password - Shell
+  ansible.builtin.shell: | 
+    lxc exec user0 -- useradd scr -s /bin/bash
+    lxc exec user0 -- addgroup scr root
+    lxc exec user0 -- bash -c 'echo "scr:password" | chpasswd'
+    lxc exec user0 -- bash -c 'echo "AllowUsers {{ StudentUser }} magna" >> /etc/ssh/sshd_config'
+
+
+
+- name: Clone user0 for other machines - Shell
+  ansible.builtin.shell: |
+    lxc copy user0 user{{ item }}
+    lxc config set user{{ item }} boot.autostart true
+    lxc start user{{ item }}
+  with_sequence: start=1 end={{ AmountOfUsers - 1 }}
+
+
+# Add SSH Proxy append with user number
+# Seperated due to bootup time
+- name: Adding proxies - Shell
+  ansible.builtin.shell: lxc config device add user{{ item }} sshproxy proxy listen=tcp:0.0.0.0:22{{ item }} connect=tcp:127.0.0.1:22
+  with_sequence: start=0 end={{ AmountOfUsers - 1 }}

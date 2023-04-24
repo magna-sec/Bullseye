@@ -67,4 +67,3 @@
     lxc config device remove attacker{{ item }} eth0
     lxc config device add attacker{{ item }} wifi nic nictype=physical parent=wlan{{ item }} name=wlan0
   with_sequence: start=0 end={{ AmountOfUsers - 1 }}
-

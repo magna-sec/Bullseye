@@ -1,0 +1,7 @@
+AmountOfUsers: 5
+SCR: True
+
+
+linux_ctfd_ip: "{{ groups['ctfd'][0] }}"
+linux_admin_ip: "{{ groups['linux_admin'][0] }}"
+linux_wifi_ip: "{{ groups['wifi'][0] }}"

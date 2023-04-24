@@ -1,8 +1,5 @@
 ---
 CTFd_Name: "Tech SCR"
-AmountOfUsers: 5
-
-linux_admin_ip: "{{ groups['linux_admin'][0] }}"
 
 InitialPackages:
   - net-tools

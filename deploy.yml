@@ -1,10 +1,15 @@
 ---
-- hosts: ctfd
-  roles:
-    - tech_scr
-  become: true
+#- hosts: ctfd
+#  roles:
+#    - tech_scr
+#  become: true
 
-- hosts: linux_admin
+#- hosts: linux_admin
+#  roles:
+#    - linux_admin
+#  become: true
+
+- hosts: wifi
   roles:
-    - linux_admin
+    - wifi
   become: true

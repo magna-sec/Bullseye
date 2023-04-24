@@ -1,8 +1,8 @@
 ---
-- name: Copy length.txt to host
+- name: Copy line_count.txt to host
   ansible.builtin.copy:
-    src: ../../tech_scr/tasks/challenges/linux/files/lines.txt
-    dest: /tmp/length.txt
+    src: ../../tech_scr/tasks/challenges/linux/files/line_count.txt
+    dest: /tmp/line_count.txt
     owner: root
     group: root
     mode: '0644'

@@ -3,7 +3,7 @@
 
 # Output hostapd config file
 - include_tasks: wpa.yml
-- include_tasks: wep.yml
+#- include_tasks: wep.yml
 
 - name: Copy ap_setup.sh then make executable
   ansible.builtin.copy:
@@ -37,8 +37,12 @@
 - name: Rebooting
   ansible.builtin.reboot:
 
+- name: Sleep for 30 seconds to allow machine to initialise, this stops timeouts with LXD
+  ansible.builtin.wait_for:
+    timeout: 30
+
 # Set MAC to random vendor
-- name: Set WLAN interface MAC to random vendor - Doesn't persist reboot
-  ansible.builtin.shell: macchanger -A wlan{{ item }}
-  with_sequence: start=0 end={{ AmountOfInterfaces - 1 }}
-  ignore_errors: true
+#- name: Set WLAN interface MAC to random vendor - Doesn't persist reboot
+#  ansible.builtin.shell: macchanger -A wlan{{ item }}
+#  with_sequence: start=0 end={{ AmountOfInterfaces - 1 }}
+#  ignore_errors: true

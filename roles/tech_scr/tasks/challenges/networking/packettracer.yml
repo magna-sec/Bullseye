@@ -2,8 +2,8 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "PacketTracer Lab"
-    file_name: lab13-OSPF.pka
-    flag_token: autopoisonous
+    file_name: lab16-AccessList.pka
+    flag_token: curacaos
 
 - name: Put PacketTracer file onto CTFd
   ansible.builtin.copy:

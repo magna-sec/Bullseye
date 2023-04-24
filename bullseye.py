@@ -14,6 +14,7 @@ import subprocess
 signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 # Purely to hide that ugly CTRL+C output
 
+ALL_VARS = "group_vars/all.yml"
 # SCR Variables
 WORD_LIST = "words.txt"
 CHALLENGE_ENCRYPTED = "roles/tech_scr/tasks/challenges/cryptography/encrypt.yml"
@@ -22,8 +23,15 @@ CHALLENGE_PACKETTRACER = "roles/tech_scr/tasks/challenges/networking/packettrace
 CHALLENGE_LINUX_LINES= "roles/tech_scr/tasks/challenges/linux/line_count.yml"
 CHALLENGE_LINUX_CHARS = "roles/tech_scr/tasks/challenges/linux/char_count.yml"
 
-CHALLENGE_LINUX_LINES_FILE = "roles/tech_scr/tasks/challenges/linux/files/lines.txt"
-CHALLENGE_LINUX_CHARS_FILE = "roles/tech_scr/tasks/challenges/linux/files/characters.txt"
+CHALLENGE_LINUX_LINES_FILE = "roles/tech_scr/tasks/challenges/linux/files/line_count.txt"
+CHALLENGE_LINUX_CHARS_FILE = "roles/tech_scr/tasks/challenges/linux/files/char_count.txt"
+
+AP_NAMES = "ap_names.txt"
+WIFI_WPA_CONFIG = "roles/wifi/tasks/wpa.yml"
+WIFI_WEP_CONFIG = "roles/wifi/tasks/wep.yml"
+CHALLENGE_WIFI_WPA = "roles/tech_scr/tasks/challenges/wifi/wpa.yml"
+CHALLENGE_WIFI_WEP = "roles/tech_scr/tasks/challenges/wifi/wep.yml"
+
 
 ENCRYPT_TYPES = ["AES256"]
 DECRYPT_TYPES = ["3DES", "AES256"]
@@ -53,6 +61,25 @@ TRAINING = {"1":"WiFi", "2":"Tech SCR - COMING SOON", "3":"Radio - COMING SOON"}
 # Ques
 WIFI_QUES = [["How many students?", DIGITS]]
 
+
+
+def edit_ansible(file_path, field, value):
+    # Using readlines()
+    file1 = open(file_path, 'r')
+    Lines = file1.readlines()
+
+    # Strips the newline character
+    for line in Lines:
+        if(f"{field}: " in line):
+            index = Lines.index(line)
+            temp = Lines[index].split(':')
+            Lines[index] = f"{temp[0]}: " + str(value).strip() + "\n"
+    
+    file1 = open(file_path, 'w')
+    file1.writelines(Lines)
+    file1.close()
+
+
 class PacketTracer:
     def __init__(self):
         # Variables
@@ -66,7 +93,7 @@ class PacketTracer:
         self.decrypt_file()
         self.edit_xml()
         self.encrypt_file()
-        self.edit_ansible(CHALLENGE_PACKETTRACER)
+        edit_ansible(CHALLENGE_PACKETTRACER, "file_name", self.random_file)
         
 
     def decrypt_file(self):
@@ -142,51 +169,10 @@ class PacketTracer:
                 f.write(xor_out)
 
         os.remove(self.pt_xml)
-
-    def edit_ansible(self, file_path):
-        # Using readlines()
-        file1 = open(file_path, 'r')
-        Lines = file1.readlines()
-
-        # Strips the newline character
-        for line in Lines:
-            if("flag_token: " in line):
-                index = Lines.index(line)
-                Lines[index] = "    flag_token: " + self.flag
-
-            if("file_name: " in line):
-                index = Lines.index(line)
-                Lines[index] = "    file_name: " + self.random_file + "\n"
-        
-        file1 = open(file_path, 'w')
-        file1.writelines(Lines)
-        file1.close()
-
 class Cryptography:
     def __init__(self):
         self.init_decrypt()
         self.init_encrypt()
-
-    def edit_cryptography(self, encrypted, decrypted, file_path, enc_type):
-        # Using readlines()
-        file1 = open(file_path, 'r')
-        Lines = file1.readlines()
-
-        # Strips the newline character
-        for line in Lines:
-            if("decrypted: " in line):
-                index = Lines.index(line)
-                Lines[index] = "    decrypted: " + decrypted
-            if("encrypted: " in line):
-                index = Lines.index(line)
-                Lines[index] = "    encrypted: " + encrypted + "\n" 
-            if("type: " in line):
-                index = Lines.index(line)
-                Lines[index] = "    type: " + enc_type + "\n"       
-        
-        file1 = open(file_path, 'w')
-        file1.writelines(Lines)
-        file1.close()
 
     def encrypt_string(self, cleartext, encrypt_type):
         match encrypt_type:
@@ -210,14 +196,18 @@ class Cryptography:
         random_word = random.choice(open(WORD_LIST).readlines())
         
         encrypted = self.encrypt_string(random_word.strip(), random_enc)
-        self.edit_cryptography(encrypted, random_word, CHALLENGE_ENCRYPTED, random_enc)
+        edit_ansible(CHALLENGE_ENCRYPTED, "encrypted", encrypted)
+        edit_ansible(CHALLENGE_ENCRYPTED, "decrypted", random_word)
+        edit_ansible(CHALLENGE_ENCRYPTED, "type", random_enc)
 
     def init_decrypt(self):
         random_enc = random.choice(DECRYPT_TYPES)
         random_word = random.choice(open(WORD_LIST).readlines())
         
         encrypted = self.encrypt_string(random_word.strip(), random_enc)
-        self.edit_cryptography(encrypted, random_word, CHALLENGE_DECRYPTED, random_enc)
+        edit_ansible(CHALLENGE_ENCRYPTED, "encrypted", encrypted)
+        edit_ansible(CHALLENGE_ENCRYPTED, "decrypted", random_word)
+        edit_ansible(CHALLENGE_ENCRYPTED, "type", random_enc)
 
 class Linux:
     def __init__(self):
@@ -230,37 +220,47 @@ class Linux:
         with open(CHALLENGE_LINUX_LINES_FILE, "w") as my_file:
             for a in range(0, random_length):
                 my_file.write("Hello There\n")
-        self.edit_ansible(CHALLENGE_LINUX_LINES, "flag_token", random_length)
+        edit_ansible(CHALLENGE_LINUX_LINES, "flag_token", random_length)
 
     def character_count(self):
         random_length = random.choice(range(10, 10000))
         with open(CHALLENGE_LINUX_CHARS_FILE, "w") as my_file:
             for a in range(0, random_length):      
                 my_file.write(random.choice(string.ascii_lowercase))
-        self.edit_ansible(CHALLENGE_LINUX_CHARS, "flag_token", random_length)
-
-
-
-    def edit_ansible(self, file_path, field, value):
-        # Using readlines()
-        file1 = open(file_path, 'r')
-        Lines = file1.readlines()
-
-        # Strips the newline character
-        for line in Lines:
-            if(f"{field}: " in line):
-                index = Lines.index(line)
-                Lines[index] = f"    {field}: " + str(value) + "\n"
-        
-        file1 = open(file_path, 'w')
-        file1.writelines(Lines)
-        file1.close()
+        edit_ansible(CHALLENGE_LINUX_CHARS, "flag_token", random_length)
 
 class Scr:
     def __init__(self):
+        edit_ansible(ALL_VARS, "SCR", "True")
         convert_pt = PacketTracer()
         crypto = Cryptography()
         linux = Linux()
+        wifi = Wifi()
+
+class Wifi:
+    def __init__(self):
+        print("WIFI GO BRRR")
+        self.edit_wpa()
+        self.edit_wep()
+    
+    def edit_wpa(self):
+        print("WPA")
+        # Random SSID
+        ssid = random.choice(open(AP_NAMES).readlines())
+        # Random Password
+        password = random.choice(open(WORD_LIST).readlines())
+
+        # Edit ansible wifi config files
+        edit_ansible(WIFI_WPA_CONFIG, "WPA_Name", ssid)
+        edit_ansible(WIFI_WPA_CONFIG, "WPA_Pass", password)
+
+        # Edit ansible challenge files
+        edit_ansible(CHALLENGE_WIFI_WPA, "WPA_Name", ssid)
+        edit_ansible(CHALLENGE_WIFI_WPA, "flag_token", password)
+        
+
+    def edit_wep(self):
+        return
 
 class Que:
     def __init__(self, question):
@@ -303,10 +303,11 @@ class Menu:
 def splash():
     print(SPLASH)
 
-def start():
+def main():
     running = True
     splash()
     while(running):
+        edit_ansible(ALL_VARS, "SCR", "False")
         main_menu = Menu(MAIN, DIGITS)
         if main_menu.choice == "1":
             training_menu = Menu(TRAINING, DIGITS)
@@ -318,4 +319,4 @@ def start():
             running = False
 
 if __name__ == "__main__":
-    start()
+    main()

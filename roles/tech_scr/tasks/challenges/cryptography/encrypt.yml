@@ -2,8 +2,8 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "String Encryption"
-    decrypted: overrealistic
-    encrypted: kUXPMpIfZ/ZZFoWzy5SAxA==
+    decrypted: escheating
+    encrypted: 0F52TeEKMzS/97dF3SucEA==
     type: AES256
 
 - name: Set MySQL statements

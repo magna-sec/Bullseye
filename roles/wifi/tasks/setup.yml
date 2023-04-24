@@ -13,9 +13,3 @@
     name: "{{ item }}"
     state: present
   loop: "{{ InitialPackages }}"
-
-# Set fact to change Default Wifi_1 name
-- name: Pick {{ AmountOfAPs | int }} random Access Point names
-  set_fact:
-    APNames: "{{ APNames + [AP_Names | random] }}"
-  with_sequence: start=1 end={{ AmountOfAPs | int }}
