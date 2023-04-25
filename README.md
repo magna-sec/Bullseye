@@ -13,12 +13,7 @@ Deploy various training environments
 - Multiple containers for users
 ## Tech SCR:
 - Deploy and config CTFd with attached MySql database
-- Challenges:
-    - Linux Administration
-    - Networking
-    - Packet Tracer
-    - Wifi Hacking
-    - Encryption/Decryption
+- Add challenges
 
 ---
 ## To Do:
@@ -28,4 +23,5 @@ Deploy various training environments
 - Introduce randomness
 - Assign vendor MAC addresses to Wifi APs
 ## Tech SCR:
+- Encryption/Decryption - Write randomness into python wrapper
 - Add more challenges, see `roles/tech_scr/challenge_ideas`
