@@ -1,4 +1,6 @@
+macchanger -b -A wlan1
 systemctl enable --now hostapd@wlan1
+
 #systemctl enable --now hostapd@wlan2
 #systemctl enable --now hostapd@wlan3
 #systemctl enable --now hostapd@wlan4

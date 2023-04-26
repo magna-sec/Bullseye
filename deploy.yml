@@ -1,8 +1,8 @@
 ---
-#- hosts: ctfd
-#  roles:
-#    - tech_scr
-#  become: true
+- hosts: ctfd
+  roles:
+    - tech_scr
+  become: true
 
 - hosts: linux_admin
   roles:

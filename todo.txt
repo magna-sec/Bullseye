@@ -1,2 +1,4 @@
 - Fix WiFi question when terraform etc is up
-- Fix wording in encrypt/decrypt
+- https://nims11.wordpress.com/2012/04/27/hostapd-the-linux-way-to-create-virtual-wifi-access-point/
+- Insane but maybe logical idea...... make 1 VM per WiFi point? Add them to their own network via NICs... can other VMs see it? If so WIN. This may be horrible
+https://askubuntu.com/questions/1317036/how-to-rename-a-network-interface-in-20-04 <- don't think possible
