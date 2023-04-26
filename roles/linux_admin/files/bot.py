@@ -2,16 +2,23 @@
 import time
 import subprocess
 
-AMOUNT_OF_STUDENTS = 5
+AMOUNT_OF_USERS = 5
+SCR_USER = "scr"
 
 create_user = True
-create_user_flag = "Hello There"
+create_user_flag = "togetherness"
 
 create_group = True
-create_group_flag = "I like turtles"
+create_group_flag = "feathering"
 
 user_groups = True
-user_groups_flag = "Yessss"
+user_groups_flag = "accursed"
+
+folder_perms = True
+#640: gread, 620: gwrite,604: pread,602: pwrite
+folder_perms_check = "640"
+folder_perms_flag = "foreignize"
+
 
 class LxcCheck:
     def __init__(self):
@@ -26,6 +33,8 @@ class LxcCheck:
             self.create_group()
         if(user_groups):
             self.user_groups()
+        if(folder_perms):
+            self.folder_perms()
 
 
     def lxc_exec(self, command):
@@ -35,35 +44,47 @@ class LxcCheck:
     def create_user(self):
         print("SEARCH: CREATE USER")
         # Check each lxc container for their user
-        for i in range(0, AMOUNT_OF_STUDENTS): 
-            self.lxc_exec(f"lxc exec student{i} -- grep jedi{i} /etc/passwd")
+        for i in range(0, AMOUNT_OF_USERS): 
+            self.lxc_exec(f"lxc exec user{i} -- grep jedi{i} /etc/passwd")
 
             if(f"jedi{i}" in self.output):
                 print("SUCCESS: USER EXISTS")
-                self.lxc_exec(f"lxc exec student{i} -- echo {create_user_flag} >> /challenges/create_user_flag.txt")
+                self.lxc_exec(f"lxc exec user{i} -- bash -c 'echo {create_user_flag} > /home/{SCR_USER}/challenges/create_user_flag.txt'")
                 break
 
     def create_group(self):
         print("SEARCH: CREATE GROUP")
         # Check each lxc container for their group
-        for i in range(0, AMOUNT_OF_STUDENTS): 
-            self.lxc_exec(f"lxc exec student{i} -- grep jediorder{i} /etc/group")
+        for i in range(0, AMOUNT_OF_USERS): 
+            self.lxc_exec(f"lxc exec user{i} -- grep jediorder{i} /etc/group")
 
             if(f"jediorder{i}" in self.output):
                 print("SUCCESS: GROUP EXISTS")
-                self.lxc_exec(f"lxc exec student{i} -- echo {create_group_flag} >> /challenges/create_group_flag.txt")
+                self.lxc_exec(f"lxc exec user{i} -- bash -c 'echo {create_group_flag} > /home/{SCR_USER}/challenges/create_group_flag.txt'")
                 break
     
     def user_groups(self):
         print("SEARCH: USER GROUPS")
         # Check each lxc container for user in group
-        for i in range(0, AMOUNT_OF_STUDENTS): 
-            self.lxc_exec(f"lxc exec student{i} -- groups jedi{i} | grep jediorder{i}")
+        for i in range(0, AMOUNT_OF_USERS): 
+            self.lxc_exec(f"lxc exec user{i} -- groups jedi{i} | grep jediorder{i}")
 
             if(f"jediorder{i}" in self.output):
                 print("SUCCESS: User in groups EXISTS")
-                self.lxc_exec(f"lxc exec student{i} -- echo {user_groups_flag} >> /challenges/user_groups_flag.txt")
+                self.lxc_exec(f"lxc exec user{i} -- bash -c 'echo {user_groups_flag} > /home/{SCR_USER}/challenges/user_groups_flag.txt'")
                 break
+
+    def folder_perms(self):
+        print("SEARCH: FOLDER PERMS")
+        # Check each lxc container for directory perms
+        for i in range(0, AMOUNT_OF_USERS): 
+            self.lxc_exec(f"lxc exec user{i} -- stat -c '%a' /home/{SCR_USER}/PermMe/")
+
+            if(self.output.strip() == folder_perms_check):
+                print("SUCCESS: Folder Perms correct")
+                self.lxc_exec(f"lxc exec user{i} -- bash -c 'echo {folder_perms_flag} > /home/{SCR_USER}/challenges/folder_perms_flag.txt'")
+                break
+
 
 
 def main():

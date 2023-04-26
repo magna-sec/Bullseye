@@ -26,35 +26,37 @@
 - name: Set autoboot on user0 to true - Shell
   ansible.builtin.shell: lxc config set user0 boot.autostart true
   
-# Do some updating on the container and set up ssh server on the container
-- name: Container Command - update - Shell
+# Do some updating on the LXC and set up ssh server on the LXC
+- name: LXC Command - update - Shell
   ansible.builtin.shell: lxc exec user0 -- apt update
 
-- name: Container Command - upgrade - Shell
-  ansible.builtin.shell: lxc exec user0 -- apt upgrade
+- name: LXC Command - upgrade - Shell
+  ansible.builtin.shell: lxc exec user0 -- apt -y upgrade
 
-- name: Container Command - Install APT packages - Shell
+- name: LXC Command - Install APT packages - Shell
   ansible.builtin.shell: lxc exec user0 -- apt -y install {{ item }}
   loop: "{{ AptPackages }}"
 
-- name: Container Command - Create challenge folder - Shell
-  ansible.builtin.shell: | 
-    lxc exec user0 -- mkdir /challenges
-    lxc exec user0 -- chmod 644 /challenges
-
-- name: Container Command - Allow root login - Shell
+- name: LXC Command - Allow root login - Shell
   ansible.builtin.shell: lxc exec user0 -- bash -c 'echo "PermitRootLogin yes" >> /etc/ssh/sshd_config'
 
-- name: Container Command - Restart SSH - Shell
+- name: LXC Command - Restart SSH - Shell
   ansible.builtin.shell: lxc exec user0 -- systemctl restart sshd
 
-- name: Container Command - Change scr password - Shell
+- name: LXC Command - Change "{{ ScrUser }}" password - Shell
   ansible.builtin.shell: | 
-    lxc exec user0 -- useradd scr -s /bin/bash
-    lxc exec user0 -- addgroup scr root
-    lxc exec user0 -- bash -c 'echo "scr:password" | chpasswd'
-    lxc exec user0 -- bash -c 'echo "AllowUsers {{ StudentUser }} ansible" >> /etc/ssh/sshd_config'
+    lxc exec user0 -- useradd -m {{ ScrUser }} -s /bin/bash
+    lxc exec user0 -- addgroup {{ ScrUser }} sudo
+    lxc exec user0 -- bash -c 'echo "{{ ScrUser }}:password" | chpasswd'
+    lxc exec user0 -- bash -c 'echo "AllowUsers {{ ScrUser }} ansible" >> /etc/ssh/sshd_config'
 
+
+- name: LXC Command - Create challenge folder - Shell
+  ansible.builtin.shell: | 
+    lxc exec user0 -- mkdir /home/{{ ScrUser }}/challenges
+    lxc exec user0 -- chmod --reference /home/{{ ScrUser }}/ /home/{{ ScrUser }}/challenges/
+    lxc exec user0 -- chown {{ ScrUser }} /home/{{ ScrUser }}/challenges
+    lxc exec user0 -- chgrp {{ ScrUser }} /home/{{ ScrUser }}/challenges
 
 
 - name: Clone user0 for other machines - Shell

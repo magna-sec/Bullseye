@@ -1,0 +1,2 @@
+- Fix WiFi question when terraform etc is up
+- Fix wording in encrypt/decrypt

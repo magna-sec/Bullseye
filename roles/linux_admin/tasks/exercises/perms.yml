@@ -1,0 +1,8 @@
+---
+- name: Creates PermMe directory
+  file:
+    path: /home/{{ ScrUser }}/PermMe
+    state: directory
+    owner: "{{ ScrUser }}"
+    group: "{{ ScrUser }}"
+    mode: 0600

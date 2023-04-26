@@ -65,13 +65,43 @@ MySql_Setup:
  - INSERT INTO pages (title, route, content, draft, hidden, auth_required, format) VALUES (NULL, "index", FROM_BASE64("PGhlYWQ+CiAgPG1ldGEgaHR0cC1lcXVpdj0icmVmcmVzaCIgY29udGVudD0iMTsgVVJMPS9jaGFsbGVuZ2VzIiAvPgo8L2hlYWQ+Cjxib2R5PgogIDxwPklmIHlvdSBhcmUgbm90IHJlZGlyZWN0ZWQgZ28gdG8sIDxhIGhyZWY9Ii9jaGFsbGVuZ2VzIj5jbGljayBoZXJlPC9hPi48L3A+CjwvYm9keT4="), 0, NULL, NULL, "markdown")
 
 Net_Ques:
-  - "Which protocol is connection-oriented?~TCP"
-  - "Which protocol is connectionless?~UDP"
-  - "What port is SSH?~22"
-  - "What port is WinRM?~5985"
-  - "How do you save a running and startup config in Cisco?~copy running-config startup-config"
-  - "What type of device do you use to connect to a WAN?~Router"
-  - "What type of Firewall inspects packets?~stateful"
-  - "What does TCP stand for?~Transmission Control Protocol"
-  - "What does UDP stand for?~User Datagram Protocol"
-  - "What do you use to create dynamic connections and provide information to the requesting port?~Switch"
+  - Protocol that is connection-oriented?~TCP
+  - Protocol that is connectionless?~UDP
+  - How do you save a running and startup config in Cisco?~copy running-config startup-config
+  - Type of device do you use to connect to a WAN?~Router
+  - Type of Firewall inspects packets?~stateful # Firewalls
+  - Type of Firewall does not inspect packets?~stateless
+  - What does TCP stand for?~Transmission Control Protocol # Protocol Names
+  - What does UDP stand for?~User Datagram Protocol
+  - What does OSPF stand for?~Open Shortest Path First
+  - Used to create dynamic connections and provide information to the requesting port?~Switch
+  - Layer 1 of the OSI model?~Physical # OSI
+  - Layer 2 of the OSI model?~Data Link Layer
+  - Layer 3 of the OSI model?~Network
+  - Layer 4 of the OSI model?~Transport
+  - Layer 5 of the OSI model?~Session
+  - Layer 6 of the OSI model?~Presentation
+  - Layer 7 of the OSI model?~Application
+  - Type of cast is the exchange of messages between one sender to all possible multiple receivers. It works only on a local network?~Broadcast
+  - Type of cast is the exchange of messages between a single source and a single destination. Packets sent from the sender contains data address of the receiver so that it can go to the receiver directly?~Unicast
+  - Type of cast is the exchange of messages between one sender and multiple receivers. The network settings determine your receiving clients?~Multicast
+  - Type of cast is the exchange of messages between one host to another host. It uses TCP and UDP protocols. The copy of each data packet goes to every host that requests it?~Anycast
+  - Can IP address be assigned to Layer 2?No
+  - What type of class is 1-126?~A
+  - What type of class is 127-191?~B
+  - What type of class is 192-223?~C
+  - What type of class is 234-239?~D
+  - What type of class is 240-254?~E
+  - What type of address is inside 169.254.0.1/24?~apipa
+  - Protocol is used to map an IP address to a physical machine?~arp
+  - The IEEE standard for wireless networking?~802.11
+  - Algorithm does OSPF use?~Dijkstra
+  - Does DNS use TCP UDP or Both?~Both
+  - What port is SSH?~22 # Ports
+  - What port is WinRM?~5985
+  - What port is WinRM SSL?~5986
+  - What port is HTTP?~80
+  - What port is HTTPS?~443
+  - What port is MySQL?~3306
+  - What port is DNS?~53
+

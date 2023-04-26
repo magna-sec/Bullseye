@@ -3,6 +3,7 @@
 - include_tasks: setup.yml
 # Setup host
 - include_tasks: host.yml
+- include_tasks: bot.yml
 # Create files
 #- include_tasks: dnsmasq.yml
 - include_tasks: host_files.yml

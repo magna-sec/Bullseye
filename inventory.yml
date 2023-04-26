@@ -4,11 +4,10 @@ all:
       hosts: null
       children:
         ctfd:
-          hosts: 192.168.64.73
+          hosts: 10.10.254.49
         linux_admin:
-          hosts: 192.168.64.168
+          hosts: 10.10.254.50
         wifi:
-          hosts: 192.168.64.84
-          #hosts: 192.168.64.118
+          hosts: 10.10.254.51
       vars:
         ansible_user: ansible

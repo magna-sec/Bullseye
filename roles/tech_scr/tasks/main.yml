@@ -24,5 +24,6 @@
 
 # Wifi Challenges
 - include_tasks: challenges/wifi/wpa.yml
+- include_tasks: challenges/wifi/join_wifi.yml
 
 

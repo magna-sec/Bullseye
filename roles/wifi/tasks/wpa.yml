@@ -1,8 +1,8 @@
 ---
 - name: Set facts for random Access Point - WPA
   set_fact:
-    WPA_Name: PorterPlough
-    WPA_Pass: communicatee
+    WPA_Name: SmashClock
+    WPA_Pass: world-wide
 
 - name: Set facts for custom files - WPA
   set_fact:

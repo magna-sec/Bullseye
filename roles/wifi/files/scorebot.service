@@ -1,0 +1,11 @@
+[Unit]
+Description=Scorebot
+
+[Service]
+Type=oneshot
+ExecStart=/root/bot.py
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target

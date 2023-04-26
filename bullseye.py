@@ -23,14 +23,30 @@ CHALLENGE_PACKETTRACER = "roles/tech_scr/tasks/challenges/networking/packettrace
 CHALLENGE_LINUX_LINES= "roles/tech_scr/tasks/challenges/linux/line_count.yml"
 CHALLENGE_LINUX_CHARS = "roles/tech_scr/tasks/challenges/linux/char_count.yml"
 
+LINUX_ADMIN_BOT = "roles/linux_admin/files/bot.py"
 CHALLENGE_LINUX_LINES_FILE = "roles/tech_scr/tasks/challenges/linux/files/line_count.txt"
 CHALLENGE_LINUX_CHARS_FILE = "roles/tech_scr/tasks/challenges/linux/files/char_count.txt"
+
+CHALLENGE_LINUX_PERMS = "roles/tech_scr/tasks/challenges/linux/perms.yml"
+CHALLENGE_LINUX_PERMS_GROUP_R = "Add group read to the folder"
+CHALLENGE_LINUX_PERMS_GROUP_W = "Add group write to the folder"
+CHALLENGE_LINUX_PERMS_PUBLIC_R = "Add public read to the folder"
+CHALLENGE_LINUX_PERMS_PUBLIC_W = "Add public write to the folder"
+CHALLENGE_LINUX_PERMS_DICT = {"640":CHALLENGE_LINUX_PERMS_GROUP_R,"620":CHALLENGE_LINUX_PERMS_GROUP_W,"604":CHALLENGE_LINUX_PERMS_PUBLIC_R,"602":CHALLENGE_LINUX_PERMS_PUBLIC_W}
+
+CHALLENGE_LINUX_CUSER = "roles/tech_scr/tasks/challenges/linux/create_user.yml"
+CHALLENGE_LINUX_CGROUP = "roles/tech_scr/tasks/challenges/linux/create_group.yml"
+CHALLENGE_LINUX_USERGROUP = "roles/tech_scr/tasks/challenges/linux/user_groups.yml"
+
 
 AP_NAMES = "ap_names.txt"
 WIFI_WPA_CONFIG = "roles/wifi/tasks/wpa.yml"
 WIFI_WEP_CONFIG = "roles/wifi/tasks/wep.yml"
+WIFI_BOT = "roles/wifi/files/bot.py"
 CHALLENGE_WIFI_WPA = "roles/tech_scr/tasks/challenges/wifi/wpa.yml"
+CHALLENGE_JOIN_WIFI = "roles/tech_scr/tasks/challenges/wifi/join_wifi.yml"
 CHALLENGE_WIFI_WEP = "roles/tech_scr/tasks/challenges/wifi/wep.yml"
+
 
 
 ENCRYPT_TYPES = ["AES256"]
@@ -63,17 +79,25 @@ WIFI_QUES = [["How many students?", DIGITS]]
 
 
 
-def edit_ansible(file_path, field, value):
+def edit_file(file_path, field, value):
     # Using readlines()
     file1 = open(file_path, 'r')
     Lines = file1.readlines()
 
     # Strips the newline character
     for line in Lines:
-        if(f"{field}: " in line):
-            index = Lines.index(line)
-            temp = Lines[index].split(':')
-            Lines[index] = f"{temp[0]}: " + str(value).strip() + "\n"
+        # ansible files
+        if(".yml" in file_path):
+            if(f"{field}: " in line):
+                index = Lines.index(line)
+                temp = Lines[index].split(':')
+                Lines[index] = f"{temp[0]}: " + str(value).strip() + "\n"
+        # python files
+        if(".py" in file_path):
+            if(f"{field} = " in line):
+                index = Lines.index(line)
+                temp = Lines[index].split(' ')
+                Lines[index] = f'{temp[0]} = "' + str(value).strip() + '"\n'
     
     file1 = open(file_path, 'w')
     file1.writelines(Lines)
@@ -93,7 +117,7 @@ class PacketTracer:
         self.decrypt_file()
         self.edit_xml()
         self.encrypt_file()
-        edit_ansible(CHALLENGE_PACKETTRACER, "file_name", self.random_file)
+        edit_file(CHALLENGE_PACKETTRACER, "file_name", self.random_file)
         
 
     def decrypt_file(self):
@@ -196,23 +220,26 @@ class Cryptography:
         random_word = random.choice(open(WORD_LIST).readlines())
         
         encrypted = self.encrypt_string(random_word.strip(), random_enc)
-        edit_ansible(CHALLENGE_ENCRYPTED, "encrypted", encrypted)
-        edit_ansible(CHALLENGE_ENCRYPTED, "decrypted", random_word)
-        edit_ansible(CHALLENGE_ENCRYPTED, "type", random_enc)
+        edit_file(CHALLENGE_ENCRYPTED, "encrypted", encrypted)
+        edit_file(CHALLENGE_ENCRYPTED, "decrypted", random_word)
+        edit_file(CHALLENGE_ENCRYPTED, "type", random_enc)
 
     def init_decrypt(self):
         random_enc = random.choice(DECRYPT_TYPES)
         random_word = random.choice(open(WORD_LIST).readlines())
         
         encrypted = self.encrypt_string(random_word.strip(), random_enc)
-        edit_ansible(CHALLENGE_ENCRYPTED, "encrypted", encrypted)
-        edit_ansible(CHALLENGE_ENCRYPTED, "decrypted", random_word)
-        edit_ansible(CHALLENGE_ENCRYPTED, "type", random_enc)
-
+        edit_file(CHALLENGE_ENCRYPTED, "encrypted", encrypted)
+        edit_file(CHALLENGE_ENCRYPTED, "decrypted", random_word)
+        edit_file(CHALLENGE_ENCRYPTED, "type", random_enc)
 class Linux:
     def __init__(self):
         self.length_count()
         self.character_count()
+        self.create_group()
+        self.create_user()
+        self.user_groups()
+        self.perms()
 
 
     def length_count(self):
@@ -220,44 +247,101 @@ class Linux:
         with open(CHALLENGE_LINUX_LINES_FILE, "w") as my_file:
             for a in range(0, random_length):
                 my_file.write("Hello There\n")
-        edit_ansible(CHALLENGE_LINUX_LINES, "flag_token", random_length)
+        edit_file(CHALLENGE_LINUX_LINES, "flag_token", random_length)
 
     def character_count(self):
         random_length = random.choice(range(10, 10000))
         with open(CHALLENGE_LINUX_CHARS_FILE, "w") as my_file:
             for a in range(0, random_length):      
                 my_file.write(random.choice(string.ascii_lowercase))
-        edit_ansible(CHALLENGE_LINUX_CHARS, "flag_token", random_length)
+        edit_file(CHALLENGE_LINUX_CHARS, "flag_token", random_length)
+
+
+    def create_group(self):
+        flag = random.choice(open(WORD_LIST).readlines())
+
+        # Edit bot
+        edit_file(LINUX_ADMIN_BOT, "create_group_flag", flag)
+
+        # Edit ansible challenge files
+        edit_file(CHALLENGE_LINUX_CGROUP, "flag_token", flag)
+
+    def create_user(self):
+        flag = random.choice(open(WORD_LIST).readlines())
+
+        # Edit bot
+        edit_file(LINUX_ADMIN_BOT, "create_user_flag", flag)
+
+        # Edit ansible challenge files
+        edit_file(CHALLENGE_LINUX_CUSER, "flag_token", flag)
+
+    def user_groups(self):
+        flag = random.choice(open(WORD_LIST).readlines())
+        
+        # Edit bot
+        edit_file(LINUX_ADMIN_BOT, "user_groups_flag", flag)
+
+        # Edit ansible challenge files
+        edit_file(CHALLENGE_LINUX_USERGROUP, "flag_token", flag)
+
+    def perms(self):
+        flag = random.choice(open(WORD_LIST).readlines())
+        perm = random.choice(list(CHALLENGE_LINUX_PERMS_DICT.keys()))
+        question = CHALLENGE_LINUX_PERMS_DICT[perm]
+
+        # Edit bot
+        edit_file(LINUX_ADMIN_BOT, "folder_perms_check", perm)
+        edit_file(LINUX_ADMIN_BOT, "folder_perms_flag", flag)
+
+        # Edit ansible challenge files
+        edit_file(CHALLENGE_LINUX_PERMS, "permissions", question)
+        edit_file(CHALLENGE_LINUX_PERMS, "flag_token", flag)
+
 
 class Scr:
     def __init__(self):
-        edit_ansible(ALL_VARS, "SCR", "True")
+        edit_file(ALL_VARS, "SCR", "True")
         convert_pt = PacketTracer()
         crypto = Cryptography()
         linux = Linux()
-        wifi = Wifi()
+        wifi = Wifi(True)
+        edit_file(ALL_VARS, "SCR", "False")
 
 class Wifi:
-    def __init__(self):
-        print("WIFI GO BRRR")
+    def __init__(self, scr):
+        self.ssid = ""
+        self.password = ""
         self.edit_wpa()
         self.edit_wep()
+        if(scr): self.scr_conf()
     
     def edit_wpa(self):
-        print("WPA")
         # Random SSID
-        ssid = random.choice(open(AP_NAMES).readlines())
+        self.ssid = random.choice(open(AP_NAMES).readlines())
         # Random Password
-        password = random.choice(open(WORD_LIST).readlines())
+        self.password = random.choice(open(WORD_LIST).readlines())
 
         # Edit ansible wifi config files
-        edit_ansible(WIFI_WPA_CONFIG, "WPA_Name", ssid)
-        edit_ansible(WIFI_WPA_CONFIG, "WPA_Pass", password)
+        edit_file(WIFI_WPA_CONFIG, "WPA_Name", self.ssid)
+        edit_file(WIFI_WPA_CONFIG, "WPA_Pass", self.password)
 
         # Edit ansible challenge files
-        edit_ansible(CHALLENGE_WIFI_WPA, "WPA_Name", ssid)
-        edit_ansible(CHALLENGE_WIFI_WPA, "flag_token", password)
+        edit_file(CHALLENGE_WIFI_WPA, "WPA_Name", self.ssid)
+        edit_file(CHALLENGE_WIFI_WPA, "flag_token", self.password)
         
+    def scr_conf(self):
+        flag = random.choice(open(WORD_LIST).readlines())
+        while(flag == self.password):
+            flag = random.choice(open(WORD_LIST).readlines())
+
+        # Edit bot
+        edit_file(WIFI_BOT, "join_wifi", "True")
+        edit_file(WIFI_BOT, "join_wifi_flag", flag)
+
+        # Edit ansible challenge files
+        edit_file(CHALLENGE_JOIN_WIFI, "WPA_Name", self.ssid)
+        edit_file(CHALLENGE_JOIN_WIFI, "flag_token", flag)
+
 
     def edit_wep(self):
         return
@@ -307,7 +391,7 @@ def main():
     running = True
     splash()
     while(running):
-        edit_ansible(ALL_VARS, "SCR", "False")
+        edit_file(ALL_VARS, "SCR", "False")
         main_menu = Menu(MAIN, DIGITS)
         if main_menu.choice == "1":
             training_menu = Menu(TRAINING, DIGITS)
