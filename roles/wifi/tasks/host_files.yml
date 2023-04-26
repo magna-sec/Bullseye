@@ -37,10 +37,6 @@
 - name: Rebooting
   ansible.builtin.reboot:
 
-- name: Sleep for 30 seconds to allow machine to initialise, this stops timeouts with LXD
-  ansible.builtin.wait_for:
-    timeout: 30
-
 # Set MAC to random vendor
 #- name: Set WLAN interface MAC to random vendor - Doesn't persist reboot
 #  ansible.builtin.shell: macchanger -A wlan{{ item }}

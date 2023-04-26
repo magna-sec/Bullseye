@@ -53,7 +53,7 @@
     lxc exec user0 -- useradd scr -s /bin/bash
     lxc exec user0 -- addgroup scr root
     lxc exec user0 -- bash -c 'echo "scr:password" | chpasswd'
-    lxc exec user0 -- bash -c 'echo "AllowUsers {{ StudentUser }} magna" >> /etc/ssh/sshd_config'
+    lxc exec user0 -- bash -c 'echo "AllowUsers {{ StudentUser }} ansible" >> /etc/ssh/sshd_config'
 
 
 

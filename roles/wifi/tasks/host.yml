@@ -1,3 +1,4 @@
+---
 # Disable the default wpa_supplicant service, we'll be starting a client ourselves
 - name: Stop service wpa_supplicant, if started
   ansible.builtin.service:
@@ -27,7 +28,7 @@
     create: yes
 
 # Assign a static IP to the card, not really used since there's no traffic but could be in the future
-- name: Assign a static IP to the wlan30, not really used since there's no traffic - Shell
-  ansible.builtin.shell: ip addr add 10.10.254.52/24 dev wlan30 
+- name: Assign a static IP to the wlan1, not really used since there's no traffic - Shell
+  ansible.builtin.shell: ip addr add 192.168.64.250/24 dev wlan1 
   ignore_errors: true
 

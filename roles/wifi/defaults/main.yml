@@ -1,12 +1,11 @@
 ---
-# 0-19: Users
-# 20-29: APs
-# 30-39: Fake Users for APs
-AmountOfInterfaces: 40
-AmountOfAPs: "{{ (AmountOfInterfaces - AmountOfUsers) / 2 }}" # 50/50 AP/Clients hence /2
-AmountOfClients: "{{ AmountOfAPs }}"
-
-APNames: []
+# Per machine
+# 1x Attacking Interface wlan0
+# 10x APs wlan1 -> wlan10
+# 1x Client wlan11 <- may need to increase
+AmountOfInterfaces: 12
+AmountOfAPs: 10
+AmountOfClients: 1
 
 InitialPackages:
   - wpasupplicant
@@ -15,11 +14,18 @@ InitialPackages:
   - wireless-tools
   - net-tools
   - macchanger
-  
-ApkPackages:
   - iw
-  - aircrack-ng
-  - openssh-server
-  - pciutils
+  - tshark
+  - dnsmasq
+
+Sudoers:
+  - /usr/sbin/airmon-ng
+  - /usr/sbin/airodump-ng
+  - /usr/sbin/aireplay-ng
+  - /usr/sbin/iwlist
+  - /usr/sbin/wpa_supplicant
+  - /usr/sbin/tcpdump
+  - /usr/sbin/ifconfig
+  - /usr/sbin/dhclient
 
 

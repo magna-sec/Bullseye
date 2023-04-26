@@ -7,7 +7,7 @@
 - name: Set facts for custom files - WPA
   set_fact:
     HostapdWPA:
-    - interface=wlan20
+    - interface=wlan1
     - driver=nl80211
     - country_code=UK
     - ssid={{ WPA_Name }}
@@ -28,7 +28,7 @@
 
 - name: Create custom hostapd.conf - WPA
   ansible.builtin.lineinfile:
-    path: /etc/hostapd/wlan20.conf
+    path: /etc/hostapd/wlan1.conf
     line: "{{ item }}"
     create: yes
   loop: "{{ HostapdWPA }}"
@@ -36,7 +36,7 @@
 # Output wpa_supplicant config file
 - name: Create custom wpa_supplicant.conf
   ansible.builtin.lineinfile:
-    path: /root/wpa_supplicant.conf
+    path: /root/wpa_supplicant_1.conf
     line: "{{ item }}"
     create: yes
   loop: "{{ WPA_supplicantFile }}"

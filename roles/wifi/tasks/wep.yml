@@ -21,7 +21,7 @@
 
 - name: Create custom hostapd.conf - WEP
   ansible.builtin.lineinfile:
-    path: /etc/hostapd/wlan29.conf
+    path: /etc/hostapd/wlan2.conf
     line: "{{ item }}"
     create: yes
   loop: "{{ HostapdWEP }}"

@@ -1,6 +1,10 @@
 AmountOfUsers: 5
 SCR: True
 
+ScrUser: scr
+ScrPass: $6$DN6gpdwEQz3E4uCb$zboJPhqjzBfdCBjbURmFAz6GHMJpqHoVKRpOJAKfcppzP1w0kIBTub0dl61p4BnN0kMT8Bky3d7fT8vQmqlnf1 #password
+
+
 
 linux_ctfd_ip: "{{ groups['ctfd'][0] }}"
 linux_admin_ip: "{{ groups['linux_admin'][0] }}"

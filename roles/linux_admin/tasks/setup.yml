@@ -26,14 +26,14 @@
 
 - name: Add the user scr 
   ansible.builtin.user:
-    name: "{{ StudentUser }}"
-    password: "{{ StudentPass }}"
+    name: "{{ ScrUser }}"
+    password: "{{ ScrPass }}"
     shell: /bin/bash
     comment: Get good
 
 - name: Edit /etc/ssh/sshd_config to allow scr group to SSH - Shell
   ansible.builtin.shell:
-    cmd: echo "AllowUsers {{ StudentUser }} magna" >> /etc/ssh/sshd_config
+    cmd: echo "AllowUsers {{ ScrUser }} ansible" >> /etc/ssh/sshd_config
 
 - name: Restart service ssh, in all cases
   ansible.builtin.service:

@@ -1,0 +1,22 @@
+---
+- name: Set facts for custom files - dnsmasq
+  set_fact:
+    Dnsmasq_File:
+      - "# Interface to bind to"
+      - "interface=wlan1"
+      - "# Specify starting_range,end_range,lease_time"
+      - "dhcp-range=192.168.64.200,192.168.64.220,12h"
+      - "dhcp-option=wlan1,3,192.168.64.250"
+
+- name: Create custom dnsmasq.conf - WPA
+  ansible.builtin.lineinfile:
+    path: /etc/dnsmasq.conf
+    line: "{{ item }}"
+    create: yes
+  loop: "{{ Dnsmasq_File }}"
+
+- name: Copy resolved.conf
+  ansible.builtin.copy:
+    src: resolved.conf
+    dest: /etc/systemd/resolved.conf
+    mode: '0644'

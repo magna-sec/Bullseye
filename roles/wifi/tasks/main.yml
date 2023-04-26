@@ -4,6 +4,7 @@
 # Setup host
 - include_tasks: host.yml
 # Create files
+#- include_tasks: dnsmasq.yml
 - include_tasks: host_files.yml
 # Start attacker setup
-- include_tasks: lxc.yml
+- include_tasks: user.yml
