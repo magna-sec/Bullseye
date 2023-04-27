@@ -1,0 +1,1 @@
+# vlc -vvv example.mp4 --sout '#standard{access=http,mux=ts,dst=:8081}'

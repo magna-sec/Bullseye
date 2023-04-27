@@ -4,12 +4,12 @@
     - tech_scr
   become: true
 
-- hosts: linux_admin
-  roles:
-    - linux_admin
-  become: true
+#- hosts: linux_admin
+#  roles:
+#    - linux_admin
+#  become: true
 
-- hosts: wifi
-  roles:
-    - wifi
-  become: true
+#- hosts: wifi
+#  roles:
+#    - wifi
+#  become: true
