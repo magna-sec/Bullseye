@@ -1,4 +1,4 @@
 terraform.tfvars
 terraform-debug.log
-plan
-*.tfstate*
+terraform.tfstate
+terraform.tfstate.backup
