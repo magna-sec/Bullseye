@@ -17,6 +17,7 @@ InitialPackages:
   - iw
   - tshark
   - dnsmasq
+  - linux-image-extra-virtual
 
 Sudoers:
   - /usr/sbin/airmon-ng

@@ -3,7 +3,7 @@ import time
 import subprocess
 
 join_wifi = "True"
-join_wifi_flag = "Baillaud"
+join_wifi_flag = "demicircle"
 
 
 class LxcCheck:

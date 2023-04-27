@@ -86,7 +86,7 @@ Net_Ques:
   - Type of cast is the exchange of messages between a single source and a single destination. Packets sent from the sender contains data address of the receiver so that it can go to the receiver directly?~Unicast
   - Type of cast is the exchange of messages between one sender and multiple receivers. The network settings determine your receiving clients?~Multicast
   - Type of cast is the exchange of messages between one host to another host. It uses TCP and UDP protocols. The copy of each data packet goes to every host that requests it?~Anycast
-  - Can IP address be assigned to Layer 2?No
+  - Can IP address be assigned to Layer 2?~No
   - What type of class is 1-126?~A
   - What type of class is 127-191?~B
   - What type of class is 192-223?~C

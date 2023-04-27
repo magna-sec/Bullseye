@@ -2,7 +2,7 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Line Count"
-    flag_token: 140
+    flag_token: 370
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:

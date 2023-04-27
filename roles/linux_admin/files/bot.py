@@ -6,18 +6,18 @@ AMOUNT_OF_USERS = 5
 SCR_USER = "scr"
 
 create_user = True
-create_user_flag = "togetherness"
+create_user_flag = "Eriodendron"
 
 create_group = True
-create_group_flag = "feathering"
+create_group_flag = "byerlite"
 
 user_groups = True
-user_groups_flag = "accursed"
+user_groups_flag = "geostrategy"
 
 folder_perms = True
 #640: gread, 620: gwrite,604: pread,602: pwrite
-folder_perms_check = "640"
-folder_perms_flag = "foreignize"
+folder_perms_check = "620"
+folder_perms_flag = "intermundian"
 
 
 class LxcCheck:

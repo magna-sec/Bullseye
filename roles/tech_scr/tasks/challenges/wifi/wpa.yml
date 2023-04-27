@@ -2,8 +2,8 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Wifi Password"
-    WPA_Name: SmashClock
-    flag_token: world-wide
+    WPA_Name: RealizeProse
+    flag_token: ruffianlike
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:
