@@ -1,0 +1,18 @@
+---
+- name: Set question and answer
+  ansible.builtin.set_fact:
+    question_name: "View Stream"
+    flag_token: pseudobrachium
+
+- name: Set MySQL statements
+  ansible.builtin.set_fact:
+    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "SSH to {{ linux_wifi_ip }} port 22X where X is your user number with '{{ ScrUser }}:password'\r\n\r\nNow you have joined the WiFi, sniff network traffic, what is the flag in the stream?", 0, 5, "Wifi", "standard", "visible", NULL, NULL, NULL)
+    answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ flag_token }}", "case_insensitive")
+
+- name: Put challenge into CTFd - Wifi - View Stream
+  community.mysql.mysql_query:
+    query: "{{ challenge }}"
+
+- name: Put flag into CTFd - Wifi - View Stream
+  community.mysql.mysql_query:
+    query: "{{ answer_flag }}"

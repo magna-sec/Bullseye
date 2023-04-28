@@ -1,0 +1,12 @@
+[Unit]
+Description=VLCStream
+
+[Service]
+Type=oneshot
+User=vlc-user
+ExecStart=/home/vlc-user/vlc.sh
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target

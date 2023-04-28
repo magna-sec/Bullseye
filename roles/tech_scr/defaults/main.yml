@@ -4,6 +4,7 @@ CTFd_Name: "Tech SCR"
 InitialPackages:
   - net-tools
   - mysql-client
+  - vlc
 
 DockerRequired:
   - ca-certificates

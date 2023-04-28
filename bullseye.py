@@ -7,6 +7,7 @@ import os
 import time
 import string
 from termcolor import colored
+import cv2
 
 # Purely to hide that ugly CTRL+C output
 import signal
@@ -43,10 +44,13 @@ AP_NAMES = "ap_names.txt"
 WIFI_WPA_CONFIG = "roles/wifi/tasks/wpa.yml"
 WIFI_WEP_CONFIG = "roles/wifi/tasks/wep.yml"
 WIFI_BOT = "roles/wifi/files/bot.py"
+STREAM_SERVICE = "roles/tech_scr/files/vlc.sh"
 CHALLENGE_WIFI_WPA = "roles/tech_scr/tasks/challenges/wifi/wpa.yml"
 CHALLENGE_JOIN_WIFI = "roles/tech_scr/tasks/challenges/wifi/join_wifi.yml"
 CHALLENGE_WIFI_WEP = "roles/tech_scr/tasks/challenges/wifi/wep.yml"
-
+CHALLENGE_STREAM_BASE = "roles/tech_scr/files/base.mp4"
+CHALLENGE_STREAM_FILE = "rles/tech_scr/files/stream.mp4"
+CHALLENGE_WIFI_STREAM_FILE = "roles/tech_scr/tasks/challenges/wifi/stream.yml"
 
 
 ENCRYPT_TYPES = ["AES256"]
@@ -313,6 +317,7 @@ class Wifi:
         self.password = ""
         self.edit_wpa()
         self.edit_wep()
+        self.overlay_video()
         if(scr): self.scr_conf()
     
     def edit_wpa(self):
@@ -342,6 +347,43 @@ class Wifi:
         edit_file(CHALLENGE_JOIN_WIFI, "WPA_Name", self.ssid)
         edit_file(CHALLENGE_JOIN_WIFI, "flag_token", flag)
 
+
+    def overlay_video(self):
+        flag = random.choice(open(WORD_LIST).readlines())
+        # Read the video file
+        video = cv2.VideoCapture(CHALLENGE_STREAM_BASE)
+
+        # Define the codec and create VideoWriter object
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        out = cv2.VideoWriter(CHALLENGE_STREAM_FILE, fourcc, 30.0, (int(video.get(3)), int(video.get(4))))
+
+        # Loop through the video frames
+        while video.isOpened():
+            ret, frame = video.read()
+            if not ret:
+                break
+
+            # Add text overlay to the frame
+            text = flag.strip()
+            print(text)
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            font_scale = 1
+            thickness = 2
+            text_size = cv2.getTextSize(text, font, font_scale, thickness)[0]
+            text_x = int((frame.shape[1] - text_size[0]) / 2)
+            text_y = int((frame.shape[0] + text_size[1]) / 2)
+            cv2.putText(frame, text, (text_x, text_y), font, font_scale, (255, 255, 255), thickness, cv2.LINE_AA)
+
+            # Write the frame to the output video
+            out.write(frame)
+
+        # Release the resources
+        video.release()
+        out.release()
+        cv2.destroyAllWindows()
+
+        # Edit ansible challenge files
+        edit_file(CHALLENGE_WIFI_STREAM_FILE, "flag_token", flag)
 
     def edit_wep(self):
         return

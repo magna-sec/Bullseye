@@ -1,5 +1,5 @@
 ---
-- name: Copy docker-compose to host
+- name: Copy my.cnf to host
   ansible.builtin.copy:
     src: my.cnf
     dest: /root/.my.cnf
