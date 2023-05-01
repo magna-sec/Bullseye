@@ -19,14 +19,16 @@ Deploy various training environments
     - Linux Administration
     - Cryptography
     - WiFi Hacking
+    - Python
 
 ---
 ## To Do:
 ## Wifi:
 - Different versions of encryption
 - Traffic generation
-- Introduce randomness
 - Assign vendor MAC addresses to Wifi APs
+- Fix stream viewing
 ## Tech SCR:
-- Encryption/Decryption - Write randomness into python wrapper
+- Dynamic Python challenges
+- Home made Packet Tracer for simpler labs
 - Add more challenges, see `roles/tech_scr/challenge_ideas`
