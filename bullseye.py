@@ -15,6 +15,7 @@ import subprocess
 signal.signal(signal.SIGINT, lambda x, y: sys.exit(0))
 # Purely to hide that ugly CTRL+C output
 
+TERRAFORM_VARS = "terraform/vars.tf"
 ALL_VARS = "group_vars/all.yml"
 # SCR Variables
 WORD_LIST = "words.txt"
@@ -59,7 +60,7 @@ ENCRYPT_TYPES = ["AES256"]
 DECRYPT_TYPES = ["3DES", "AES256"]
 # Checks
 COLOURS = ["black","blue","cyan","dark_grey","green","light_blue","light_cyan","light_green","light_grey","light_magenta","light_red","light_yellow","magenta","red","white","yellow"]
-DIGITS = ["0","1","2","3","4","5","6","7","8","9"] # Sure theres a better way than this
+DIGITS = ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"] # Sure theres a better way than this
 
 # Splash
 SPLASH = """
@@ -104,11 +105,19 @@ def edit_file(file_path, field, value):
                 index = Lines.index(line)
                 temp = Lines[index].split(' ')
                 Lines[index] = f'{temp[0]} = "' + str(value).strip() + '"\n'
+        # terraform vars files
+        if(".tf" in file_path):
+            if(f"{field}" in line):
+                index = Lines.index(line)
+                while("default" not in Lines[index]):
+                    index += 1
+                temp = Lines[index].split('=')
+                Lines[index] = f'{temp[0]}= ' + str(value).strip() + '\n'
+                break
     
     file1 = open(file_path, 'w')
     file1.writelines(Lines)
     file1.close()
-
 
 class PacketTracer:
     def __init__(self):
@@ -315,12 +324,17 @@ class Linux:
 class Scr:
     def __init__(self):
         edit_file(ALL_VARS, "SCR", "True")
+        self.get_users()
         convert_pt = PacketTracer()
         crypto = Cryptography()
         linux = Linux()
         wifi = Wifi(True)
         edit_file(ALL_VARS, "SCR", "False")
 
+    def get_users(self):
+        ask_u_que = Que(WIFI_QUES[0])
+        edit_file(TERRAFORM_VARS, "amount_of_users", ask_u_que.answer)
+        edit_file(ALL_VARS, "AmountOfUsers", ask_u_que.answer)
 class Wifi:
     def __init__(self, scr):
         self.ssid = ""
@@ -402,13 +416,15 @@ class Que:
         self.question = question[0]
         self.possibles = question[1]
         self.choice = ""
+        self.answer = ""
         self.ask_que()
     
     def ask_que(self):
         while self.choice not in self.possibles:
             print(colored(self.question, 'green'), end = "")
             print(colored(": ", 'white'), end = "")
-            self.choice = input()    
+            self.choice = input()  
+        self.answer = self.choice  
 
 class Menu:
     def __init__(self, menu_list, possibles):

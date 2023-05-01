@@ -24,6 +24,10 @@ variable "vlan_num" {
 variable "api_url" {
     default = "https://p2.dcxl.xz:8006/api2/json"
 }
+variable "amount_of_users" {
+    type = number
+    default = 10
+}
 #Blank var for use by terraform.tfvars
 variable "token_secret" {
 }

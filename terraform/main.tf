@@ -26,7 +26,7 @@ provider "proxmox" {
 resource "proxmox_vm_qemu" "wifi" {
   name ="wifi${count.index}" # count.index starts at 0
   #name = "test-vm-01"
-  count = 8 # Establishes how many instances will be created 
+  count = var.amount_of_users # Establishes how many instances will be created 
   target_node = var.proxmox_host
 
 
