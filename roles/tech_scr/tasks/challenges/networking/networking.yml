@@ -1,7 +1,11 @@
 ---
+- name: Create seed
+  ansible.builtin.set_fact:
+    rand_seed: "{{ ansible_date_time.epoch + itter | md5 }}"
+
 - name: Choose a networking question - NetQuestion {{ itter }}
   ansible.builtin.set_fact:
-    rand_question: "{{ Net_Ques | random(seed=inventory_hostname=inventory_hostname) }}"
+    rand_question: "{{ Net_Ques | random(seed=rand_seed) }}"
 
 - name: Set question and answer for - NetQuestion {{ itter }}
   ansible.builtin.set_fact:
