@@ -1,8 +1,8 @@
 ---
 - name: Set facts for random Access Point - WPA
   set_fact:
-    WPA_Name: RepresentativeProcess
-    WPA_Pass: Sporochnus
+    WPA_Name: CowboyConcert
+    WPA_Pass: malady's
 
 - name: Set facts for custom files - WPA
   set_fact:

@@ -13,3 +13,9 @@
   ansible.builtin.shell: lxc file push /tmp/line_count.txt user{{ item }}//home/{{ ScrUser }}/challenges/
   with_sequence: start=0 end={{ AmountOfUsers - 1 }}
   when: line_count == True
+
+# hidden_file challenge
+- name: Container Command - Copy hidden_file.txt to user
+  ansible.builtin.shell: lxc file push /tmp/hidden_file.txt user{{ item }}//home/{{ ScrUser }}/challenges/.CANYoUsEeMe.txt
+  with_sequence: start=0 end={{ AmountOfUsers - 1 }}
+  when: hidden_file == True

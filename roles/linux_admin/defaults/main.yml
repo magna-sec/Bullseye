@@ -3,6 +3,7 @@ create_user: True
 create_group: True
 line_count: True
 user_groups: True
+hidden_file: True
 
 
 InitialPackages:

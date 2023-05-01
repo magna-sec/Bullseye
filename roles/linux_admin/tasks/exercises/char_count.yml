@@ -1,7 +1,7 @@
 ---
 - name: Copy char_count.txt to host
   ansible.builtin.copy:
-    src: ../../tech_scr/tasks/challenges/linux/files/char_count.txt
+    src: char_count.txt
     dest: /tmp/char_count.txt
     owner: root
     group: root

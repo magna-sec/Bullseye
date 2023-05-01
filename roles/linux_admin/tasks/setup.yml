@@ -1,8 +1,4 @@
 ---
-- name: Run the equivalent of "apt update"
-  apt:
-    update_cache: yes
-
 - name: Remove apt lock-frontend file
   file:
     state: absent
@@ -13,8 +9,9 @@
     state: absent
     path: "/var/lib/dpkg/lock"
 
-- name: Upgrade all packages to their latest version
+- name: Update then Upgrade all packages to their latest version
   apt:
+    update_cache: true
     upgrade: yes
 
 # Installing packages

@@ -8,8 +8,10 @@
 - include_tasks: exercises/char_count.yml
   when: char_count == True
 - include_tasks: exercises/perms.yml
-  
+- include_tasks: exercises/hidden_file.yml
+
 - include_tasks: challenge_files.yml
+
 
 # Bot
 - include_tasks: bot.yml

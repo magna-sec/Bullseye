@@ -3,7 +3,7 @@ import time
 import subprocess
 
 join_wifi = "True"
-join_wifi_flag = "pseudobrachium"
+join_wifi_flag = "nonbiological"
 
 
 class LxcCheck:

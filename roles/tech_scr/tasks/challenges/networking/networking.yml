@@ -1,7 +1,7 @@
 ---
 - name: Choose a networking question - NetQuestion {{ itter }}
   ansible.builtin.set_fact:
-    rand_question: "{{ Net_Ques | random }}"
+    rand_question: "{{ Net_Ques | random(seed=inventory_hostname=inventory_hostname) }}"
 
 - name: Set question and answer for - NetQuestion {{ itter }}
   ansible.builtin.set_fact:

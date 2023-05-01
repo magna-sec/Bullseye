@@ -1,0 +1,23 @@
+---
+- name: Choose a networking question - PythonQuestion {{ itter }}
+  ansible.builtin.set_fact:
+    rand_question: "{{ Py_Ques | random(seed=inventory_hostname=inventory_hostname) }}"
+
+- name: Set question and answer for - PythonQuestion {{ itter }}
+  ansible.builtin.set_fact:
+    question_name: "Python Question {{ itter }}"
+    question: "{{ rand_question.split('~')[0] }}"
+    flag_token: "{{ rand_question.split('~')[1] }}"
+
+- name: Set MySQL statements - PythonQuestion {{ itter }}
+  ansible.builtin.set_fact:
+    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "{{ question }}", 0, 5, "Python", "standard", "visible", NULL, NULL, NULL)
+    answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ flag_token }}", "case_insensitive")
+
+- name: Put challenge into CTFd - PythonQuestion {{ itter }}
+  community.mysql.mysql_query:
+    query: "{{ challenge }}"
+
+- name: Put flag into CTFd - PythonQuestion {{ itter }}
+  community.mysql.mysql_query:
+    query: "{{ answer_flag }}"

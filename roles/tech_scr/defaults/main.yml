@@ -106,3 +106,11 @@ Net_Ques:
   - What port is MySQL?~3306
   - What port is DNS?~53
 
+Py_Ques:
+  - What type of language is Python?~Interpreted
+  - Is Python object-oriented?~Yes
+  - At what level is the Python programming language?~High
+  - What is this an an example of{{NL}}[1,2,3,4]~List
+  - "What is this an an example of{{NL}}    def hi:{{NL}}        print('hi')~function"
+  - What is this an an example of{{NL}}    a = 5~variable
+  - "What is this an an example of{{NL}}    d={'a':'bob',1337:'leet'}~dictionary"

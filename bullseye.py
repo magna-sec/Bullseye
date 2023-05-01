@@ -23,10 +23,12 @@ CHALLENGE_DECRYPTED = "roles/tech_scr/tasks/challenges/cryptography/decrypt.yml"
 CHALLENGE_PACKETTRACER = "roles/tech_scr/tasks/challenges/networking/packettracer.yml"
 CHALLENGE_LINUX_LINES= "roles/tech_scr/tasks/challenges/linux/line_count.yml"
 CHALLENGE_LINUX_CHARS = "roles/tech_scr/tasks/challenges/linux/char_count.yml"
+CHALLENGE_LINUX_HIDDEN = "roles/tech_scr/tasks/challenges/linux/hidden_file.yml"
 
 LINUX_ADMIN_BOT = "roles/linux_admin/files/bot.py"
-CHALLENGE_LINUX_LINES_FILE = "roles/tech_scr/tasks/challenges/linux/files/line_count.txt"
-CHALLENGE_LINUX_CHARS_FILE = "roles/tech_scr/tasks/challenges/linux/files/char_count.txt"
+CHALLENGE_LINUX_LINES_FILE = "roles/linux_admin/files/line_count.txt"
+CHALLENGE_LINUX_CHARS_FILE = "roles/linux_admin/files/char_count.txt"
+CHALLENGE_LINUX_HIDDEN_FILE = "roles/linux_admin/files/hidden_file.txt"
 
 CHALLENGE_LINUX_PERMS = "roles/tech_scr/tasks/challenges/linux/perms.yml"
 CHALLENGE_LINUX_PERMS_GROUP_R = "Add group read to the folder"
@@ -240,10 +242,12 @@ class Linux:
     def __init__(self):
         self.length_count()
         self.character_count()
+        self.hidden_file()
         self.create_group()
         self.create_user()
         self.user_groups()
         self.perms()
+
 
 
     def length_count(self):
@@ -259,6 +263,12 @@ class Linux:
             for a in range(0, random_length):      
                 my_file.write(random.choice(string.ascii_lowercase))
         edit_file(CHALLENGE_LINUX_CHARS, "flag_token", random_length)
+
+    def hidden_file(self):
+        flag = random.choice(open(WORD_LIST).readlines())
+        with open(CHALLENGE_LINUX_HIDDEN_FILE, "w") as my_file:
+            my_file.write(flag)
+        edit_file(CHALLENGE_LINUX_HIDDEN, "flag_token", flag)
 
 
     def create_group(self):
@@ -365,7 +375,6 @@ class Wifi:
 
             # Add text overlay to the frame
             text = flag.strip()
-            print(text)
             font = cv2.FONT_HERSHEY_SIMPLEX
             font_scale = 1
             thickness = 2

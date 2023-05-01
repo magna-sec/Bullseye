@@ -4,9 +4,9 @@ all:
       hosts: null
       children:
         ctfd:
-          hosts: 10.10.254.50
+          hosts: 192.168.190.160
         linux_admin:
-          hosts: 192.168.64.189
+          hosts: 192.168.190.158
         wifi:
           hosts:
             wifi0:

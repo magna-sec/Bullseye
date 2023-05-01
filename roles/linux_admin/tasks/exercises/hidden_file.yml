@@ -1,0 +1,8 @@
+---
+- name: Copy hidden_file.txt to host
+  ansible.builtin.copy:
+    src: hidden_file.txt
+    dest: /tmp/hidden_file.txt
+    owner: root
+    group: root
+    mode: '0644'
