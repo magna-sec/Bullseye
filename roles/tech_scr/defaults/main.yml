@@ -110,7 +110,7 @@ Py_Ques:
   - What type of language is Python?~Interpreted
   - Is Python object-oriented?~Yes
   - At what level is the Python programming language?~High
-  - What is this an an example of{{NL}}[1,2,3,4]~List
-  - "What is this an an example of{{NL}}    def hi:{{NL}}        print('hi')~function"
-  - What is this an an example of{{NL}}    a = 5~variable
-  - "What is this an an example of{{NL}}    d={'a':'bob',1337:'leet'}~dictionary"
+  - What is this an an example of{{PY_MD}}a = [1,2,3,4]~List
+  - "What is this an an example of{{PY_MD}}def hi:{{NL1}}    print('hi')~function"
+  - What is this an an example of{{PY_MD}}a = 5~variable
+  - "What is this an an example of{{PY_MD}}a = {'a':'bob',1337:'leet'}~dictionary"

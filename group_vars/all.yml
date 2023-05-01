@@ -4,7 +4,9 @@ SCR: False
 ScrUser: scr
 ScrPass: $6$DN6gpdwEQz3E4uCb$zboJPhqjzBfdCBjbURmFAz6GHMJpqHoVKRpOJAKfcppzP1w0kIBTub0dl61p4BnN0kMT8Bky3d7fT8vQmqlnf1 #password
 
-NL: "\r\n"
+NL1: "\r\n"
+NL2: "\r\n\r\n"
+PY_MD: "\r\n\r\n    "
 
 
 linux_ctfd_ip: "{{ groups['ctfd'][0] }}"
