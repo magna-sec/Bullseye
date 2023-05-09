@@ -42,48 +42,44 @@ class LxcCheck:
          self.output = result.stdout.decode("utf-8")
     
     def create_user(self):
-        print("SEARCH: CREATE USER")
         # Check each lxc container for their user
         for i in range(0, AMOUNT_OF_USERS): 
+            print("Checking {i}: Create user")
             self.lxc_exec(f"lxc exec user{i} -- grep jedi{i} /etc/passwd")
 
             if(f"jedi{i}" in self.output):
                 print("SUCCESS: USER EXISTS")
                 self.lxc_exec(f"lxc exec user{i} -- bash -c 'echo {create_user_flag} > /home/{SCR_USER}/challenges/create_user_flag.txt'")
-                break
 
     def create_group(self):
-        print("SEARCH: CREATE GROUP")
         # Check each lxc container for their group
         for i in range(0, AMOUNT_OF_USERS): 
+            print("Checking {i}: Create Group")
             self.lxc_exec(f"lxc exec user{i} -- grep jediorder{i} /etc/group")
 
             if(f"jediorder{i}" in self.output):
                 print("SUCCESS: GROUP EXISTS")
                 self.lxc_exec(f"lxc exec user{i} -- bash -c 'echo {create_group_flag} > /home/{SCR_USER}/challenges/create_group_flag.txt'")
-                break
     
     def user_groups(self):
-        print("SEARCH: USER GROUPS")
         # Check each lxc container for user in group
         for i in range(0, AMOUNT_OF_USERS): 
+            print("Checking {i}: Add2Group")
             self.lxc_exec(f"lxc exec user{i} -- groups jedi{i} | grep jediorder{i}")
 
             if(f"jediorder{i}" in self.output):
                 print("SUCCESS: User in groups EXISTS")
                 self.lxc_exec(f"lxc exec user{i} -- bash -c 'echo {user_groups_flag} > /home/{SCR_USER}/challenges/user_groups_flag.txt'")
-                break
 
     def folder_perms(self):
-        print("SEARCH: FOLDER PERMS")
         # Check each lxc container for directory perms
-        for i in range(0, AMOUNT_OF_USERS): 
+        for i in range(0, AMOUNT_OF_USERS):
+            print("Checking {i}: Folder Perms")
             self.lxc_exec(f"lxc exec user{i} -- stat -c '%a' /home/{SCR_USER}/PermMe/")
 
             if(self.output.strip() == folder_perms_check):
                 print("SUCCESS: Folder Perms correct")
                 self.lxc_exec(f"lxc exec user{i} -- bash -c 'echo {folder_perms_flag} > /home/{SCR_USER}/challenges/folder_perms_flag.txt'")
-                break
 
 
 
