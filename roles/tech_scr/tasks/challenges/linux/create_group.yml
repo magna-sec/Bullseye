@@ -2,7 +2,7 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Create Group"
-    flag_token: nonflyable
+    flag_token: decempunctate
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:

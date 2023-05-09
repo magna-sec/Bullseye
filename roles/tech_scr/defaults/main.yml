@@ -1,5 +1,5 @@
 ---
-CTFd_Name: "Tech SCR"
+CTFd_Name: "Technical SCR"
 
 InitialPackages:
   - net-tools

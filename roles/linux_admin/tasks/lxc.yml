@@ -64,6 +64,7 @@
     lxc copy user0 user{{ item }}
     lxc config set user{{ item }} boot.autostart true
     lxc start user{{ item }}
+    sleep 5
   with_sequence: start=1 end={{ AmountOfUsers - 1 }}
 
 

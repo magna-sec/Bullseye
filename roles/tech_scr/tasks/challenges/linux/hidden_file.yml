@@ -2,7 +2,7 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Hidden File"
-    flag_token: analogise
+    flag_token: inoculative
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:

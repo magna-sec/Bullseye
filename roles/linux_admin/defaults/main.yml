@@ -14,3 +14,4 @@ AptPackages:
   - iw
   - net-tools
   - openssh-server
+  - nano

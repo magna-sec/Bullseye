@@ -42,7 +42,8 @@ CHALLENGE_LINUX_CUSER = "roles/tech_scr/tasks/challenges/linux/create_user.yml"
 CHALLENGE_LINUX_CGROUP = "roles/tech_scr/tasks/challenges/linux/create_group.yml"
 CHALLENGE_LINUX_USERGROUP = "roles/tech_scr/tasks/challenges/linux/user_groups.yml"
 
-
+WIN_WIFI_XML= "roles/windows_admin/files/temp.xml"
+WIN_WIFI_XML_NEW = "roles/windows_admin/files/new.xml"
 AP_NAMES = "ap_names.txt"
 WIFI_WPA_CONFIG = "roles/wifi/tasks/wpa.yml"
 WIFI_WEP_CONFIG = "roles/wifi/tasks/wep.yml"
@@ -123,6 +124,8 @@ class PacketTracer:
     def __init__(self):
         # Variables
         self.random_file = random.choice(os.listdir("PacketTracer")) 
+        # Purely here for pick a file
+        #self.random_file = "lab01-BasicConfig.pka"
         print("FILE: " + self.random_file)
         self.flag = random.choice(open(WORD_LIST).readlines())
         self.pt_file = "PacketTracer/" + self.random_file
@@ -319,6 +322,41 @@ class Linux:
         # Edit ansible challenge files
         edit_file(CHALLENGE_LINUX_PERMS, "permissions", question)
         edit_file(CHALLENGE_LINUX_PERMS, "flag_token", flag)
+class Windows:
+    def __init__(self):
+        self.ssid = random.choice(open(WORD_LIST).readlines()).strip()
+        self.flag = random.choice(open(WORD_LIST).readlines()).strip()
+        self.edit_wifi()
+
+    def edit_wifi(self):
+        new_ssid = f'<name>{self.ssid}</name>'
+        encode_ssid = self.ssid.encode('utf-8')
+        hex_ssid = encode_ssid.hex()
+        new_hex = f'<hex>{hex_ssid}</hex>'
+        new_flag = f'<keyMaterial>{self.flag}</keyMaterial>'
+        file1 = open(WIN_WIFI_XML, 'r')
+        Lines = file1.readlines()
+ 
+        # Change Flag and timer from 30mins to 60mins
+        for line in Lines:
+            if("Network_Name" in line):
+                index = Lines.index(line)
+                Lines[index] = "\t" + new_ssid + "\n"
+            if("WifiNetwork" in line):
+                index = Lines.index(line)
+                Lines[index] = "\t\t\t" + new_ssid + "\n"
+            if("<hex>" in line):
+                index = Lines.index(line)
+                Lines[index] = "\t\t\t" + new_hex + "\n"
+            if("<keyMaterial>" in line):
+                index = Lines.index(line)
+                Lines[index] = "\t\t\t\t" + new_flag + "\n"
+
+
+        file1 = open(WIN_WIFI_XML_NEW, 'w')
+        file1.writelines(Lines)
+        file1.close()
+
 
 
 class Scr:
@@ -328,6 +366,7 @@ class Scr:
         convert_pt = PacketTracer()
         crypto = Cryptography()
         linux = Linux()
+        windows = Windows()
         wifi = Wifi(True)
         edit_file(ALL_VARS, "SCR", "False")
 
