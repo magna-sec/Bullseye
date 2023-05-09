@@ -1,8 +1,8 @@
 ---
 - name: Set facts for random Access Point - WPA
   set_fact:
-    WPA_Name: SelectSlang
-    WPA_Pass: enflowering
+    WPA_Name: ElasticMike
+    WPA_Pass: rewakening
 
 - name: Set facts for custom files - WPA
   set_fact:

@@ -2,13 +2,13 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "String Encryption"
-    decrypted: thunderstorm's
-    encrypted: ZGgu1JtJJuMMt1xvgaJVqg==
+    decrypted: Russellite
+    encrypted: FQGKBtACCSNWF0Ltg8W+xw==
     type: AES256
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:
-    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "Use {{ type }} to encrypt the following string\r\n\r\n{{ decrypted }}\r\n\r\nMake sure to use '-pbkdf2' and '-nosalt'\r\n\r\nKey-> mysecretpassword", 0, 5, "Cryptography", "standard", "visible", NULL, NULL, NULL)
+    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "Use {{ type }} to encrypt the following string{{NL}}{{ decrypted }}{{NL}}Make sure to use '-pbkdf2' and '-nosalt'{{NL}}Use to make the Key-> mysecretpassword", 0, 5, "Cryptography", "standard", "visible", NULL, NULL, NULL)
     answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ encrypted }}", "case_insensitive")
 
 - name: Put challenge into CTFd - Encrypt

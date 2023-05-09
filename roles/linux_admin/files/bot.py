@@ -2,22 +2,22 @@
 import time
 import subprocess
 
-AMOUNT_OF_USERS = 5
+AMOUNT_OF_USERS = "12"
 SCR_USER = "scr"
 
 create_user = True
-create_user_flag = "submersion"
+create_user_flag = "xenogenetic"
 
 create_group = True
-create_group_flag = "decempunctate"
+create_group_flag = "numismatician"
 
 user_groups = True
-user_groups_flag = "undermelodies"
+user_groups_flag = "rhythmical"
 
 folder_perms = True
 #640: gread, 620: gwrite,604: pread,602: pwrite
-folder_perms_check = "604"
-folder_perms_flag = "differentialize"
+folder_perms_check = "620"
+folder_perms_flag = "mollitude"
 
 
 class LxcCheck:
@@ -43,7 +43,7 @@ class LxcCheck:
     
     def create_user(self):
         # Check each lxc container for their user
-        for i in range(0, AMOUNT_OF_USERS): 
+        for i in range(0, int(AMOUNT_OF_USERS)): 
             print("Checking {i}: Create user")
             self.lxc_exec(f"lxc exec user{i} -- grep jedi{i} /etc/passwd")
 
@@ -53,7 +53,7 @@ class LxcCheck:
 
     def create_group(self):
         # Check each lxc container for their group
-        for i in range(0, AMOUNT_OF_USERS): 
+        for i in range(0, int(AMOUNT_OF_USERS)): 
             print("Checking {i}: Create Group")
             self.lxc_exec(f"lxc exec user{i} -- grep jediorder{i} /etc/group")
 
@@ -63,7 +63,7 @@ class LxcCheck:
     
     def user_groups(self):
         # Check each lxc container for user in group
-        for i in range(0, AMOUNT_OF_USERS): 
+        for i in range(0, int(AMOUNT_OF_USERS)): 
             print("Checking {i}: Add2Group")
             self.lxc_exec(f"lxc exec user{i} -- groups jedi{i} | grep jediorder{i}")
 
@@ -73,7 +73,7 @@ class LxcCheck:
 
     def folder_perms(self):
         # Check each lxc container for directory perms
-        for i in range(0, AMOUNT_OF_USERS):
+        for i in range(0, int(AMOUNT_OF_USERS)):
             print("Checking {i}: Folder Perms")
             self.lxc_exec(f"lxc exec user{i} -- stat -c '%a' /home/{SCR_USER}/PermMe/")
 

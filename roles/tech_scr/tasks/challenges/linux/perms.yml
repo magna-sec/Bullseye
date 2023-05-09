@@ -2,12 +2,12 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Change Directory Permissions"
-    permissions: Add public read to the folder
-    flag_token: differentialize
+    permissions: Add group write to the folder
+    flag_token: mollitude
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:
-    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "SSH to {{ linux_admin_ip }} port 22X where X is your user number with 'scr:password'\r\n\r\nFolder\:/home/{{ ScrUser }}/PermMe\r\n\r\nGive this folder {{ permissions }}", 0, 5, "Linux", "standard", "visible", NULL, NULL, NULL)
+    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "SSH to {{ linux_admin_ip }} port 22X where X is your user number with 'scr:password'{{NL}}Folder\:/home/{{ ScrUser }}/PermMe{{NL}}Give this folder {{ permissions }}", 0, 5, "Linux", "standard", "visible", NULL, NULL, NULL)
     answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ flag_token }}", "case_insensitive")
 
 - name: Put challenge into CTFd - Linux - Directory Permissions

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
-	<name>intertrigo</name>
+	<name>untameness</name>
     <SSIDConfig>
         <SSID>
-			<hex>696e746572747269676f</hex>
-			<name>intertrigo</name>
+			<hex>756e74616d656e657373</hex>
+			<name>untameness</name>
         </SSID>
     </SSIDConfig>
     <connectionType>ESS</connectionType>
@@ -19,7 +19,7 @@
             <sharedKey>
                 <keyType>passPhrase</keyType>
                 <protected>false</protected>
-				<keyMaterial>subgranular</keyMaterial>
+				<keyMaterial>unarrestive</keyMaterial>
             </sharedKey>
         </security>
     </MSM>

@@ -332,8 +332,10 @@ class Windows:
         new_ssid = f'<name>{self.ssid}</name>'
         encode_ssid = self.ssid.encode('utf-8')
         hex_ssid = encode_ssid.hex()
+        
         new_hex = f'<hex>{hex_ssid}</hex>'
         new_flag = f'<keyMaterial>{self.flag}</keyMaterial>'
+
         file1 = open(WIN_WIFI_XML, 'r')
         Lines = file1.readlines()
  
@@ -356,9 +358,6 @@ class Windows:
         file1 = open(WIN_WIFI_XML_NEW, 'w')
         file1.writelines(Lines)
         file1.close()
-
-
-
 class Scr:
     def __init__(self):
         edit_file(ALL_VARS, "SCR", "True")
@@ -374,6 +373,7 @@ class Scr:
         ask_u_que = Que(WIFI_QUES[0])
         edit_file(TERRAFORM_VARS, "amount_of_users", ask_u_que.answer)
         edit_file(ALL_VARS, "AmountOfUsers", ask_u_que.answer)
+        edit_file(LINUX_ADMIN_BOT,"AMOUNT_OF_USERS", int(ask_u_que.answer))
 class Wifi:
     def __init__(self, scr):
         self.ssid = ""
@@ -464,7 +464,6 @@ class Que:
             print(colored(": ", 'white'), end = "")
             self.choice = input()  
         self.answer = self.choice  
-
 class Menu:
     def __init__(self, menu_list, possibles):
         self.menu_list = menu_list

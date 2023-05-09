@@ -2,7 +2,7 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Character Count"
-    flag_token: 8502
+    flag_token: 853
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:

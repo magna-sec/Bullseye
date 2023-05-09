@@ -23,6 +23,7 @@
 - include_tasks: challenges/linux/line_count.yml
 - include_tasks: challenges/linux/user_groups.yml
 - include_tasks: challenges/linux/hidden_file.yml
+- include_tasks: challenges/linux/perms.yml
 
 # Wifi Challenges
 - include_tasks: challenges/wifi/wpa.yml
