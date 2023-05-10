@@ -2,11 +2,11 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Character Count"
-    flag_token: 853
+    flag_token: 9830
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:
-    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "SSH to {{ linux_admin_ip }} port 22X where X is your user number with 'scr:password'\r\n\r\nHow many characters are in /home/{{ ScrUser }}/challenges/char_count.txt", 0, 5, "Linux", "standard", "visible", NULL, NULL, NULL)
+    challenge: INSERT INTO challenges (name, description, max_attempts, value, category, type, state, requirements, connection_info, next_id) VALUES ("{{ question_name }}", "SSH to {{ linux_admin_ip }} port 22X where X is your user number with 'scr:password'{{NL2}}How many characters are in /home/{{ ScrUser }}/challenges/char_count.txt", 0, 5, "Linux", "standard", "visible", NULL, NULL, NULL)
     answer_flag: INSERT INTO flags (challenge_id, type, content, data) VALUES ((SELECT id FROM challenges WHERE name = "{{ question_name }}"), "static", "{{ flag_token }}", "case_insensitive")
 
 - name: Put challenge into CTFd - Linux - Character Count

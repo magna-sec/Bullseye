@@ -2,7 +2,7 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "PacketTracer Lab"
-    file_name: lab01-BasicConfig.pka
+    file_name: lab04-nterVLAN.pka
     flag_token: curacaos
 
 - name: Put PacketTracer file onto CTFd
