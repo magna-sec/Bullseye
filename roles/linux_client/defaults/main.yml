@@ -7,4 +7,4 @@ InitialPackages:
   - vim
 
 Sudoers:
-  - /usr/sbin/tcpdump
+  - /usr/bin/tcpdump

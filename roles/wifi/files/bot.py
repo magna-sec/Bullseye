@@ -4,7 +4,7 @@ import subprocess
 
 join_wifi = "True"
 join_wifi_flag = "accessing"
-
+client_password = "dreamily"
 
 class WiFiCheck:
     def __init__(self):
