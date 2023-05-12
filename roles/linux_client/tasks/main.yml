@@ -1,0 +1,7 @@
+---
+# Setup
+- include_tasks: setup.yml
+- include_tasks: users.yml
+
+# Watching stream bot
+- include_tasks: bot.yml

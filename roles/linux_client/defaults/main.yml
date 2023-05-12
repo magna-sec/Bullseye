@@ -1,0 +1,10 @@
+DynamicPassword: $6$sJVP1pxq8Wcky4SW$Gf/JCJJ0AuE75h/ZQNS4nTPz5.COz.oCXirWkKrXCD8reinNzePlQvK5fn66WNvpa1EGkKKDV7w7Wl5c0cXdk0 # dreamily
+
+
+InitialPackages:
+  - vlc
+  - net-tools
+  - vim
+
+Sudoers:
+  - /usr/sbin/tcpdump

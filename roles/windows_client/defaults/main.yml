@@ -1,0 +1,9 @@
+DynamicPassword: HelloThere
+
+
+#InitialPackages:
+#  - vlc
+#  - net-tools
+
+#Sudoers:
+#  - /usr/sbin/tcpdump

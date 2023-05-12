@@ -13,3 +13,12 @@
   roles:
     - wifi
   become: true
+
+- hosts: linux_client
+  roles:
+    - linux_client
+  become: true
+
+- hosts: windows_client
+  roles:
+   - windows_client

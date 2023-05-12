@@ -26,7 +26,7 @@ variable "api_url" {
 }
 variable "amount_of_users" {
     type = number
-    default = 3
+    default = 5
 }
 #Blank var for use by terraform.tfvars
 variable "token_secret" {
@@ -59,7 +59,8 @@ variable "mac_addresses" {
         "42:CE:92:97:95:14",
         "42:CE:92:97:95:15",
         "42:CE:92:97:95:16",
-        "42:CE:92:97:95:17",
+        "42:CE:92:97:95:17", # no 18 on purpose
+        "42:CE:92:97:95:19",
     ]
   
 }

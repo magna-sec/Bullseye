@@ -1,5 +1,10 @@
 all:
   children:
+    windows:
+      hosts: null
+      children:
+        windows_client:
+          hosts: 192.168.64.191
     linux:
       hosts: null
       children:
@@ -7,6 +12,8 @@ all:
           hosts: 192.168.64.190
         linux_admin:
           hosts: 192.168.64.189
+        linux_client:
+          hosts: 192.168.64.188
         wifi:
           hosts:
             wifi0:
@@ -18,23 +25,6 @@ all:
             wifi3:
               ansible_host: 192.168.64.173
             wifi4:
-              ansible_host: 192.168.64.174      
-            wifi5:
-              ansible_host: 192.168.64.175
-            wifi6:
-              ansible_host: 192.168.64.176
-            wifi7:
-              ansible_host: 192.168.64.177
-            wifi8:
-              ansible_host: 192.168.64.178
-            wifi9:
-              ansible_host: 192.168.64.179
-            wifi10:
-              ansible_host: 192.168.64.180
-            wifi11:
-              ansible_host: 192.168.64.181
-            wifi12:
-              ansible_host: 192.168.64.182
-              
+              ansible_host: 192.168.64.174            
       vars:
         ansible_user: ansible

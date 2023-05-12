@@ -1,0 +1,13 @@
+all:
+  children:
+    linux:
+      hosts: null
+      children:
+        ctfd:
+          hosts: null
+        linux_admin:
+          hosts: null
+        linux_client:
+          hosts: 192.168.64.188
+      vars:
+        ansible_user: ansible

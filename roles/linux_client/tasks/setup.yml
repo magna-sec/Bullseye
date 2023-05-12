@@ -1,0 +1,23 @@
+---
+- name: Remove apt lock-frontend file
+  file:
+    state: absent
+    path: "/var/lib/dpkg/lock-frontend"
+
+- name: Remove apt lock file
+  file:
+    state: absent
+    path: "/var/lib/dpkg/lock"
+
+- name: Update then Upgrade all packages to their latest version
+  apt:
+    update_cache: true
+    upgrade: yes
+
+# Installing packages
+- name: Install quality of life packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ InitialPackages }}"
+

@@ -3,7 +3,7 @@ import time
 import subprocess
 
 join_wifi = "True"
-join_wifi_flag = "narrative's"
+join_wifi_flag = "accessing"
 
 
 class WiFiCheck:
@@ -18,7 +18,6 @@ class WiFiCheck:
         if(join_wifi):
             self.get_wifi_name()
             self.wifi_joined()
-            self.view_stream()
 
     def get_wifi_name(self):
         print("Searching for WiFi name")
@@ -34,16 +33,16 @@ class WiFiCheck:
         if(self.ssid in self.output):
             print("SUCCESS: WiFi Found")
             self.joined = True
+            # Give flag
             command = f'echo "{join_wifi_flag}" > /home/scr/join_wifi_flag.txt'
             result = subprocess.run(command, shell=True, stdout=subprocess.PIPE)
+            # Give password
+            command = f'echo "Well done! Now connect to 192.168.64.188 as scr:{client_password}" > /home/scr/client_password.txt'
+            result = subprocess.run(command, shell=True, stdout=subprocess.PIPE)
+
+            
         else:
             self.joined = False
-
-    def view_stream(self):
-        while(self.joined):
-            time.sleep(10)
-            self.wifi_joined()
-            print("HI")
 
 def main():
     while(True):

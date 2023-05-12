@@ -1,0 +1,21 @@
+---
+- name: Copy stream.py make executable
+  ansible.builtin.copy:
+    src: stream.py
+    dest: /home/ansible/stream.py
+    mode: '0755'
+
+- name: Copy WatchStream service
+  ansible.builtin.copy:
+    src: watchstream.service
+    dest: /etc/systemd/system/watchstream.service
+    mode: '0644'
+
+- name: Enable WatchStream service
+  ansible.builtin.service:
+    name: watchstream
+    enabled: true
+
+# Tried with module.. hung forever
+- name: Start watchstream service - Shell
+  ansible.builtin.shell: systemctl start watchstream &

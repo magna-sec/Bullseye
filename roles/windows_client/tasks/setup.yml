@@ -1,0 +1,12 @@
+---
+- name: Copy wifi file to winodws
+  ansible.windows.win_copy:
+    src: new.xml
+    dest: C:\Users\ansible\Documents\
+
+#- name: start the netsh wlan service
+#  ansible.windows.win_command: net start wlansvc
+
+- name: Run netsh and build a wifi profile
+  ansible.windows.win_command: netsh wlan add profile filename="C:\Users\ansible\Documents\new.xml"
+

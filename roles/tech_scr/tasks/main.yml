@@ -28,6 +28,7 @@
 # Wifi Challenges
 - include_tasks: challenges/wifi/wpa.yml
 - include_tasks: challenges/wifi/join_wifi.yml
+- include_tasks: challenges/wifi/stream.yml
 
 # Python challenges
 - include_tasks: challenges/python/python.yml

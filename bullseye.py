@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import random
 import sys
-import yaml
 import zlib
 import os
 import time
@@ -26,6 +25,7 @@ CHALLENGE_LINUX_LINES= "roles/tech_scr/tasks/challenges/linux/line_count.yml"
 CHALLENGE_LINUX_CHARS = "roles/tech_scr/tasks/challenges/linux/char_count.yml"
 CHALLENGE_LINUX_HIDDEN = "roles/tech_scr/tasks/challenges/linux/hidden_file.yml"
 
+LINUX_CLIENT_PW = "roles/linux_client/defaults/main.yml"
 LINUX_ADMIN_BOT = "roles/linux_admin/files/bot.py"
 CHALLENGE_LINUX_LINES_FILE = "roles/linux_admin/files/line_count.txt"
 CHALLENGE_LINUX_CHARS_FILE = "roles/linux_admin/files/char_count.txt"
@@ -42,8 +42,8 @@ CHALLENGE_LINUX_CUSER = "roles/tech_scr/tasks/challenges/linux/create_user.yml"
 CHALLENGE_LINUX_CGROUP = "roles/tech_scr/tasks/challenges/linux/create_group.yml"
 CHALLENGE_LINUX_USERGROUP = "roles/tech_scr/tasks/challenges/linux/user_groups.yml"
 
-WIN_WIFI_XML= "roles/windows_admin/files/temp.xml"
-WIN_WIFI_XML_NEW = "roles/windows_admin/files/new.xml"
+WIN_WIFI_XML= "roles/windows_client/files/temp.xml"
+WIN_WIFI_XML_NEW = "roles/windows_client/files/new.xml"
 AP_NAMES = "ap_names.txt"
 WIFI_WPA_CONFIG = "roles/wifi/tasks/wpa.yml"
 WIFI_WEP_CONFIG = "roles/wifi/tasks/wep.yml"
@@ -53,7 +53,7 @@ CHALLENGE_WIFI_WPA = "roles/tech_scr/tasks/challenges/wifi/wpa.yml"
 CHALLENGE_JOIN_WIFI = "roles/tech_scr/tasks/challenges/wifi/join_wifi.yml"
 CHALLENGE_WIFI_WEP = "roles/tech_scr/tasks/challenges/wifi/wep.yml"
 CHALLENGE_STREAM_BASE = "roles/tech_scr/files/base.mp4"
-CHALLENGE_STREAM_FILE = "rles/tech_scr/files/stream.mp4"
+CHALLENGE_STREAM_FILE = "roles/tech_scr/files/stream.mp4"
 CHALLENGE_WIFI_STREAM_FILE = "roles/tech_scr/tasks/challenges/wifi/stream.yml"
 
 
@@ -250,6 +250,7 @@ class Cryptography:
         edit_file(CHALLENGE_ENCRYPTED, "encrypted", encrypted)
         edit_file(CHALLENGE_ENCRYPTED, "decrypted", random_word)
         edit_file(CHALLENGE_ENCRYPTED, "type", random_enc)
+
 class Linux:
     def __init__(self):
         self.length_count()
@@ -259,8 +260,6 @@ class Linux:
         self.create_user()
         self.user_groups()
         self.perms()
-
-
 
     def length_count(self):
         random_length = random.choice(range(10, 500))
@@ -322,6 +321,22 @@ class Linux:
         # Edit ansible challenge files
         edit_file(CHALLENGE_LINUX_PERMS, "permissions", question)
         edit_file(CHALLENGE_LINUX_PERMS, "flag_token", flag)
+
+class Linux_client:
+    def __init__(self):
+        self.password = random.choice(open(WORD_LIST).readlines()).strip()
+        self.edit_password()
+
+    def edit_password(self):
+        comment = f" # {self.password}"
+        command =  f'echo -n "{self.password}" | mkpasswd -m sha512crypt --stdin'
+        password = subprocess.check_output(command, shell=True).decode('utf-8').strip()
+        
+        new_line = password + comment
+
+        edit_file(LINUX_CLIENT_PW, "DynamicPassword", new_line)
+        edit_file(WIFI_BOT, "client_password", self.password)
+
 class Windows:
     def __init__(self):
         self.ssid = random.choice(open(WORD_LIST).readlines()).strip()
@@ -331,10 +346,9 @@ class Windows:
     def edit_wifi(self):
         new_ssid = f'<name>{self.ssid}</name>'
         encode_ssid = self.ssid.encode('utf-8')
-        hex_ssid = encode_ssid.hex()
-        
+        hex_ssid = encode_ssid.hex()        
         new_hex = f'<hex>{hex_ssid}</hex>'
-        new_flag = f'<keyMaterial>{self.flag}</keyMaterial>'
+        new_flag = f'<keyMaterial>{self.flag}</keyMaterial>'       
 
         file1 = open(WIN_WIFI_XML, 'r')
         Lines = file1.readlines()
@@ -365,6 +379,7 @@ class Scr:
         convert_pt = PacketTracer()
         crypto = Cryptography()
         linux = Linux()
+        linux_client = Linux_client()
         windows = Windows()
         wifi = Wifi(True)
         edit_file(ALL_VARS, "SCR", "False")
@@ -374,6 +389,7 @@ class Scr:
         edit_file(TERRAFORM_VARS, "amount_of_users", ask_u_que.answer)
         edit_file(ALL_VARS, "AmountOfUsers", ask_u_que.answer)
         edit_file(LINUX_ADMIN_BOT,"AMOUNT_OF_USERS", int(ask_u_que.answer))
+
 class Wifi:
     def __init__(self, scr):
         self.ssid = ""

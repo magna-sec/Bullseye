@@ -2,22 +2,22 @@
 import time
 import subprocess
 
-AMOUNT_OF_USERS = "3"
+AMOUNT_OF_USERS = "5"
 SCR_USER = "scr"
 
 create_user = True
-create_user_flag = "pseudocrystalline"
+create_user_flag = "patronised"
 
 create_group = True
-create_group_flag = "ill-persuaded"
+create_group_flag = "preplanned"
 
 user_groups = True
-user_groups_flag = "hobbyist"
+user_groups_flag = "prebendary"
 
 folder_perms = True
 #640: gread, 620: gwrite,604: pread,602: pwrite
-folder_perms_check = "602"
-folder_perms_flag = "Jebusite"
+folder_perms_check = "620"
+folder_perms_flag = "Tosephtas"
 
 
 class LxcCheck:

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
-	<name>bitterbark</name>
+	<name>leucoplastid</name>
     <SSIDConfig>
         <SSID>
-			<hex>6269747465726261726b</hex>
-			<name>bitterbark</name>
+			<hex>6c6575636f706c6173746964</hex>
+			<name>leucoplastid</name>
         </SSID>
     </SSIDConfig>
     <connectionType>ESS</connectionType>
@@ -19,7 +19,7 @@
             <sharedKey>
                 <keyType>passPhrase</keyType>
                 <protected>false</protected>
-				<keyMaterial>shallow-searching</keyMaterial>
+				<keyMaterial>never-ending</keyMaterial>
             </sharedKey>
         </security>
     </MSM>

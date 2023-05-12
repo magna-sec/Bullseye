@@ -1,0 +1,25 @@
+---
+- name: Add the user scr 
+  ansible.builtin.user:
+    name: "{{ ScrUser }}"
+    password: "{{ DynamicPassword }}"
+    shell: /bin/bash
+    comment: Get good
+
+- name: Edit /etc/ssh/sshd_config to allow scr group to SSH - Shell
+  ansible.builtin.shell:
+    cmd: echo "AllowUsers {{ ScrUser }} ansible" >> /etc/ssh/sshd_config
+
+- name: Restart service ssh, in all cases
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
+
+
+- name: Allow the {{ ScrUser }} user certain suders rights
+  community.general.sudoers:
+    name: allow-{{ item.split('/')[-1] }}
+    state: present
+    user: "{{ ScrUser }}"
+    commands: "{{ item }}"
+  loop: "{{ Sudoers }}"

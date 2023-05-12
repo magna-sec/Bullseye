@@ -1,0 +1,12 @@
+[Unit]
+Description=WatchStream
+
+[Service]
+Type=oneshot
+User=ansible
+ExecStart=/home/ansible/stream.py
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target

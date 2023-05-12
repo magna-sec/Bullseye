@@ -2,7 +2,7 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Add User to group"
-    flag_token: hobbyist
+    flag_token: prebendary
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:

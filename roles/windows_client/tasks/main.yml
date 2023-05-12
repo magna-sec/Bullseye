@@ -1,0 +1,4 @@
+---
+# Setup
+- include_tasks: setup.yml
+- include_tasks: users.yml

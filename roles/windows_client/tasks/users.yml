@@ -1,0 +1,8 @@
+- name: create a user called SCR
+  ansible.windows.win_user:
+    name: SCR
+    password: "{{ DynamicPassword }}"
+    state: present
+    groups:
+      - Users
+      - Administrators
