@@ -106,7 +106,7 @@ Net_Ques:
   - What port is HTTPS?~443
   - What port is MySQL?~3306
   - What port is DNS?~53
-  - What type of traffic is FF:FF:FF:FF:FF:FF when sent from a switch?~Broadcast
+  - What type of traffic comes from FF:FF:FF:FF:FF:FF when sent from a switch?~Broadcast
 
 Py_Ques:
   - What type of language is Python?~Interpreted
@@ -116,5 +116,5 @@ Py_Ques:
   - "What is this an an example of{{PY_MD}}def hi:{{NL1}}    print('hi')~function"
   - What is this an an example of{{PY_MD}}a = 5~variable
   - "What is this an an example of{{PY_MD}}a = {'a':'bob',1337:'leet'}~dictionary"
-  - how would you input a new line into a string?~/n
+  - How would you input a new line into a string?~/n
   
