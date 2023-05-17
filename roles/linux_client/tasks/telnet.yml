@@ -1,0 +1,34 @@
+---
+- name: Add the user 'telnetuser'
+  ansible.builtin.user:
+    name: telnetuser
+    password: "{{ SMBPassword }}"
+    shell: /bin/bash
+    comment: Telnet go brr
+
+- name: Copy telnet.py then make executable
+  ansible.builtin.copy:
+    src: telnet.py
+    dest: /home/telnetuser/telnet.py
+    mode: '0645'
+
+- name: Copy cat.jpg
+  ansible.builtin.copy:
+    src: cat.jpg
+    dest: /home/telnetuser/cat.jpg
+    mode: '0644'
+
+- name: Copy telnetcon service
+  ansible.builtin.copy:
+    src: telnetcon.service
+    dest: /etc/systemd/system/telnetcon.service
+    mode: '0644'
+
+- name: Enable telnetcon service
+  ansible.builtin.service:
+    name: telnetcon
+    enabled: true
+
+# Tried with module.. hung forever
+- name: Start telnetcon service - Shell
+  ansible.builtin.shell: systemctl start telnetcon &

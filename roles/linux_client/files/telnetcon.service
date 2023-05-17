@@ -1,0 +1,12 @@
+[Unit]
+Description=telnetcon
+
+[Service]
+Type=oneshot
+User=telnet
+ExecStart=/home/telnet/telnet.py
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target
