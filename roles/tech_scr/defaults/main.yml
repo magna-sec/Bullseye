@@ -4,7 +4,9 @@ CTFd_Name: "Technical SCR"
 InitialPackages:
   - net-tools
   - mysql-client
+  - samba
   - vlc
+  - telnetd
 
 DockerRequired:
   - ca-certificates

@@ -21,3 +21,9 @@
     state: present
   loop: "{{ InitialPackages }}"
 
+- name: Install python packages
+  ansible.builtin.pip:
+    name: "{{ item }}"
+  loop: "{{ PipInstalls }}"
+
+

@@ -1,0 +1,7 @@
+---
+- name: Add the user 'telnet'
+  ansible.builtin.user:
+    name: telnet
+    password: "{{ SMBPassword }}"
+    shell: /bin/bash
+    comment: Jesus...

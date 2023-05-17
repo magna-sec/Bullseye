@@ -5,3 +5,5 @@
 
 # Watching stream bot
 - include_tasks: bot.yml
+
+- include_tasks: smb.yml

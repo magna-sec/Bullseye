@@ -1,0 +1,12 @@
+[Unit]
+Description=smbsend
+
+[Service]
+Type=oneshot
+User=smbuser
+ExecStart=/home/smbuser/smb_send.py
+RemainAfterExit=true
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target

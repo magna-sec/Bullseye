@@ -1,0 +1,34 @@
+---
+- name: Add the user 'smbuser'
+  ansible.builtin.user:
+    name: smbuser
+    password: "{{ SMBPassword }}"
+    shell: /bin/bash
+    comment: Printer go brr
+
+- name: Copy smb_send.py then make executable
+  ansible.builtin.copy:
+    src: smb_send.py
+    dest: /home/smbuser/smb_send.py
+    mode: '0645'
+
+- name: Copy cat.jpg
+  ansible.builtin.copy:
+    src: cat.jpg
+    dest: /home/smbuser/cat.jpg
+    mode: '0644'
+
+- name: Copy smbsend service
+  ansible.builtin.copy:
+    src: smbsend.service
+    dest: /etc/systemd/system/smbsend.service
+    mode: '0644'
+
+- name: Enable smbsend service
+  ansible.builtin.service:
+    name: smbsend
+    enabled: true
+
+# Tried with module.. hung forever
+- name: Start smbsend service - Shell
+  ansible.builtin.shell: systemctl start smbsend &

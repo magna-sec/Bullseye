@@ -26,7 +26,7 @@ variable "api_url" {
 }
 variable "amount_of_users" {
     type = number
-    default = 5
+    default = 9
 }
 #Blank var for use by terraform.tfvars
 variable "token_secret" {

@@ -2,7 +2,7 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Create Group"
-    flag_token: preplanned
+    flag_token: tacpoint
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:

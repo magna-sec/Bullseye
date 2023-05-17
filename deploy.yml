@@ -19,6 +19,6 @@
     - linux_client
   become: true
 
-- hosts: windows_client
-  roles:
-   - windows_client
+#- hosts: windows_client
+#  roles:
+#   - windows_client

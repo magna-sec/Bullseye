@@ -3,8 +3,8 @@ import time
 import subprocess
 
 join_wifi = "True"
-join_wifi_flag = "accessing"
-client_password = "dreamily"
+join_wifi_flag = "unhappily"
+client_password = "hambones"
 
 class WiFiCheck:
     def __init__(self):

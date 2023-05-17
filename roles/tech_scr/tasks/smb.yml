@@ -1,0 +1,26 @@
+---
+- name: Add the user 'smbuser'
+  ansible.builtin.user:
+    name: smbuser
+    password: "{{ SMBPassword }}"
+    shell: /bin/bash
+    comment: Printer go brr
+
+- name: Copy samba settings
+  ansible.builtin.copy:
+    src: smb.conf
+    dest: /etc/samba/smb.conf
+    mode: '0644'
+
+- name: Add smbuser to samba users - Shell
+  shell: (echo "Passw0rd!"; echo "Passw0rd!") | smbpasswd -s -a smbuser
+
+- name: Restart smbd service
+  ansible.builtin.service:
+    name: smbd
+    state: restarted
+  
+- name: Restart nmbd service
+  ansible.builtin.service:
+    name: nmbd
+    state: restarted
