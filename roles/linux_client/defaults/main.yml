@@ -8,7 +8,7 @@ InitialPackages:
   - python3-pip
 
 Sudoers:
-  - /usr/bin/tcpdump
+  - /usr/sbin/tcpdump
 
 PipInstalls:
   - pysmb
