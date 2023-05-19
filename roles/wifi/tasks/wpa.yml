@@ -1,8 +1,8 @@
 ---
 - name: Set facts for random Access Point - WPA
   set_fact:
-    WPA_Name: BallsBirds
-    WPA_Pass: antiparalytical
+    WPA_Name: HawaiiPandora
+    WPA_Pass: misliving
 
 - name: Set facts for custom files - WPA
   set_fact:

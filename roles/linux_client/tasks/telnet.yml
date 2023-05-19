@@ -12,12 +12,6 @@
     dest: /home/telnetuser/telnet.py
     mode: '0645'
 
-- name: Copy cat.jpg
-  ansible.builtin.copy:
-    src: cat.jpg
-    dest: /home/telnetuser/cat.jpg
-    mode: '0644'
-
 - name: Copy telnetcon service
   ansible.builtin.copy:
     src: telnetcon.service

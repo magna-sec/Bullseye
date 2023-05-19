@@ -2,8 +2,8 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Change Directory Permissions"
-    permissions: Add public write to the folder
-    flag_token: lallapalooza
+    permissions: Add group read to the folder
+    flag_token: hairball
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:

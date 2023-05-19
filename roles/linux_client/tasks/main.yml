@@ -7,3 +7,4 @@
 - include_tasks: bot.yml
 
 - include_tasks: smb.yml
+- include_tasks: telnet.yml

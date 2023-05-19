@@ -7,6 +7,10 @@ import time
 import string
 from termcolor import colored
 import cv2
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+
 
 # Purely to hide that ugly CTRL+C output
 import signal
@@ -56,6 +60,13 @@ CHALLENGE_STREAM_BASE = "roles/tech_scr/files/base.mp4"
 CHALLENGE_STREAM_FILE = "roles/tech_scr/files/stream.mp4"
 CHALLENGE_WIFI_STREAM_FILE = "roles/tech_scr/tasks/challenges/wifi/stream.yml"
 
+CHALLENGE_SMB_CAT_TEMP = "roles/linux_client/files/temp.jpg"
+CHALLENGE_SMB_CAT_FILE = "roles/linux_client/files/cat.jpg"
+CHALLENGE_SMB_SNIFF = "roles/tech_scr/tasks/challenges/wifi/smb.yml"
+
+CHALLENGE_TELNET_BOT = "roles/linux_client/files/telnet.py"
+CHALLENGE_TELNET_SNIFF = "roles/tech_scr/tasks/challenges/wifi/telnet.yml"
+
 
 ENCRYPT_TYPES = ["AES256"]
 DECRYPT_TYPES = ["3DES", "AES256"]
@@ -80,7 +91,7 @@ SPLASH = """
 
 # Menus
 MAIN = {"1":"Training Builds", "2":"COMING SOON", "3":"Exit"}
-TRAINING = {"1":"WiFi", "2":"Tech SCR - COMING SOON", "3":"Radio - COMING SOON"}
+TRAINING = {"1":"WiFi", "2":"Technical SCR", "3":"Radio - COMING SOON"}
 
 # Ques
 WIFI_QUES = [["How many students?", DIGITS]]
@@ -397,6 +408,8 @@ class Wifi:
         self.edit_wpa()
         self.edit_wep()
         self.overlay_video()
+        self.overlay_image()
+        self.telnet()
         if(scr): self.scr_conf()
     
     def edit_wpa(self):
@@ -462,6 +475,32 @@ class Wifi:
 
         # Edit ansible challenge files
         edit_file(CHALLENGE_WIFI_STREAM_FILE, "flag_token", flag)
+
+    
+    def overlay_image(self):
+        flag = random.choice(open(WORD_LIST).readlines())
+        img = Image.open(CHALLENGE_SMB_CAT_TEMP)
+        # Call draw Method to add 2D graphics in an image
+        I1 = ImageDraw.Draw(img)
+
+        
+        # Custom font style and font size
+        myFont = ImageFont.truetype('FreeMono.ttf', 100)
+        
+        # Add Text to an image
+        I1.text((50, 250), flag, font=myFont, fill =(0, 0, 0))
+        img.save(CHALLENGE_SMB_CAT_FILE)
+
+        # Edit ansible challenge files
+        edit_file(CHALLENGE_SMB_SNIFF, "flag_token", flag)
+
+    def telnet(self):
+        flag = random.choice(open(WORD_LIST).readlines())
+        edit_file(CHALLENGE_TELNET_BOT, "flag", flag)
+        edit_file(CHALLENGE_TELNET_SNIFF, "flag_token", flag)
+
+
+
 
     def edit_wep(self):
         return

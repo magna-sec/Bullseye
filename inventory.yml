@@ -33,16 +33,6 @@ all:
             wifi7:
               ansible_host: 192.168.64.177
             wifi8:
-              ansible_host: 192.168.64.178
-            wifi9:
-              ansible_host: 192.168.64.179
-            wifi10:
-              ansible_host: 192.168.64.180
-            wifi11:
-              ansible_host: 192.168.64.181
-            wifi12:
-              ansible_host: 192.168.64.182
-              
-   
+              ansible_host: 192.168.64.178 
       vars:
         ansible_user: ansible

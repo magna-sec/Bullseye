@@ -2,7 +2,7 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "View Stream"
-    flag_token: instellation
+    flag_token: Gunderson
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:

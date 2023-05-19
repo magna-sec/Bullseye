@@ -6,18 +6,18 @@ AMOUNT_OF_USERS = "9"
 SCR_USER = "scr"
 
 create_user = True
-create_user_flag = "vanillism"
+create_user_flag = "snuffiness"
 
 create_group = True
-create_group_flag = "tacpoint"
+create_group_flag = "unhazardous"
 
 user_groups = True
-user_groups_flag = "coreductase"
+user_groups_flag = "collunarium"
 
 folder_perms = True
 #640: gread, 620: gwrite,604: pread,602: pwrite
-folder_perms_check = "602"
-folder_perms_flag = "lallapalooza"
+folder_perms_check = "640"
+folder_perms_flag = "hairball"
 
 
 class LxcCheck:

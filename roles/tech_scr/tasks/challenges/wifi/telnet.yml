@@ -2,7 +2,7 @@
 - name: Set question and answer
   ansible.builtin.set_fact:
     question_name: "Telnet"
-    flag_token: instellation
+    flag_token: epidiascope
 
 - name: Set MySQL statements
   ansible.builtin.set_fact:

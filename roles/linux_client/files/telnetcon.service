@@ -3,8 +3,8 @@ Description=telnetcon
 
 [Service]
 Type=oneshot
-User=telnet
-ExecStart=/home/telnet/telnet.py
+User=telnetuser
+ExecStart=/home/telnetuser/telnet.py
 RemainAfterExit=true
 StandardOutput=journal
 
